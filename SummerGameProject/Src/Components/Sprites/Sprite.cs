@@ -10,14 +10,34 @@ namespace SummerGameProject.Src.Components.Sprites
 {
     public class Sprite : Component
     {
+        private Texture2D texture;
+        private float Depth;
+        private Vector2 origin;
+
+        public Sprite(Texture2D texture, Vector2 position)
+        {
+            this.texture = texture;
+            this.Position = position;
+            Color = Color.White;
+            origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Scale = Vector2.One;
+            Depth = 0f;
+        }
+
+        public Vector2 Position { get; set; }
+        public Vector2 Scale { get; set; }
+        public Color Color { get; set; }
+
+
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture, Position, null, Color, 0f, origin, Scale, SpriteEffects.None, Depth);
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

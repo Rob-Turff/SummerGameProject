@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.GameStates;
 
 namespace SummerGameProject
 {
@@ -11,6 +12,8 @@ namespace SummerGameProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        State currentState;
+        State nextState;
 
         public MainGameClass()
         {
@@ -40,7 +43,9 @@ namespace SummerGameProject
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // Sets the initial state of the game to be the main menu.
+            currentState = new MainMenuState(this, graphics);
+
         }
 
         /// <summary>
@@ -59,10 +64,16 @@ namespace SummerGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            if (nextState != null)
+            {
+                currentState = nextState;
+                nextState = null;
+            }
+
+            currentState.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +86,7 @@ namespace SummerGameProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            currentState.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }

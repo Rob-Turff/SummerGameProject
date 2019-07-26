@@ -5,19 +5,35 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SummerGameProject.Src.Components;
 
 namespace SummerGameProject.Src.GameStates
 {
     public class MainMenuState : State
     {
+        private MainGameClass game;
+        private GraphicsDeviceManager graphics;
+        private List<Component> components;
+
+        public MainMenuState(MainGameClass mainGameClass, GraphicsDeviceManager graphics)
+        {
+            this.game = mainGameClass;
+            this.graphics = graphics;
+            components = new List<Component>();
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Begin();
+            foreach (var component in components)
+                component.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            foreach (var component in components)
+                component.Update(gameTime);
         }
     }
 }

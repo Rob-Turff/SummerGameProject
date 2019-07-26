@@ -13,13 +13,8 @@ namespace SummerGameProject.Src.Components
     /// </summary>
     public abstract class Component
     {
-        #region Fields
-        #endregion
-
-        #region Methods
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        public abstract void Update(GameTime gameTime)
-        #endregion
+        public abstract void Update(GameTime gameTime);
     }
 }
