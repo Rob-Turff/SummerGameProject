@@ -8,14 +8,15 @@ namespace SummerGameProject
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class MainGameClass : Game
+    public class MainGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        State currentState;
-        State nextState;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private GameState currentState;
+        private GameState nextState;
+        private KeyboardState keyboardState;
 
-        public MainGameClass()
+        public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -64,7 +65,9 @@ namespace SummerGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
             if (nextState != null)
@@ -73,7 +76,7 @@ namespace SummerGameProject
                 nextState = null;
             }
 
-            currentState.Update(gameTime);
+            currentState.Update(gameTime, keyboardState);
 
             base.Update(gameTime);
         }
