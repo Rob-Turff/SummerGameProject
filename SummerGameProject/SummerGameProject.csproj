@@ -42,7 +42,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Src\Components\Component.cs" />
-    <Compile Include="Src\Components\Sprites\Player.cs" />
     <Compile Include="Src\Components\Sprites\Sprite.cs" />
     <Compile Include="Src\GameStates\MainMenuState.cs" />
     <Compile Include="Src\GameStates\State.cs" />
