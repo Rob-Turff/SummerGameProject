@@ -2,6 +2,7 @@
 ## Current Tasks
 1. Make a simple main menu
 2. Draw some simple shapes in the game screen
+3. Come up with a decent name for the game
 ## Completed Tasks
 1. Basic project setup
 ## Useful Links
