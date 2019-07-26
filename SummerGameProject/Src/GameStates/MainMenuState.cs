@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Components;
 
 namespace SummerGameProject.Src.GameStates
 {
-    public class MainMenuState : State
+    public class MainMenuState : GameState
     {
-        private MainGameClass game;
+        private MainGame game;
         private GraphicsDeviceManager graphics;
         private List<Component> components;
 
-        public MainMenuState(MainGameClass mainGameClass, GraphicsDeviceManager graphics)
+        public MainMenuState(MainGame mainGameClass, GraphicsDeviceManager graphics)
         {
             this.game = mainGameClass;
             this.graphics = graphics;
@@ -30,10 +31,10 @@ namespace SummerGameProject.Src.GameStates
             spriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             foreach (var component in components)
-                component.Update(gameTime);
+                component.Update(gameTime, keyboardState);
         }
     }
 }

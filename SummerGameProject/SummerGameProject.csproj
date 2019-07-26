@@ -42,10 +42,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Src\Components\Component.cs" />
+    <Compile Include="Src\Components\Sprites\PlatformSprite.cs" />
+    <Compile Include="Src\Components\Sprites\PlayerSprite.cs" />
     <Compile Include="Src\Components\Sprites\Sprite.cs" />
     <Compile Include="Src\GameStates\MainMenuState.cs" />
-    <Compile Include="Src\GameStates\State.cs" />
-    <Compile Include="Src\MainGameClass.cs" />
+    <Compile Include="Src\GameStates\GameState.cs" />
+    <Compile Include="Src\MainGame.cs" />
     <Compile Include="Src\MainMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
