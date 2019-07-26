@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SummerGameProject.Src.Components;
 
@@ -13,13 +14,24 @@ namespace SummerGameProject.Src.GameStates
     {
         private MainGameClass game;
         private GraphicsDeviceManager graphics;
-        private List<Component> components;
+        private SpriteFont font;
+        private ContentManager Content;
+        private List<Component> components = new List<Component>();
 
-        public MainMenuState(MainGameClass mainGameClass, GraphicsDeviceManager graphics)
+        public MainMenuState(MainGameClass mainGameClass, GraphicsDeviceManager graphics, SpriteFont font, ContentManager Content)
         {
             this.game = mainGameClass;
             this.graphics = graphics;
-            components = new List<Component>();
+            this.font = font;
+            this.Content = Content;
+            setupScreen();
+        }
+
+        private void setupScreen()
+        {
+            Texture2D buttonTexture = Content.Load<Texture2D>("UI/button");
+            Button startGameBtn = new Button("Start Game", buttonTexture, 300, 300, font);
+            components.Add(startGameBtn);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

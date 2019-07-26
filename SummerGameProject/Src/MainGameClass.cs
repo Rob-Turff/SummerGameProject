@@ -12,8 +12,12 @@ namespace SummerGameProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
         State currentState;
         State nextState;
+
+        private int screenWidth = 1280;
+        private int screenHeight = 720;
 
         public MainGameClass()
         {
@@ -29,7 +33,11 @@ namespace SummerGameProject
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.ApplyChanges();
+
+            IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -43,8 +51,10 @@ namespace SummerGameProject
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            font = Content.Load<SpriteFont>("Font");
+
             // Sets the initial state of the game to be the main menu.
-            currentState = new MainMenuState(this, graphics);
+            currentState = new MainMenuState(this, graphics, font, Content);
 
         }
 

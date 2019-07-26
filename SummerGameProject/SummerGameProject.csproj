@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Src\Components\Button.cs" />
     <Compile Include="Src\Components\Component.cs" />
     <Compile Include="Src\Components\Sprites\Sprite.cs" />
     <Compile Include="Src\GameStates\MainMenuState.cs" />

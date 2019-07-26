@@ -35,6 +35,11 @@ namespace SummerGameProject.Src.Components
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, new Vector2(ButtonX, ButtonY), colour);
+
+            if (font != null)
+            {
+                spriteBatch.DrawString(font, text, new Vector2(ButtonX, ButtonY), Color.White);
+            }
         }
 
         public override void Update(GameTime gameTime)
