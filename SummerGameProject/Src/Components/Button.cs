@@ -38,7 +38,9 @@ namespace SummerGameProject.Src.Components
 
             if (font != null)
             {
-                spriteBatch.DrawString(font, text, new Vector2(ButtonX, ButtonY), Color.White);
+                var x = (ButtonX + (texture.Width / 2) - (font.MeasureString(text).X / 2));
+                var y = (ButtonY + (texture.Height / 2) - (font.MeasureString(text).Y / 2));
+                spriteBatch.DrawString(font, text, new Vector2(x, y), Color.Black);
             }
         }
 
