@@ -17,8 +17,8 @@ namespace SummerGameProject
         private GameState nextState;
         private KeyboardState keyboardState;
 
-        private int screenWidth = 1280;
-        private int screenHeight = 720;
+        private int screenWidth = 400;
+        private int screenHeight = 500;
 
         public MainGame()
         {

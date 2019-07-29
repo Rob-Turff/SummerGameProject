@@ -31,9 +31,17 @@ namespace SummerGameProject.Src.GameStates
         private void setupScreen()
         {
             Texture2D buttonTexture = Content.Load<Texture2D>("UI/button");
-            Button startGameBtn = new Button("Start Game", buttonTexture, 300, 300, font);
-            startGameBtn.OnClick = new Action(() => game.changeState(this));
-            components.Add(startGameBtn);
+
+            Vector2 playButtonPos = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - (float)(buttonTexture.Height * 0.75));
+            Vector2 settingsButtonPos = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + (float)(buttonTexture.Height * 0.75));
+
+            Button playGameBtn = new Button("Start Game", buttonTexture, playButtonPos, font);
+            Button settingsBtn = new Button("Settings", buttonTexture, settingsButtonPos, font);
+
+            playGameBtn.OnClick = new Action(() => game.changeState(this));
+            settingsBtn.OnClick = new Action(() => game.changeState(this));
+            components.Add(playGameBtn);
+            components.Add(settingsBtn);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
