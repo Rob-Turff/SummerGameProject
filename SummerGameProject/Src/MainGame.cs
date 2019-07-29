@@ -12,7 +12,6 @@ namespace SummerGameProject
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private SpriteFont font;
         private GameState currentState;
         private GameState nextState;
         private KeyboardState keyboardState;
@@ -20,13 +19,15 @@ namespace SummerGameProject
         private int screenWidth = 400;
         private int screenHeight = 500;
 
+        public SpriteFont Font { get; private set; }
+
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
-        public void changeState(GameState state)
+        public void ChangeState(GameState state)
         {
             nextState = state;
         }
@@ -57,10 +58,10 @@ namespace SummerGameProject
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            font = Content.Load<SpriteFont>("Font");
+            Font = Content.Load<SpriteFont>("Font");
 
             // Sets the initial state of the game to be the main menu.
-            currentState = new MainMenu(this, graphics, font, Content);
+            currentState = new MainMenu(this, graphics, font);
 
         }
 

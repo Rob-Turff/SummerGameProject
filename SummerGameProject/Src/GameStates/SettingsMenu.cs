@@ -11,14 +11,5 @@ namespace SummerGameProject.Src.GameStates
 {
     class SettingsMenu : GameState
     {
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime gameTime, KeyboardState keyboardState)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

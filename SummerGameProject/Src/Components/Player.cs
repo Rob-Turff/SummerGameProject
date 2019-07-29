@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SummerGameProject.Src.Components.Sprites
 {
-    class PlayerSprite : Sprite
+    class Player : Component
     {
         private float horizontalMovement;
         private bool attemptJump;
@@ -18,7 +18,7 @@ namespace SummerGameProject.Src.Components.Sprites
 
         public Vector2 Acceleration { get; }
 
-        public PlayerSprite(Texture2D texture, Vector2 position) : base(texture, position)
+        public Player(Vector2 position)
         {
         }
 
@@ -37,6 +37,11 @@ namespace SummerGameProject.Src.Components.Sprites
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
                 attemptJump = true;
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
         }
     }
 }
