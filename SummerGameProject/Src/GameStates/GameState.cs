@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -16,9 +17,22 @@ namespace SummerGameProject.Src.GameStates
     {
         #region Fields
 
+        protected MainGame game;
+
+        #endregion
+
+        #region Properties 
+
+        public ContentManager Content { get; }
+
         #endregion
 
         #region Methods
+
+        public void GameState()
+        {
+            this.Content = new ContentManager()
+        }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
