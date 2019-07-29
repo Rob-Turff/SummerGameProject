@@ -12,6 +12,7 @@ namespace SummerGameProject
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        private SpriteFont font;
         private GameState currentState;
         private GameState nextState;
         private KeyboardState keyboardState;
