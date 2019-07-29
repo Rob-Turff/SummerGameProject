@@ -25,6 +25,11 @@ namespace SummerGameProject
             Content.RootDirectory = "Content";
         }
 
+        public void changeState(State state)
+        {
+            nextState = state;
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic

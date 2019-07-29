@@ -31,6 +31,7 @@ namespace SummerGameProject.Src.GameStates
         {
             Texture2D buttonTexture = Content.Load<Texture2D>("UI/button");
             Button startGameBtn = new Button("Start Game", buttonTexture, 300, 300, font);
+            startGameBtn.OnClick = new Action(() => game.changeState(this));
             components.Add(startGameBtn);
         }
 

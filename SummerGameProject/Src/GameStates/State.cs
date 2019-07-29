@@ -14,6 +14,7 @@ namespace SummerGameProject.Src.GameStates
     public abstract class State
     {
         #region Fields
+
         #endregion
 
         #region Methods
