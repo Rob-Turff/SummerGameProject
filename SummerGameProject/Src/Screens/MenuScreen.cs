@@ -16,10 +16,10 @@ namespace SummerGameProject.Src.Screens
 
         public MenuScreen(MainGame mainGame, GraphicsDeviceManager graphics) : base (mainGame,graphics)
         {
-            SetupScreen();
+
         }
 
-        private void SetupScreen()
+        public override void LoadContent()
         {
             Texture2D buttonTexture = Content.Load<Texture2D>("UI/button");
 
@@ -33,6 +33,11 @@ namespace SummerGameProject.Src.Screens
             settingsBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
             components.Add(playGameBtn);
             components.Add(settingsBtn);
+        }
+
+        public override void UnloadContent()
+        {
+            Content.Unload();
         }
     }
 }
