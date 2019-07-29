@@ -12,5 +12,15 @@ namespace SummerGameProject.Src.Screens
         public GameScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
         {
         }
+
+        public override void LoadContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UnloadContent()
+        {
+            Content.Unload();
+        }
     }
 }

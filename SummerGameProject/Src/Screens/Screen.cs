@@ -56,6 +56,10 @@ namespace SummerGameProject.Src.Screens
                 component.Update(gameTime);
         }
 
+        public abstract void LoadContent();
+
+        public abstract void UnloadContent();
+
         #endregion
     }
 }

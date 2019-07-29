@@ -30,16 +30,22 @@ namespace SummerGameProject.Src.Screens
 
         public void ChangeScreen(ScreenEnum screenEnum)
         {
+            if (CurrentScreen != null)
+                CurrentScreen.UnloadContent();
+
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
                     CurrentScreen = gameScreen;
+                    CurrentScreen.LoadContent();
                     break;
                 case ScreenEnum.Menu:
                     CurrentScreen = menuScreen;
+                    CurrentScreen.LoadContent();
                     break;
                 case ScreenEnum.Setting:
                     CurrentScreen = settingScreen;
+                    CurrentScreen.LoadContent();
                     break;
             }
         }
