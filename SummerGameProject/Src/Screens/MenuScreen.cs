@@ -9,12 +9,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Components;
 
-namespace SummerGameProject.Src.GameStates
+namespace SummerGameProject.Src.Screens
 {
-    public class MainMenuState : GameState
+    public class MenuScreen : Screen
     {
 
-        public MainMenuState(MainGame mainGame, GraphicsDeviceManager graphics, SpriteFont font) : base (mainGame,graphics)
+        public MenuScreen(MainGame mainGame, GraphicsDeviceManager graphics) : base (mainGame,graphics)
         {
             SetupScreen();
         }
@@ -26,11 +26,11 @@ namespace SummerGameProject.Src.GameStates
             Vector2 playButtonPos = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - (float)(buttonTexture.Height * 0.75));
             Vector2 settingsButtonPos = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + (float)(buttonTexture.Height * 0.75));
 
-            Button playGameBtn = new Button("Start Game", buttonTexture, playButtonPos, font);
-            Button settingsBtn = new Button("Settings", buttonTexture, settingsButtonPos, font);
+            Button playGameBtn = new Button("Start Game", buttonTexture, playButtonPos, game.Font);
+            Button settingsBtn = new Button("Settings", buttonTexture, settingsButtonPos, game.Font);
 
-            playGameBtn.OnClick = new Action(() => game.ChangeState(this));
-            settingsBtn.OnClick = new Action(() => game.ChangeState(this));
+            playGameBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Game));
+            settingsBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
             components.Add(playGameBtn);
             components.Add(settingsBtn);
         }

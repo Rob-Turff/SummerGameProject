@@ -9,12 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SummerGameProject.Src.GameStates
+namespace SummerGameProject.Src.Screens
 {
     /// <summary>
     /// Abstract class to create game states e.g. main menu
     /// </summary>
-    public abstract class GameState
+    public abstract class Screen
     {
         #region Fields
 
@@ -34,7 +34,7 @@ namespace SummerGameProject.Src.GameStates
 
         #region Methods
 
-        public GameState(MainGame game,GraphicsDeviceManager graphics)
+        public Screen(MainGame game,GraphicsDeviceManager graphics)
         {
             this.game = game;
             this.graphics = graphics;
