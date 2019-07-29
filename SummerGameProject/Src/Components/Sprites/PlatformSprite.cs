@@ -15,7 +15,7 @@ namespace SummerGameProject.Src.Components.Sprites
         {
         }
 
-        public override void Update(GameTime gameTime, KeyboardState keyboardState)
+        public override void Update(GameTime gameTime)
         {
             
         }

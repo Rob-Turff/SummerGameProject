@@ -47,7 +47,7 @@ namespace SummerGameProject.Src.GameStates
         public override void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             foreach (var component in components)
-                component.Update(gameTime, keyboardState);
+                component.Update(gameTime);
         }
     }
 }
