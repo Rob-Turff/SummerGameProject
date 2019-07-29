@@ -9,10 +9,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SummerGameProject.Src.Components.Sprites
 {
-    class PlatformSprite : Sprite
+    class Platform : Component
     {
-        public PlatformSprite(Texture2D texture, Vector2 position) : base(texture, position)
+        public Platform(Texture2D texture, Vector2 position)
         {
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
