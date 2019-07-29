@@ -11,6 +11,8 @@ namespace SummerGameProject.Src.Components
 {
     class Button : Component
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public int ButtonX { get; set; }
         public int ButtonY { get; set; }
 
@@ -54,6 +56,7 @@ namespace SummerGameProject.Src.Components
                 colour = Color.Yellow;
                 if (currentMouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed)
                 {
+                    logger.Error("Invoked button in main menu");
                     OnClick?.Invoke();
                 }
             }
