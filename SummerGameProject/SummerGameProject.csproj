@@ -49,9 +49,8 @@
   <ItemGroup>
     <Compile Include="Src\Components\Button.cs" />
     <Compile Include="Src\Components\Component.cs" />
-    <Compile Include="Src\Components\Sprites\PlatformSprite.cs" />
-    <Compile Include="Src\Components\Sprites\PlayerSprite.cs" />
-    <Compile Include="Src\Components\Sprites\Sprite.cs" />
+    <Compile Include="Src\Components\Platform.cs" />
+    <Compile Include="Src\Components\Player.cs" />
     <Compile Include="Src\GameStates\MainMenuState.cs" />
     <Compile Include="Src\GameStates\GameState.cs" />
     <Compile Include="Src\MainGame.cs" />
