@@ -60,7 +60,7 @@ namespace SummerGameProject
             font = Content.Load<SpriteFont>("Font");
 
             // Sets the initial state of the game to be the main menu.
-            currentState = new MainMenuState(this, graphics, font, Content);
+            currentState = new MainMenu(this, graphics, font, Content);
 
         }
 
