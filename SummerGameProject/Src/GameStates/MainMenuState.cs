@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Components;
 
 namespace SummerGameProject.Src.GameStates
 {
-    public class MainMenuState : State
+    public class MainMenuState : GameState
     {
-        private MainGameClass game;
+        private MainGame game;
         private GraphicsDeviceManager graphics;
         private SpriteFont font;
         private ContentManager Content;
         private List<Component> components = new List<Component>();
 
-        public MainMenuState(MainGameClass mainGameClass, GraphicsDeviceManager graphics, SpriteFont font, ContentManager Content)
+        public MainMenuState(MainGame mainGame, GraphicsDeviceManager graphics, SpriteFont font, ContentManager Content)
         {
-            this.game = mainGameClass;
+            this.game = mainGame;
             this.graphics = graphics;
             this.font = font;
             this.Content = Content;
@@ -43,10 +44,10 @@ namespace SummerGameProject.Src.GameStates
             spriteBatch.End();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             foreach (var component in components)
-                component.Update(gameTime);
+                component.Update(gameTime, keyboardState);
         }
     }
 }

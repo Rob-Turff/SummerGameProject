@@ -14,7 +14,7 @@ namespace SummerGameProject
         [STAThread]
         static void Main()
         {
-            using (var game = new MainGameClass())
+            using (var game = new MainGame())
                 game.Run();
         }
     }
