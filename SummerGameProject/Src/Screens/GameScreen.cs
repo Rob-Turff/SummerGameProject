@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SummerGameProject.Src.Screens
 {
@@ -15,7 +16,8 @@ namespace SummerGameProject.Src.Screens
 
         public override void LoadContent()
         {
-            throw new NotImplementedException();
+            Texture2D ground = Content.Load<Texture2D>("Game/GroundV1");
+            components.Add(ground);
         }
 
         public override void UnloadContent()
