@@ -6,40 +6,44 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Screens;
 
-namespace SummerGameProject.Src.Components.Sprites
+namespace SummerGameProject.Src.Components
 {
     class Player : Component
     {
         #region Constants
 
         // Constants for controlling horizontal movement
-        private const float moveAcceleration = 13000.0f;
-        private const float maxMoveSpeed = 1750.0f;
-        private const float groundDragFactor = 0.48f;
-        private const float airDragFactor = 0.58f;
+        private const float moveAcceleration = 30.0f;
+        private const float maxMoveSpeed = 1000.0f;
+        private const float groundDragFactor = 0.9f;
+        private const float airDragFactor = 0.9f;
 
         // Constants for controlling vertical movement
-        private const float gravityAcceleration = 3400.0f;
-        private const float maxFallSpeed = 550.0f;
-        private const float initalJumpSpeed = 2000.0f;
+        private const float gravityAcceleration = 20.0f;
+        private const float maxFallSpeed = 20.0f;
+        private const float initalJumpSpeed = 10.0f;
         private const float maxJumpTime = 0.3f;
         private const float jumpControlPower = 0.3f;
 
         #endregion
 
+        private Screen screen;
+
+        private Texture2D texture;
+
         private bool isOnGround = true; //TODO
 
         private float jumpTime;
-
-        private Texture2D texture2D;
 
         private Vector2 velocity;
 
         public Vector2 Position { get; set; }
 
-        public Player(Vector2 position)
+        public Player(Vector2 position, Screen screen)
         {
+            this.screen = screen;
         }
 
         public override void Update(GameTime gameTime)
@@ -48,6 +52,18 @@ namespace SummerGameProject.Src.Components.Sprites
 
             ApplyPhysics(gameTime, horizontalMovement, attemptJump);
         }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, Position, Color.White);
+        }
+
+        public void LoadContent()
+        {
+            texture = screen.Content.Load<Texture2D>("ball");
+        }
+
+        #region Private Methods
 
         private (float, bool) HandleInput()
         {
@@ -94,7 +110,9 @@ namespace SummerGameProject.Src.Components.Sprites
 
             // Prevent the player from running faster than their top speed
             velocity.X = MathHelper.Clamp(velocity.X, -maxMoveSpeed, maxMoveSpeed);
+            velocity.Y = MathHelper.Clamp(velocity.Y, -maxFallSpeed, maxFallSpeed);
 
+            Position = previousPosition + velocity;
         }
 
         private float HandleJump(bool jumpButtonPressed, float currentVerticalVelocity, float elapsedTime)
@@ -144,9 +162,6 @@ namespace SummerGameProject.Src.Components.Sprites
             return newVerticalVelocity;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }
