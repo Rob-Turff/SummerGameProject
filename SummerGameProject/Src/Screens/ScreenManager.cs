@@ -36,6 +36,7 @@ namespace SummerGameProject.Src.Screens
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
+                    changeRes(1920, 1080, false);
                     CurrentScreen = gameScreen;
                     CurrentScreen.LoadContent();
                     break;
@@ -48,6 +49,13 @@ namespace SummerGameProject.Src.Screens
                     CurrentScreen.LoadContent();
                     break;
             }
+        }
+
+        private void changeRes(int height, int width, bool fullscreen) {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.IsFullScreen = fullscreen;
+            graphics.ApplyChanges();
         }
     }
 }
