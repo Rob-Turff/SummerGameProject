@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SummerGameProject.Src.GameStates;
+using SummerGameProject.Src.Screens;
 
 namespace SummerGameProject
 {
@@ -12,24 +12,19 @@ namespace SummerGameProject
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private GameState currentState;
-        private GameState nextState;
         private KeyboardState keyboardState;
 
-        private int screenWidth = 1280;
-        private int screenHeight = 720;
+        private int screenWidth = 400;
+        private int screenHeight = 500;
 
+        public ScreenManager ScreenManager { get; private set; }
         public SpriteFont Font { get; private set; }
+
 
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-        }
-
-        public void ChangeState(GameState state)
-        {
-            nextState = state;
         }
 
         /// <summary>
@@ -60,9 +55,8 @@ namespace SummerGameProject
 
             Font = Content.Load<SpriteFont>("Font");
 
-            // Sets the initial state of the game to be the main menu.
-            currentState = new MainMenuState(this, graphics, Font);
-
+            ScreenManager = new ScreenManager(this, graphics);
+            ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Menu);
         }
 
         /// <summary>
@@ -86,13 +80,7 @@ namespace SummerGameProject
             if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (nextState != null)
-            {
-                currentState = nextState;
-                nextState = null;
-            }
-
-            currentState.Update(gameTime, keyboardState);
+            ScreenManager.CurrentScreen.Update(gameTime, keyboardState);
 
             base.Update(gameTime);
         }
@@ -105,7 +93,7 @@ namespace SummerGameProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentState.Draw(gameTime, spriteBatch);
+            ScreenManager.CurrentScreen.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }
