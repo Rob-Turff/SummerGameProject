@@ -21,10 +21,10 @@ namespace SummerGameProject.Src.Components
         private const float airDragFactor = 0.9f;
 
         // Constants for controlling vertical movement
-        private const float gravityAcceleration = 20.0f;
+        private const float gravityAcceleration = 40.0f;
         private const float maxFallSpeed = 20.0f;
         private const float initalJumpSpeed = 10.0f;
-        private const float maxJumpTime = 0.3f;
+        private const float maxJumpTime = 0.5f;
         private const float jumpControlPower = 0.3f;
 
         #endregion
