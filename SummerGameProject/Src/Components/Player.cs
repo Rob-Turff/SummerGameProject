@@ -28,30 +28,33 @@ namespace SummerGameProject.Src.Components.Sprites
 
         #endregion
 
-        private Vector2 velocity;
-
         private bool isOnGround = true; //TODO
 
         private float jumpTime;
 
         private Texture2D texture2D;
 
+        private Vector2 velocity;
+
+        public Vector2 Position { get; set; }
+
         public Player(Vector2 position)
         {
-
         }
 
-        public override void Update(GameTime gameTime, KeyboardState keyboardState)
+        public override void Update(GameTime gameTime)
         {
-            (float horizontalMovement, bool attemptJump) = HandleInput(keyboardState);
+            (float horizontalMovement, bool attemptJump) = HandleInput();
 
             ApplyPhysics(gameTime, horizontalMovement, attemptJump);
         }
 
-        private (float, bool) HandleInput(KeyboardState keyboardState)
+        private (float, bool) HandleInput()
         {
             float horizontalMovement = 0;
             bool attemptJump = false;
+
+            KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.A))
                 horizontalMovement = -1f;
@@ -111,7 +114,7 @@ namespace SummerGameProject.Src.Components.Sprites
                         newVerticalVelocity = -initalJumpSpeed;
                         jumpTime += elapsedTime;
                     }
-                    
+
                 }
                 // If already jumping
                 else
@@ -144,11 +147,6 @@ namespace SummerGameProject.Src.Components.Sprites
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
-        }
-
-        protected override void LoadContent()
-        {
-            texture2D = Content.Load
         }
     }
 }

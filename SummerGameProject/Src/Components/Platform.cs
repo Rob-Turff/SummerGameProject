@@ -11,18 +11,18 @@ namespace SummerGameProject.Src.Components.Sprites
 {
     class Platform : Component
     {
+        public Platform(Texture2D texture, Vector2 position)
+        {
+        }
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }
 
-        public override void Update(GameTime gameTime, KeyboardState keyboardState)
+        public override void Update(GameTime gameTime)
         {
-        }
-
-        protected override void LoadContent()
-        {
-            throw new NotImplementedException();
+            
         }
     }
 }
