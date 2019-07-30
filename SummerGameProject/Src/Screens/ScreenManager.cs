@@ -51,7 +51,7 @@ namespace SummerGameProject.Src.Screens
             }
         }
 
-        private void changeRes(int height, int width, bool fullscreen) {
+        private void changeRes(int width, int height, bool fullscreen) {
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.IsFullScreen = fullscreen;
