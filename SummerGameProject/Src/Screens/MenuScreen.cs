@@ -34,10 +34,5 @@ namespace SummerGameProject.Src.Screens
             components.Add(playGameBtn);
             components.Add(settingsBtn);
         }
-
-        public override void UnloadContent()
-        {
-            Content.Unload();
-        }
     }
 }
