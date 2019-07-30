@@ -18,10 +18,5 @@ namespace SummerGameProject.Src.Screens
         {
             throw new NotImplementedException();
         }
-
-        public override void UnloadContent()
-        {
-            Content.Unload();
-        }
     }
 }

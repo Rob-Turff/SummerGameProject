@@ -75,12 +75,7 @@ namespace SummerGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            keyboardState = Keyboard.GetState();
-
-            if (keyboardState.IsKeyDown(Keys.Escape))
-                Exit();
-
-            ScreenManager.CurrentScreen.Update(gameTime, keyboardState);
+            ScreenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -93,7 +88,7 @@ namespace SummerGameProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            ScreenManager.CurrentScreen.Draw(gameTime, spriteBatch);
+            ScreenManager.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }
