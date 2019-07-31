@@ -10,16 +10,18 @@ namespace SummerGameProject.Src.Screens
 {
     public class ScreenManager
     {
-        public Screen CurrentScreen { get; private set; }
-        public enum ScreenEnum { Game, Menu, Setting };
-        public bool ToggleMenuOverlay { set; get; } = false;
-
-        private GameScreen gameScreen;
-        private MenuScreen menuScreen;
-        private SettingScreen settingScreen;
-        private InGameMenuScreen inGameMenuScreen;
         private MainGame game;
         private GraphicsDeviceManager graphics;
+
+        private MenuScreen menuScreen;
+        private SettingScreen settingScreen;
+        private GameScreen gameScreen;
+        private InGameMenuScreen inGameMenuScreen;
+
+        public Screen CurrentScreen { get; private set; }
+
+        public bool ToggleMenuOverlay { set; get; } = false;
+        public enum ScreenEnum { Game, Menu, Setting };
 
         public ScreenManager(MainGame game, GraphicsDeviceManager graphics)
         {
@@ -30,6 +32,10 @@ namespace SummerGameProject.Src.Screens
             menuScreen = new MenuScreen(game, graphics);
             settingScreen = new SettingScreen(game, graphics);
             inGameMenuScreen = new InGameMenuScreen(game, graphics);
+
+            ChangeScreen(ScreenEnum.Menu);
+            game.IsMouseVisible = true;
+
         }
 
         public void ChangeScreen(ScreenEnum screenEnum)
