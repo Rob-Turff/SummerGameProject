@@ -48,7 +48,7 @@ namespace SummerGameProject.Src.Screens
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
-                    changeRes(1920, 1080, true);
+                    changeRes(1920, 1080, false);
                     CurrentScreen = gameScreen;
                     CurrentScreen.LoadContent();
                     inGameMenuScreen.LoadContent();
