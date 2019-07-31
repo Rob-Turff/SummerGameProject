@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Components.Sprites;
+using SummerGameProject.Src.Utilities.Physics;
 
 namespace SummerGameProject.Src.Screens
 {
@@ -18,6 +14,7 @@ namespace SummerGameProject.Src.Screens
 
         public GameScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
         {
+            PhysicsHandler physics = new PhysicsHandler();
         }
 
         public override void LoadContent()
