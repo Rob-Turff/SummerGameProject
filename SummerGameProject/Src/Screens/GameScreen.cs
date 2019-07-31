@@ -14,8 +14,7 @@ namespace SummerGameProject.Src.Screens
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private KeyboardState keyboardState;
-        private bool escPressed = false;
+        private bool wasEscapePressed = false;
 
         public GameScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
         {
@@ -30,17 +29,20 @@ namespace SummerGameProject.Src.Screens
 
         public override void Update(GameTime gameTime)
         {
-            keyboardState = Keyboard.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
-                escPressed = true;
-            } 
-            else if (escPressed)
+                if (wasEscapePressed == false)
+                {
+                    logger.Debug("Menu toggled in game screen");
+                    game.ScreenManager.ToggleMenuOverlay = !game.ScreenManager.ToggleMenuOverlay;
+                    wasEscapePressed = true;
+                }
+            }
+            else
             {
-                logger.Debug("Menu toggled in game screen");
-                game.ScreenManager.ToggleMenuOverlay = !game.ScreenManager.ToggleMenuOverlay;
-                escPressed = false;
+                wasEscapePressed = false;
             }
 
             // Potential Issue: Might update twice in one cycle

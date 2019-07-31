@@ -9,9 +9,9 @@ using SummerGameProject.Src.Components;
 
 namespace SummerGameProject.Src.Screens
 {
-    class InGameMenu : Screen
+    class InGameMenuScreen : Screen
     {
-        public InGameMenu(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
+        public InGameMenuScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
         {
         }
 
