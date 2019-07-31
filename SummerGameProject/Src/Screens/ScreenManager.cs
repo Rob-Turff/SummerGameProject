@@ -17,7 +17,7 @@ namespace SummerGameProject.Src.Screens
         private GameScreen gameScreen;
         private MenuScreen menuScreen;
         private SettingScreen settingScreen;
-        private InGameMenu InGameMenu;
+        private InGameMenuScreen inGameMenuScreen;
         private MainGame game;
         private GraphicsDeviceManager graphics;
 
@@ -29,28 +29,29 @@ namespace SummerGameProject.Src.Screens
             gameScreen = new GameScreen(game, graphics);
             menuScreen = new MenuScreen(game, graphics);
             settingScreen = new SettingScreen(game, graphics);
-            InGameMenu = new InGameMenu(game, graphics);
+            inGameMenuScreen = new InGameMenuScreen(game, graphics);
         }
 
         public void ChangeScreen(ScreenEnum screenEnum)
         {
             // Unloads the content from the current screen when switching (also unload inGameMenu if switching from game screen)
-            if (CurrentScreen != null) {
+            if (CurrentScreen != null)
+            {
                 CurrentScreen.UnloadContent();
                 if (CurrentScreen == gameScreen)
                 {
-                    InGameMenu.UnloadContent();
+                    inGameMenuScreen.UnloadContent();
                     ToggleMenuOverlay = false;
                 }
-                }
+            }
 
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
-                    changeRes(1920, 1080, false);
+                    changeRes(1920, 1080, true);
                     CurrentScreen = gameScreen;
                     CurrentScreen.LoadContent();
-                    InGameMenu.LoadContent();
+                    inGameMenuScreen.LoadContent();
                     break;
                 case ScreenEnum.Menu:
                     changeRes(400, 500, false);
@@ -71,7 +72,7 @@ namespace SummerGameProject.Src.Screens
 
             if (ToggleMenuOverlay)
             {
-                InGameMenu.Draw(gameTime, spriteBatch);
+                inGameMenuScreen.Draw(gameTime, spriteBatch);
             }
         }
 
@@ -81,11 +82,12 @@ namespace SummerGameProject.Src.Screens
 
             if (ToggleMenuOverlay)
             {
-                InGameMenu.Update(gameTime);
+                inGameMenuScreen.Update(gameTime);
             }
         }
 
-        private void changeRes(int width, int height, bool fullscreen) {
+        private void changeRes(int width, int height, bool fullscreen)
+        {
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.IsFullScreen = fullscreen;
