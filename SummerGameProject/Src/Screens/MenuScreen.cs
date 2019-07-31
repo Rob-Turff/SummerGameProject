@@ -14,17 +14,19 @@ namespace SummerGameProject.Src.Screens
     public class MenuScreen : Screen
     {
 
-        public MenuScreen(MainGame mainGame, GraphicsDeviceManager graphics) : base (mainGame,graphics)
+        public MenuScreen(MainGame game) : base(game)
         {
-
+            ScreenWidth = 400;
+            ScreenHeight = 500;
+            IsFullScreen = false;
         }
 
         public override void LoadContent()
         {
             Texture2D buttonTexture = Content.Load<Texture2D>("UI/button");
 
-            Vector2 playButtonPos = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - (float)(buttonTexture.Height * 0.75));
-            Vector2 settingsButtonPos = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 + (float)(buttonTexture.Height * 0.75));
+            Vector2 playButtonPos = new Vector2(ScreenWidth / 2, ScreenHeight / 2 - (float)(buttonTexture.Height * 0.75));
+            Vector2 settingsButtonPos = new Vector2(ScreenWidth / 2, ScreenHeight / 2 + (float)(buttonTexture.Height * 0.75));
 
             Button playGameBtn = new Button("Start Game", buttonTexture, playButtonPos, game.Font);
             Button settingsBtn = new Button("Settings", buttonTexture, settingsButtonPos, game.Font);

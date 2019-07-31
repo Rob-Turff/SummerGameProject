@@ -10,13 +10,12 @@ namespace SummerGameProject.Src.Screens
 {
     public class ScreenManager
     {
-        private MainGame game;
-        private GraphicsDeviceManager graphics;
-
         private MenuScreen menuScreen;
         private SettingScreen settingScreen;
         private GameScreen gameScreen;
         private InGameMenuScreen inGameMenuScreen;
+
+        private GraphicsDeviceManager graphics;
 
         public Screen CurrentScreen { get; private set; }
 
@@ -25,17 +24,16 @@ namespace SummerGameProject.Src.Screens
 
         public ScreenManager(MainGame game, GraphicsDeviceManager graphics)
         {
-            this.game = game;
             this.graphics = graphics;
 
-            gameScreen = new GameScreen(game, graphics);
-            menuScreen = new MenuScreen(game, graphics);
-            settingScreen = new SettingScreen(game, graphics);
-            inGameMenuScreen = new InGameMenuScreen(game, graphics);
+            gameScreen = new GameScreen(game);
+            menuScreen = new MenuScreen(game);
+            settingScreen = new SettingScreen(game);
+            inGameMenuScreen = new InGameMenuScreen(game,gameScreen);
 
-            ChangeScreen(ScreenEnum.Menu);
+            CurrentScreen = menuScreen;
+            ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
             game.IsMouseVisible = true;
-
         }
 
         public void ChangeScreen(ScreenEnum screenEnum)
@@ -54,22 +52,20 @@ namespace SummerGameProject.Src.Screens
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
-                    changeRes(1920, 1080, true);
                     CurrentScreen = gameScreen;
                     CurrentScreen.LoadContent();
                     inGameMenuScreen.LoadContent();
                     break;
                 case ScreenEnum.Menu:
-                    changeRes(400, 500, false);
                     CurrentScreen = menuScreen;
                     CurrentScreen.LoadContent();
                     break;
                 case ScreenEnum.Setting:
-                    changeRes(400, 500, false);
                     CurrentScreen = settingScreen;
                     CurrentScreen.LoadContent();
                     break;
             }
+            ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -92,13 +88,12 @@ namespace SummerGameProject.Src.Screens
             }
         }
 
-        private void changeRes(int width, int height, bool fullscreen)
+        private void ChangeRes(int width, int height, bool fullscreen)
         {
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.IsFullScreen = fullscreen;
             graphics.ApplyChanges();
         }
-
     }
 }
