@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace SummerGameProject.Src.Components.Sprites
+namespace SummerGameProject.Src.Components
 {
     class Platform : Component
     {
