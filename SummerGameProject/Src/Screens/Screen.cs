@@ -21,7 +21,6 @@ namespace SummerGameProject.Src.Screens
         protected List<Component> components = new List<Component>();
 
         protected readonly MainGame game;
-        protected readonly GraphicsDeviceManager graphics;
         protected readonly SpriteFont font;
 
         #endregion
@@ -29,15 +28,17 @@ namespace SummerGameProject.Src.Screens
         #region Properties
 
         public ContentManager Content { get; }
+        public int ScreenWidth { get; protected set; }
+        public int ScreenHeight { get; protected set; }
+        public bool IsFullScreen { get; protected set; }
 
         #endregion
 
         #region Methods
 
-        public Screen(MainGame game,GraphicsDeviceManager graphics)
+        public Screen(MainGame game)
         {
             this.game = game;
-            this.graphics = graphics;
             this.font = game.Font;
             this.Content = new ContentManager(game.Services,game.Content.RootDirectory);
         }

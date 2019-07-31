@@ -16,14 +16,17 @@ namespace SummerGameProject.Src.Screens
 
         private bool wasEscapePressed = false;
 
-        public GameScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
+        public GameScreen(MainGame game) : base(game)
         {
+            ScreenWidth = 1920;
+            ScreenHeight = 1080;
+            IsFullScreen = true;
         }
 
         public override void LoadContent()
         {
             Texture2D floorTexture = Content.Load<Texture2D>("Game/GroundV1");
-            Platform floor = new Platform(floorTexture, new Vector2(0, graphics.PreferredBackBufferHeight - floorTexture.Height), Color.White);
+            Platform floor = new Platform(floorTexture, new Vector2(0, ScreenHeight - floorTexture.Height), Color.White);
             components.Add(floor);
         }
 
