@@ -16,22 +16,48 @@ namespace SummerGameProject.Src.Screens
 
         private bool wasEscapePressed = false;
 
+        private InGameMenuScreen menuOverlay;
+        private bool isMenuOverlayShowing;
+
         public GameScreen(MainGame game) : base(game)
         {
             ScreenWidth = 1920;
             ScreenHeight = 1080;
             IsFullScreen = true;
+
+            menuOverlay = new InGameMenuScreen(game, this);
         }
 
-        public override void LoadContent()
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Texture2D floorTexture = Content.Load<Texture2D>("Game/GroundV1");
-            Platform floor = new Platform(floorTexture, new Vector2(0, ScreenHeight - floorTexture.Height), Color.White);
-            components.Add(floor);
+            if (isMenuOverlayShowing)
+            {
+                menuOverlay.Draw(gameTime,spriteBatch);
+            }
+            base.Draw(gameTime, spriteBatch);
         }
 
         public override void Update(GameTime gameTime)
         {
+            isMenuOverlayShowing = checkIfMenuToggled();
+            
+            if (isMenuOverlayShowing)
+            {
+                menuOverlay.Update(gameTime);
+            }
+            else
+            {
+                // Potential Issue: Might update twice in one cycle
+                base.Update(gameTime);
+            }
+        }
+
+        private bool checkIfMenuToggled()
+        {
+            bool wasOverlayShowing = isMenuOverlayShowing;
+            bool isOverlayShowing = wasOverlayShowing;
+
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
@@ -39,7 +65,7 @@ namespace SummerGameProject.Src.Screens
                 if (wasEscapePressed == false)
                 {
                     logger.Debug("Menu toggled in game screen");
-                    game.ScreenManager.ToggleMenuOverlay = !game.ScreenManager.ToggleMenuOverlay;
+                    isOverlayShowing = !isMenuOverlayShowing;
                     wasEscapePressed = true;
                 }
             }
@@ -48,8 +74,21 @@ namespace SummerGameProject.Src.Screens
                 wasEscapePressed = false;
             }
 
-            // Potential Issue: Might update twice in one cycle
-            base.Update(gameTime);
+            return isOverlayShowing;
+        }
+
+        public override void LoadContent()
+        {
+            menuOverlay.LoadContent();
+            Texture2D floorTexture = Content.Load<Texture2D>("Game/GroundV1");
+            Platform floor = new Platform(floorTexture, new Vector2(0, ScreenHeight - floorTexture.Height), Color.White);
+            components.Add(floor);
+        }
+
+        public override void UnloadContent()
+        {
+            menuOverlay.UnloadContent();
+            base.UnloadContent();
         }
     }
 }

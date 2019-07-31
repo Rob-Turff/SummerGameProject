@@ -29,7 +29,6 @@ namespace SummerGameProject.Src.Screens
             gameScreen = new GameScreen(game);
             menuScreen = new MenuScreen(game);
             settingScreen = new SettingScreen(game);
-            inGameMenuScreen = new InGameMenuScreen(game,gameScreen);
 
             CurrentScreen = menuScreen;
             ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
@@ -38,33 +37,23 @@ namespace SummerGameProject.Src.Screens
 
         public void ChangeScreen(ScreenEnum screenEnum)
         {
-            // Unloads the content from the current screen when switching (also unload inGameMenu if switching from game screen)
-            if (CurrentScreen != null)
-            {
-                CurrentScreen.UnloadContent();
-                if (CurrentScreen == gameScreen)
-                {
-                    inGameMenuScreen.UnloadContent();
-                    ToggleMenuOverlay = false;
-                }
-            }
+            // Unloads the content from the current screen when switching
+            CurrentScreen.UnloadContent();
 
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
                     CurrentScreen = gameScreen;
-                    CurrentScreen.LoadContent();
-                    inGameMenuScreen.LoadContent();
                     break;
                 case ScreenEnum.Menu:
                     CurrentScreen = menuScreen;
-                    CurrentScreen.LoadContent();
                     break;
                 case ScreenEnum.Setting:
                     CurrentScreen = settingScreen;
-                    CurrentScreen.LoadContent();
                     break;
             }
+
+            CurrentScreen.LoadContent();
             ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
         }
 

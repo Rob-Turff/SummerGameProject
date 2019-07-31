@@ -43,7 +43,7 @@ namespace SummerGameProject.Src.Screens
             this.Content = new ContentManager(game.Services,game.Content.RootDirectory);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             foreach (var component in components)
@@ -59,7 +59,7 @@ namespace SummerGameProject.Src.Screens
 
         public abstract void LoadContent();
 
-        public void UnloadContent()
+        public virtual void UnloadContent()
         {
             Content.Unload();
         }
