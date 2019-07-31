@@ -10,21 +10,18 @@ namespace SummerGameProject
     /// </summary>
     public class MainGame : Game
     {
-        private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private KeyboardState keyboardState;
 
-        private int screenWidth = 400;
-        private int screenHeight = 500;
-
-        public ScreenManager ScreenManager { get; private set; }
         public SpriteFont Font { get; private set; }
+        public ScreenManager ScreenManager { get; private set; }
 
 
         public MainGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            ScreenManager = new ScreenManager(this, graphics);
         }
 
         /// <summary>
@@ -35,12 +32,6 @@ namespace SummerGameProject
         /// </summary>
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = screenWidth;
-            graphics.PreferredBackBufferHeight = screenHeight;
-            graphics.ApplyChanges();
-
-            IsMouseVisible = true;
-
             base.Initialize();
         }
 
@@ -55,8 +46,7 @@ namespace SummerGameProject
 
             Font = Content.Load<SpriteFont>("Font");
 
-            ScreenManager = new ScreenManager(this, graphics);
-            ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Menu);
+            ScreenManager.CurrentScreen.LoadContent();
         }
 
         /// <summary>
@@ -66,6 +56,8 @@ namespace SummerGameProject
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+
+            ScreenManager.CurrentScreen.UnloadContent();
         }
 
         /// <summary>
