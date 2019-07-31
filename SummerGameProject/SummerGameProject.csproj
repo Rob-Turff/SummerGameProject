@@ -67,6 +67,7 @@
     <Compile Include="Src\Components\Platform.cs" />
     <Compile Include="Src\Components\Player.cs" />
     <Compile Include="Src\Screens\GameScreen.cs" />
+    <Compile Include="Src\Screens\InGameMenuScreen.cs" />
     <Compile Include="Src\Screens\MenuScreen.cs" />
     <Compile Include="Src\Screens\Screen.cs" />
     <Compile Include="Src\Screens\ScreenManager.cs" />

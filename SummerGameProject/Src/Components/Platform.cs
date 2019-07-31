@@ -11,13 +11,20 @@ namespace SummerGameProject.Src.Components
 {
     class Platform : Component
     {
-        public Platform(Texture2D texture, Vector2 position)
+        private Texture2D texture;
+        private Vector2 position;
+        private Color colour;
+
+        public Platform(Texture2D texture, Vector2 position, Color colour)
         {
+            this.texture = texture;
+            this.position = position;
+            this.colour = colour;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(texture, position, colour);
         }
 
         public override void Update(GameTime gameTime)
