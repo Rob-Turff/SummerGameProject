@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace SummerGameProject.Src.Screens
     {
         public Screen CurrentScreen { get; private set; }
         public enum ScreenEnum { Game, Menu, Setting };
+        public bool ToggleMenuOverlay { set; get; } = false;
 
         private GameScreen gameScreen;
         private MenuScreen menuScreen;
         private SettingScreen settingScreen;
+        private InGameMenu InGameMenu;
         private MainGame game;
         private GraphicsDeviceManager graphics;
 
@@ -26,28 +29,68 @@ namespace SummerGameProject.Src.Screens
             gameScreen = new GameScreen(game, graphics);
             menuScreen = new MenuScreen(game, graphics);
             settingScreen = new SettingScreen(game, graphics);
+            InGameMenu = new InGameMenu(game, graphics);
         }
 
         public void ChangeScreen(ScreenEnum screenEnum)
         {
-            if (CurrentScreen != null)
+            // Unloads the content from the current screen when switching (also unload inGameMenu if switching from game screen)
+            if (CurrentScreen != null) {
                 CurrentScreen.UnloadContent();
+                if (CurrentScreen == gameScreen)
+                {
+                    InGameMenu.UnloadContent();
+                    ToggleMenuOverlay = false;
+                }
+                }
 
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
+                    changeRes(1920, 1080, false);
                     CurrentScreen = gameScreen;
                     CurrentScreen.LoadContent();
+                    InGameMenu.LoadContent();
                     break;
                 case ScreenEnum.Menu:
+                    changeRes(400, 500, false);
                     CurrentScreen = menuScreen;
                     CurrentScreen.LoadContent();
                     break;
                 case ScreenEnum.Setting:
+                    changeRes(400, 500, false);
                     CurrentScreen = settingScreen;
                     CurrentScreen.LoadContent();
                     break;
             }
         }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            CurrentScreen.Draw(gameTime, spriteBatch);
+
+            if (ToggleMenuOverlay)
+            {
+                InGameMenu.Draw(gameTime, spriteBatch);
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            CurrentScreen.Update(gameTime);
+
+            if (ToggleMenuOverlay)
+            {
+                InGameMenu.Update(gameTime);
+            }
+        }
+
+        private void changeRes(int width, int height, bool fullscreen) {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.IsFullScreen = fullscreen;
+            graphics.ApplyChanges();
+        }
+
     }
 }
