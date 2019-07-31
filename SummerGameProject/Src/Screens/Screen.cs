@@ -50,7 +50,7 @@ namespace SummerGameProject.Src.Screens
             spriteBatch.End();
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState)
+        public virtual void Update(GameTime gameTime)
         {
             foreach (var component in components)
                 component.Update(gameTime);
@@ -58,7 +58,10 @@ namespace SummerGameProject.Src.Screens
 
         public abstract void LoadContent();
 
-        public abstract void UnloadContent();
+        public void UnloadContent()
+        {
+            Content.Unload();
+        }
 
         #endregion
     }
