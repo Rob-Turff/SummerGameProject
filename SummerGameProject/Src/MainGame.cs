@@ -67,7 +67,7 @@ namespace SummerGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            ScreenManager.Update(gameTime);
+            ScreenManager.CurrentScreen.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -80,7 +80,7 @@ namespace SummerGameProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            ScreenManager.Draw(gameTime, spriteBatch);
+            ScreenManager.CurrentScreen.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }
