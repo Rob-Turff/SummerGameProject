@@ -13,7 +13,6 @@ namespace SummerGameProject.Src.Components
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public Vector2 ButtonPos { get; set; }
         public Action OnClick { get; set; }
 
         private string text;
@@ -31,17 +30,17 @@ namespace SummerGameProject.Src.Components
 
             // Centres the button
             Vector2 textureSize = new Vector2(texture.Width, texture.Height) / 2;
-            this.ButtonPos = ButtonPos - textureSize;
+            this.Position = ButtonPos - textureSize;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, ButtonPos, colour);
+            spriteBatch.Draw(texture, Position, colour);
 
             if (font != null)
             {
-                var x = (ButtonPos.X + (texture.Width / 2) - (font.MeasureString(text).X / 2));
-                var y = (ButtonPos.Y + (texture.Height / 2) - (font.MeasureString(text).Y / 2));
+                var x = (Position.X + (texture.Width / 2) - (font.MeasureString(text).X / 2));
+                var y = (Position.Y + (texture.Height / 2) - (font.MeasureString(text).Y / 2));
                 spriteBatch.DrawString(font, text, new Vector2(x, y), Color.Black);
             }
         }
@@ -51,7 +50,7 @@ namespace SummerGameProject.Src.Components
             colour = Color.White;
             oldMouse = currentMouse;
             currentMouse = Mouse.GetState();
-            if (currentMouse.X < ButtonPos.X + texture.Width && currentMouse.X > ButtonPos.X && currentMouse.Y < ButtonPos.Y + texture.Height && currentMouse.Y > ButtonPos.Y)
+            if (currentMouse.X < Position.X + texture.Width && currentMouse.X > Position.X && currentMouse.Y < Position.Y + texture.Height && currentMouse.Y > Position.Y)
             {
                 colour = Color.Yellow;
                 if (currentMouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed)

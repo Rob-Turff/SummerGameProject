@@ -18,7 +18,7 @@ namespace SummerGameProject.Src.Screens
     {
         #region Fields
 
-        protected List<Component> components = new List<Component>();
+        public List<Component> Components { get; set; } = new List<Component>();
 
         protected readonly MainGame game;
         protected readonly GraphicsDeviceManager graphics;
@@ -45,14 +45,14 @@ namespace SummerGameProject.Src.Screens
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            foreach (var component in components)
+            foreach (var component in Components)
                 component.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (var component in components)
+            foreach (var component in Components)
                 component.Update(gameTime);
         }
 
