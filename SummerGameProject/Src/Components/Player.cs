@@ -160,39 +160,6 @@ namespace SummerGameProject.Src.Components
             Position = previousPosition + velocity;
         }
 
-        private bool willCollideHorizontal(Component obj)
-        {
-            // Collided left
-            if (hitbox.Left <= obj.hitbox.Right && hitbox.Right >= obj.hitbox.Left)
-            {
-                return true;
-            }
-            // Collided right
-            else if (hitbox.Right <= obj.hitbox.Left && hitbox.Left >= obj.hitbox.Right)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool willCollideVertical(Component obj)
-        {
-            // Collided Bottom
-            if (hitbox.Top <= obj.hitbox.Bottom && hitbox.Bottom >= obj.hitbox.Top)
-            {
-                return true;
-            }
-
-            // Collided top
-            if (hitbox.Bottom <= obj.hitbox.Top && hitbox.Top >= obj.hitbox.Bottom)
-            {
-                return true;
-            }
-            return false;
-        }
-
-
-
         private float HandleJump(bool jumpButtonPressed, float currentVerticalVelocity, float elapsedTime)
         {
             float newVerticalVelocity = currentVerticalVelocity;
