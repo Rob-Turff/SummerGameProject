@@ -32,6 +32,9 @@ namespace SummerGameProject
         /// </summary>
         protected override void Initialize()
         {
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
             base.Initialize();
         }
 
@@ -41,9 +44,6 @@ namespace SummerGameProject
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
             Font = Content.Load<SpriteFont>("Font");
 
             ScreenManager.CurrentScreen.LoadContent();
