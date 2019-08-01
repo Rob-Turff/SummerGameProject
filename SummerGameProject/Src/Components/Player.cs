@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Screens;
 
-namespace SummerGameProject.Src.Components.Sprites
+namespace SummerGameProject.Src.Components
 {
     class Player : Component
     {
@@ -18,7 +19,7 @@ namespace SummerGameProject.Src.Components.Sprites
 
         public Vector2 Acceleration { get; }
 
-        public Player(Vector2 position)
+        public Player(Vector2 position,Screen screen) : base (screen)
         {
         }
 
@@ -40,6 +41,11 @@ namespace SummerGameProject.Src.Components.Sprites
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void LoadContent()
         {
             throw new NotImplementedException();
         }

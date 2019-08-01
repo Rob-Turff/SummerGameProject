@@ -13,28 +13,31 @@ namespace SummerGameProject.Src.Screens
 {
     public class MenuScreen : Screen
     {
+        private Button playGameBtn;
+        private Button settingsBtn;
 
         public MenuScreen(MainGame game) : base(game)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;
             IsFullScreen = false;
+
+            Action playGameBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Game));
+            Action settingsBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
+
+            playGameBtn = new Button("Start Game", new Vector2(0,0), playGameBtnAction, this);
+            settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
+
+            components.Add(playGameBtn);
+            components.Add(settingsBtn);
         }
 
         public override void LoadContent()
         {
-            Texture2D buttonTexture = Content.Load<Texture2D>("UI/button");
+            base.LoadContent();
 
-            Vector2 playButtonPos = new Vector2(ScreenWidth / 2, ScreenHeight / 2 - (float)(buttonTexture.Height * 0.75));
-            Vector2 settingsButtonPos = new Vector2(ScreenWidth / 2, ScreenHeight / 2 + (float)(buttonTexture.Height * 0.75));
-
-            Button playGameBtn = new Button("Start Game", buttonTexture, playButtonPos, game.Font);
-            Button settingsBtn = new Button("Settings", buttonTexture, settingsButtonPos, game.Font);
-
-            playGameBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Game));
-            settingsBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
-            components.Add(playGameBtn);
-            components.Add(settingsBtn);
+            DistributeVertically(new List<Button> { playGameBtn, settingsBtn });
         }
+
     }
 }
