@@ -14,7 +14,6 @@ namespace SummerGameProject.Src.Components
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public Vector2 ButtonPos { get; set; }
         public Action OnClick { get; set; }
 
         private string text;
@@ -24,46 +23,23 @@ namespace SummerGameProject.Src.Components
         private Color colour;
         private SpriteFont font => Screen.Font;
 
-        private int height = -1;
-        private int width = -1;
+        public override Vector2 Position { get; set; }
+        public override int Width => texture.Width;
+        public override int Height => texture.Height;
 
-        public int Height
-        {
-            get
-            {
-                if (height == -1)
-                {
-                    height = texture.Height;
-                }
-                return height;
-            }
-        }
-        public int Width
-        {
-            get
-            {
-                if (width == -1)
-                {
-                    width = texture.Width;
-                }
-                return width;
-            }
-        }
-
-
-        public Button(string text, Vector2 buttonPos, Action onClickAction, Screen screen) : base(screen)
+        public Button(string text, Vector2 position, Action onClickAction, Screen screen) : base(screen)
         {
             this.text = text;
             OnClick = onClickAction;
-            this.ButtonPos = buttonPos;
+            this.Position = position;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, ButtonPos, colour);
+            spriteBatch.Draw(texture, Position, colour);
 
-            var x = ButtonPos.X + (texture.Width / 2) - (font.MeasureString(text).X / 2);
-            var y = ButtonPos.Y + (texture.Height / 2) - (font.MeasureString(text).Y / 2);
+            var x = Position.X + (texture.Width / 2) - (font.MeasureString(text).X / 2);
+            var y = Position.Y + (texture.Height / 2) - (font.MeasureString(text).Y / 2);
 
             spriteBatch.DrawString(font, text, new Vector2(x, y), Color.Black);
         }
@@ -73,7 +49,7 @@ namespace SummerGameProject.Src.Components
             colour = Color.White;
             oldMouse = currentMouse;
             currentMouse = Mouse.GetState();
-            if (currentMouse.X < ButtonPos.X + texture.Width && currentMouse.X > ButtonPos.X && currentMouse.Y < ButtonPos.Y + texture.Height && currentMouse.Y > ButtonPos.Y)
+            if (currentMouse.X < Position.X + texture.Width && currentMouse.X > Position.X && currentMouse.Y < Position.Y + texture.Height && currentMouse.Y > Position.Y)
             {
                 colour = Color.Yellow;
                 if (currentMouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed)
@@ -89,8 +65,6 @@ namespace SummerGameProject.Src.Components
         public override void LoadContent()
         {
             texture = Screen.Content.Load<Texture2D>("UI/button");
-            // Centres the button
-            this.ButtonPos = ButtonPos - new Vector2(Width, Height) / 2;
         }
     }
 }

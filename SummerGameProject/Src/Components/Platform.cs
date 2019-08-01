@@ -13,18 +13,23 @@ namespace SummerGameProject.Src.Components
     abstract class Platform : Component
     {
         protected Texture2D texture;
-        protected Vector2 position;
         protected Color colour;
+
+
+        public override Vector2 Position { get; set; }
+        public override int Width => texture.Width;
+        public override int Height => texture.Height;
+
 
         public Platform(Vector2 position, Color colour,Screen screen) : base(screen)
         {
-            this.position = position;
+            Position = position;
             this.colour = colour;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, colour);
+            spriteBatch.Draw(texture, Position, colour);
         }
 
         public override void Update(GameTime gameTime)

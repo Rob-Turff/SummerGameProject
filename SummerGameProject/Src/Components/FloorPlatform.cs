@@ -19,7 +19,7 @@ namespace SummerGameProject.Src.Components
         {
             texture = Screen.Content.Load<Texture2D>("Game/GroundV1");
 
-            position = new Vector2(0, Screen.ScreenHeight - texture.Height);
+            Position = new Vector2(0, Screen.ScreenHeight - texture.Height);
         }
     }
 }
