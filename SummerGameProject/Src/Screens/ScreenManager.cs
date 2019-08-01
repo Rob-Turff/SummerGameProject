@@ -19,7 +19,6 @@ namespace SummerGameProject.Src.Screens
 
         public Screen CurrentScreen { get; private set; }
 
-        public bool ToggleMenuOverlay { set; get; } = false;
         public enum ScreenEnum { Game, Menu, Setting };
 
         public ScreenManager(MainGame game, GraphicsDeviceManager graphics)
@@ -55,26 +54,6 @@ namespace SummerGameProject.Src.Screens
 
             CurrentScreen.LoadContent();
             ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
-        }
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            CurrentScreen.Draw(gameTime, spriteBatch);
-
-            if (ToggleMenuOverlay)
-            {
-                inGameMenuScreen.Draw(gameTime, spriteBatch);
-            }
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            CurrentScreen.Update(gameTime);
-
-            if (ToggleMenuOverlay)
-            {
-                inGameMenuScreen.Update(gameTime);
-            }
         }
 
         private void ChangeRes(int width, int height, bool fullscreen)
