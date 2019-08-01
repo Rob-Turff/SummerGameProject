@@ -17,10 +17,13 @@ namespace SummerGameProject.Src.Components
 
         public Vector2 Velocity { get; }
 
-        public Vector2 Acceleration { get; }
+        public override Vector2 Position { get; set; }
+        public override int Width => 100; //TODO sort these
+        public override int Height => 200;
 
         public Player(Vector2 position,Screen screen) : base (screen)
         {
+            this.Position = position;
         }
 
         public override void Update(GameTime gameTime)

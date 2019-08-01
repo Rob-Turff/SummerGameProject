@@ -69,33 +69,33 @@ namespace SummerGameProject.Src.Screens
             Content.Unload();
         }
 
-        protected void DistributeVertically(List<Button> listOfButtons)
+        protected void DistributeVertically(List<Component> listOfComponents)
         {
-            bool IsEvenNumber = listOfButtons.Count % 2 == 0;
+            bool IsEvenNumber = listOfComponents.Count % 2 == 0;
 
             // Assume all same height and width
-            int height = listOfButtons[0].Height;
-            int width = listOfButtons[0].Width;
+            int height = listOfComponents[0].Height;
+            int width = listOfComponents[0].Width;
 
             if (IsEvenNumber)
             {
-                for (int i = 0, length = listOfButtons.Count; i < length; i++)
+                for (int i = 0, length = listOfComponents.Count; i < length; i++)
                 {
-                    Button ithButton = listOfButtons[i];
-                    ithButton.ButtonPos = new Vector2(
+                    Component ithButton = listOfComponents[i];
+                    ithButton.Position = new Vector2(
                         ScreenWidth / 2 - ithButton.Width / 2, // Centre horizontally
-                        ScreenHeight / 2 - 2 * (ithButton.Height * (length / 2 - i))  // Distribute Vertically
+                        ScreenHeight / 2 - 1.75f * (ithButton.Height * (length / 2 - i))  // Distribute Vertically
                         );
                 }
             }
             else
             {
-                for (int i = 0, length = listOfButtons.Count; i < length; i++)
+                for (int i = 0, length = listOfComponents.Count; i < length; i++)
                 {
-                    Button ithButton = listOfButtons[i];
-                    ithButton.ButtonPos = new Vector2(
+                    Component ithButton = listOfComponents[i];
+                    ithButton.Position = new Vector2(
                         ScreenWidth / 2 - ithButton.Width / 2, // Centre horizontally
-                        ScreenHeight / 2 - 2 * ithButton.Height * ((length - 1) / 2 - i) // Distribute Vertically
+                        ScreenHeight / 2 - 1.75f * ithButton.Height * ((length - 1) / 2 - i) // Distribute Vertically
                         );
                 }
             }

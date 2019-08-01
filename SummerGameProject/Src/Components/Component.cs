@@ -17,6 +17,10 @@ namespace SummerGameProject.Src.Components
     {
         protected Screen Screen { get; }
 
+        public abstract Vector2 Position { get; set; }
+        public abstract int Width { get; }
+        public abstract int Height { get; }
+
         public Component(Screen screen)
         {
             Screen = screen;

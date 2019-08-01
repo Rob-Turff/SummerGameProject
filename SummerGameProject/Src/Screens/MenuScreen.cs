@@ -13,9 +13,6 @@ namespace SummerGameProject.Src.Screens
 {
     public class MenuScreen : Screen
     {
-        private Button playGameBtn;
-        private Button settingsBtn;
-
         public MenuScreen(MainGame game) : base(game)
         {
             ScreenWidth = 400;
@@ -25,8 +22,8 @@ namespace SummerGameProject.Src.Screens
             Action playGameBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Game));
             Action settingsBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
 
-            playGameBtn = new Button("Start Game", new Vector2(0,0), playGameBtnAction, this);
-            settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
+            Button playGameBtn = new Button("Start Game", new Vector2(0,0), playGameBtnAction, this);
+            Button settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
 
             components.Add(playGameBtn);
             components.Add(settingsBtn);
@@ -36,7 +33,7 @@ namespace SummerGameProject.Src.Screens
         {
             base.LoadContent();
 
-            DistributeVertically(new List<Button> { playGameBtn, settingsBtn });
+            DistributeVertically(components);
         }
 
     }
