@@ -7,24 +7,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace SummerGameProject.Src.Components.Sprites
+namespace SummerGameProject.Src.Components
 {
-    class Platform : Component
+    public class Platform : Component
     {
-        private Texture2D texture;
-        private Vector2 position;
         private Color colour;
 
         public Platform(Texture2D texture, Vector2 position, Color colour)
         {
-            this.texture = texture;
-            this.position = position;
+            this.Texture = texture;
+            this.Position = position;
             this.colour = colour;
+        }
+
+        public Platform(Texture2D texture, Vector2 position, Color colour, float scale) : this(texture, position, colour)
+        {
+            this.Scale = scale;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, colour);
+            spriteBatch.Draw(Texture, Position, null, colour, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f); ;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + ".at: " + Position;
         }
 
         public override void Update(GameTime gameTime)

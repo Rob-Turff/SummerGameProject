@@ -31,9 +31,9 @@ namespace SummerGameProject.Src.Screens
             quitToMenuBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Menu));
             settingsBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
 
-            components.Add(quitGameBtn);
-            components.Add(quitToMenuBtn);
-            components.Add(settingsBtn);
+            Components.Add(quitGameBtn);
+            Components.Add(quitToMenuBtn);
+            Components.Add(settingsBtn);
         }
     }
 }

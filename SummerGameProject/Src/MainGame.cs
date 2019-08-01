@@ -12,7 +12,6 @@ namespace SummerGameProject
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private KeyboardState keyboardState;
 
         private int screenWidth = 400;
         private int screenHeight = 500;

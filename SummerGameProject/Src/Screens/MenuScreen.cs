@@ -31,8 +31,8 @@ namespace SummerGameProject.Src.Screens
 
             playGameBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Game));
             settingsBtn.OnClick = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
-            components.Add(playGameBtn);
-            components.Add(settingsBtn);
+            Components.Add(playGameBtn);
+            Components.Add(settingsBtn);
         }
     }
 }
