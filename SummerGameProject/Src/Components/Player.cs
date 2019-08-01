@@ -146,13 +146,13 @@ namespace SummerGameProject.Src.Components
                     // Collided left
                     if (hitbox.Left <= obj.hitbox.Right && hitbox.Left >= obj.hitbox.Left && hitbox.Intersects(obj.hitbox))
                     {
-                        velocity.X = 0;
+                        velocity.X = 0.01f;
                         logger.Debug("The left of " + playerName + " collided with " + obj + " at: " + Position + " new velocity = " + velocity);
                     }
                     // Collided right
                     if (hitbox.Right >= obj.hitbox.Left && hitbox.Right <= obj.hitbox.Right && hitbox.Intersects(obj.hitbox))
                     {
-                        velocity.X = 0;
+                        velocity.X = -0.01f;
                         logger.Debug("The right of " + playerName + " collided with " + obj + " at: " + Position + " new velocity = " + velocity);
                     }
                 }
