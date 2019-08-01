@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SummerGameProject.Src.Components;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Components.Player;
 
 namespace SummerGameProject.Src.Screens
 {
