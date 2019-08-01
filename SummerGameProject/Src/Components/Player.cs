@@ -35,6 +35,8 @@ namespace SummerGameProject.Src.Components
 
         private float jumpTime;
 
+        private SpriteEffects flipTexture;
+
         private Vector2 velocity;
 
         public Player(Vector2 position, Screen screen, string name)
@@ -58,7 +60,7 @@ namespace SummerGameProject.Src.Components
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, Color.White);
+            spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, Scale, flipTexture, 0f);
         }
 
         public void LoadContent()
@@ -76,9 +78,15 @@ namespace SummerGameProject.Src.Components
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.A))
+            {
+                flipTexture = SpriteEffects.FlipHorizontally;
                 horizontalMovement = -1f;
+            }
             else if (keyboardState.IsKeyDown(Keys.D))
+            {
+                flipTexture = SpriteEffects.None;
                 horizontalMovement = 1f;
+            }
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
                 attemptJump = true;
