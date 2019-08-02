@@ -10,21 +10,18 @@ namespace SummerGameProject
     /// </summary>
     public class MainGame : Game
     {
-        private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private KeyboardState keyboardState;
 
-        private int screenWidth = 400;
-        private int screenHeight = 500;
-
-        public ScreenManager ScreenManager { get; private set; }
         public SpriteFont Font { get; private set; }
+        public ScreenManager ScreenManager { get; private set; }
 
 
         public MainGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            ScreenManager = new ScreenManager(this, graphics);
         }
 
         /// <summary>
@@ -35,11 +32,8 @@ namespace SummerGameProject
         /// </summary>
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = screenWidth;
-            graphics.PreferredBackBufferHeight = screenHeight;
-            graphics.ApplyChanges();
-
-            IsMouseVisible = true;
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             base.Initialize();
         }
@@ -50,13 +44,9 @@ namespace SummerGameProject
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
             Font = Content.Load<SpriteFont>("Font");
 
-            ScreenManager = new ScreenManager(this, graphics);
-            ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Menu);
+            ScreenManager.CurrentScreen.LoadContent();
         }
 
         /// <summary>
@@ -66,6 +56,8 @@ namespace SummerGameProject
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+
+            ScreenManager.CurrentScreen.UnloadContent();
         }
 
         /// <summary>
@@ -75,7 +67,7 @@ namespace SummerGameProject
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            ScreenManager.Update(gameTime);
+            ScreenManager.CurrentScreen.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -88,7 +80,7 @@ namespace SummerGameProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            ScreenManager.Draw(gameTime, spriteBatch);
+            ScreenManager.CurrentScreen.Draw(gameTime, spriteBatch);
 
             base.Draw(gameTime);
         }

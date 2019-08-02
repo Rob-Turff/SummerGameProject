@@ -21,28 +21,28 @@ namespace SummerGameProject.Src.Screens
         protected List<Component> components = new List<Component>();
 
         protected readonly MainGame game;
-        protected readonly GraphicsDeviceManager graphics;
-        protected readonly SpriteFont font;
 
         #endregion
 
         #region Properties
 
         public ContentManager Content { get; }
+        public int ScreenWidth { get; protected set; }
+        public int ScreenHeight { get; protected set; }
+        public bool IsFullScreen { get; protected set; }
+        public SpriteFont Font { get => game.Font; }
 
         #endregion
 
         #region Methods
 
-        public Screen(MainGame game,GraphicsDeviceManager graphics)
+        public Screen(MainGame game)
         {
             this.game = game;
-            this.graphics = graphics;
-            this.font = game.Font;
-            this.Content = new ContentManager(game.Services,game.Content.RootDirectory);
+            this.Content = new ContentManager(game.Services, game.Content.RootDirectory);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
             foreach (var component in components)
@@ -56,11 +56,50 @@ namespace SummerGameProject.Src.Screens
                 component.Update(gameTime);
         }
 
-        public abstract void LoadContent();
+        public virtual void LoadContent()
+        {
+            foreach (var component in components)
+            {
+                component.LoadContent();
+            }
+        }
 
-        public void UnloadContent()
+        public virtual void UnloadContent()
         {
             Content.Unload();
+        }
+
+        protected void DistributeVertically(List<Component> listOfComponents)
+        {
+            bool IsEvenNumber = listOfComponents.Count % 2 == 0;
+
+            // Assume all same height and width
+            int height = listOfComponents[0].Height;
+            int width = listOfComponents[0].Width;
+
+            if (IsEvenNumber)
+            {
+                for (int i = 0, length = listOfComponents.Count; i < length; i++)
+                {
+                    Component ithButton = listOfComponents[i];
+                    ithButton.Position = new Vector2(
+                        ScreenWidth / 2 - ithButton.Width / 2, // Centre horizontally
+                        ScreenHeight / 2 - 1.75f * (ithButton.Height * (length / 2 - i))  // Distribute Vertically
+                        );
+                }
+            }
+            else
+            {
+                for (int i = 0, length = listOfComponents.Count; i < length; i++)
+                {
+                    Component ithButton = listOfComponents[i];
+                    ithButton.Position = new Vector2(
+                        ScreenWidth / 2 - ithButton.Width / 2, // Centre horizontally
+                        ScreenHeight / 2 - 1.75f * ithButton.Height * ((length - 1) / 2 - i) // Distribute Vertically
+                        );
+                }
+            }
+
         }
 
         #endregion
