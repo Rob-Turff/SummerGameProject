@@ -10,89 +10,58 @@ namespace SummerGameProject.Src.Screens
 {
     public class ScreenManager
     {
-        public Screen CurrentScreen { get; private set; }
-        public enum ScreenEnum { Game, Menu, Setting };
-        public bool ToggleMenuOverlay { set; get; } = false;
-
-        private GameScreen gameScreen;
         private MenuScreen menuScreen;
         private SettingScreen settingScreen;
+        private GameScreen gameScreen;
         private InGameMenuScreen inGameMenuScreen;
-        private MainGame game;
+
         private GraphicsDeviceManager graphics;
+
+        public Screen CurrentScreen { get; private set; }
+
+        public enum ScreenEnum { Game, Menu, Setting };
 
         public ScreenManager(MainGame game, GraphicsDeviceManager graphics)
         {
-            this.game = game;
             this.graphics = graphics;
 
-            gameScreen = new GameScreen(game, graphics);
-            menuScreen = new MenuScreen(game, graphics);
-            settingScreen = new SettingScreen(game, graphics);
-            inGameMenuScreen = new InGameMenuScreen(game, graphics);
+            gameScreen = new GameScreen(game);
+            menuScreen = new MenuScreen(game);
+            settingScreen = new SettingScreen(game);
+
+            CurrentScreen = menuScreen;
+            ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
+            game.IsMouseVisible = true;
         }
 
         public void ChangeScreen(ScreenEnum screenEnum)
         {
-            // Unloads the content from the current screen when switching (also unload inGameMenu if switching from game screen)
-            if (CurrentScreen != null)
-            {
-                CurrentScreen.UnloadContent();
-                if (CurrentScreen == gameScreen)
-                {
-                    inGameMenuScreen.UnloadContent();
-                    ToggleMenuOverlay = false;
-                }
-            }
+            // Unloads the content from the current screen when switching
+            CurrentScreen.UnloadContent();
 
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
-                    changeRes(1920, 1080, false);
                     CurrentScreen = gameScreen;
-                    CurrentScreen.LoadContent();
-                    inGameMenuScreen.LoadContent();
                     break;
                 case ScreenEnum.Menu:
-                    changeRes(400, 500, false);
                     CurrentScreen = menuScreen;
-                    CurrentScreen.LoadContent();
                     break;
                 case ScreenEnum.Setting:
-                    changeRes(400, 500, false);
                     CurrentScreen = settingScreen;
-                    CurrentScreen.LoadContent();
                     break;
             }
+
+            CurrentScreen.LoadContent();
+            ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            CurrentScreen.Draw(gameTime, spriteBatch);
-
-            if (ToggleMenuOverlay)
-            {
-                inGameMenuScreen.Draw(gameTime, spriteBatch);
-            }
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            CurrentScreen.Update(gameTime);
-
-            if (ToggleMenuOverlay)
-            {
-                inGameMenuScreen.Update(gameTime);
-            }
-        }
-
-        private void changeRes(int width, int height, bool fullscreen)
+        private void ChangeRes(int width, int height, bool fullscreen)
         {
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
             graphics.IsFullScreen = fullscreen;
             graphics.ApplyChanges();
         }
-
     }
 }

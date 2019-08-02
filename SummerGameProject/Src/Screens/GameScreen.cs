@@ -5,39 +5,73 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SummerGameProject.Src.Components;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Components;
 
 namespace SummerGameProject.Src.Screens
 {
     class GameScreen : Screen
     {
-        Player player;
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private bool wasEscapePressed = false;
 
-        public GameScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
-        {
-            player = new Player(new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2),this);
-            components.Add(player);
-        }
+        private InGameMenuScreen menuOverlay;
+        private bool isMenuOverlayShowing;
 
-        public void Initialize()
+        public GameScreen(MainGame game) : base(game)
         {
-            
-        }
+            ScreenWidth = 1920;
+            ScreenHeight = 1080;
+            IsFullScreen = true;
 
-        public override void LoadContent()
-        {
-            player.LoadContent();
-            Texture2D floorTexture = Content.Load<Texture2D>("Game/GroundV1");
-            Platform floor = new Platform(floorTexture, new Vector2(0, graphics.PreferredBackBufferHeight - floorTexture.Height), Color.White);
+            menuOverlay = new InGameMenuScreen(game, this);
+            Platform floor = new FloorPlatform(this);
             components.Add(floor);
+        }
+
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (isMenuOverlayShowing)
+            {
+                menuOverlay.Draw(gameTime,spriteBatch);
+            }
+            base.Draw(gameTime, spriteBatch);
         }
 
         public override void Update(GameTime gameTime)
         {
+            isMenuOverlayShowing = checkIfMenuToggled();
+            
+            if (isMenuOverlayShowing)
+            {
+                menuOverlay.Update(gameTime);
+            }
+            else
+            {
+                // Potential Issue: Might update twice in one cycle
+                base.Update(gameTime);
+            }
+        }
+
+        public override void LoadContent()
+        {
+            menuOverlay.LoadContent();
+            base.LoadContent();
+        }
+
+        public override void UnloadContent()
+        {
+            menuOverlay.UnloadContent();
+            base.UnloadContent();
+        }
+
+        private bool checkIfMenuToggled()
+        {
+            bool wasOverlayShowing = isMenuOverlayShowing;
+            bool isOverlayShowing = wasOverlayShowing;
+
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
@@ -45,7 +79,7 @@ namespace SummerGameProject.Src.Screens
                 if (wasEscapePressed == false)
                 {
                     logger.Debug("Menu toggled in game screen");
-                    game.ScreenManager.ToggleMenuOverlay = !game.ScreenManager.ToggleMenuOverlay;
+                    isOverlayShowing = !isMenuOverlayShowing;
                     wasEscapePressed = true;
                 }
             }
@@ -54,8 +88,7 @@ namespace SummerGameProject.Src.Screens
                 wasEscapePressed = false;
             }
 
-            // Potential Issue: Might update twice in one cycle
-            base.Update(gameTime);
+            return isOverlayShowing;
         }
     }
 }

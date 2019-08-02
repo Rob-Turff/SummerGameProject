@@ -39,11 +39,13 @@ namespace SummerGameProject.Src.Components
 
         private Vector2 velocity;
 
-        public Vector2 Position { get; set; }
+        public override Vector2 Position { get; set; }
+        public override int Width => 100; //TODO sort these
+        public override int Height => 200;
 
-        public Player(Vector2 position, Screen screen)
+        public Player(Vector2 position,Screen screen) : base (screen)
         {
-            this.screen = screen;
+            this.Position = position;
         }
 
         public override void Update(GameTime gameTime)
@@ -58,7 +60,7 @@ namespace SummerGameProject.Src.Components
             spriteBatch.Draw(texture, Position, Color.White);
         }
 
-        public void LoadContent()
+        public override void LoadContent()
         {
             texture = screen.Content.Load<Texture2D>("ball");
         }
@@ -161,7 +163,5 @@ namespace SummerGameProject.Src.Components
 
             return newVerticalVelocity;
         }
-
-        #endregion
     }
 }
