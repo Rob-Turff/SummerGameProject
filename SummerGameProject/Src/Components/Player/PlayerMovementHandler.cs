@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace SummerGameProject.Src.Components.Player
 
         private Player player;
         private List<Component> components;
-
+        private AnimationHandler animationHandler;
         private bool isInAir = false;
         private float jumpTime = 0;
 
@@ -41,10 +42,11 @@ namespace SummerGameProject.Src.Components.Player
         public Vector2 Position { get => position; set => position = value; }
         public bool IsPlayerMovingLeft { get; set; } = false;
 
-        public PlayerMovementHandler(Player player, List<Component> components)
+        public PlayerMovementHandler(Player player, List<Component> components, Utilities.AnimationHandler animationHandler)
         {
             this.player = player;
             this.components = components;
+            this.animationHandler = animationHandler;
         }
 
         public void Update(GameTime gameTime)
