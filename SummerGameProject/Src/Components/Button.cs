@@ -16,16 +16,13 @@ namespace SummerGameProject.Src.Components
 
         public Action OnClick { get; set; }
 
-        private string text;
-        private Texture2D texture;
+        private readonly string text;
         private MouseState oldMouse;
         private MouseState currentMouse;
         private Color colour;
         private SpriteFont font => Screen.Font;
 
         public override Vector2 Position { get; set; }
-        public override int Width => texture.Width;
-        public override int Height => texture.Height;
 
         public Button(string text, Vector2 position, Action onClickAction, Screen screen) : base(screen)
         {
@@ -36,10 +33,10 @@ namespace SummerGameProject.Src.Components
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, colour);
+            spriteBatch.Draw(Texture, Position, colour);
 
-            var x = Position.X + (texture.Width / 2) - (font.MeasureString(text).X / 2);
-            var y = Position.Y + (texture.Height / 2) - (font.MeasureString(text).Y / 2);
+            var x = Position.X + (Texture.Width / 2) - (font.MeasureString(text).X / 2);
+            var y = Position.Y + (Texture.Height / 2) - (font.MeasureString(text).Y / 2);
 
             spriteBatch.DrawString(font, text, new Vector2(x, y), Color.Black);
         }
@@ -49,7 +46,7 @@ namespace SummerGameProject.Src.Components
             colour = Color.White;
             oldMouse = currentMouse;
             currentMouse = Mouse.GetState();
-            if (currentMouse.X < Position.X + texture.Width && currentMouse.X > Position.X && currentMouse.Y < Position.Y + texture.Height && currentMouse.Y > Position.Y)
+            if (currentMouse.X < Position.X + Texture.Width && currentMouse.X > Position.X && currentMouse.Y < Position.Y + Texture.Height && currentMouse.Y > Position.Y)
             {
                 colour = Color.Yellow;
                 if (currentMouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed)
@@ -64,7 +61,7 @@ namespace SummerGameProject.Src.Components
 
         public override void LoadContent()
         {
-            texture = Screen.Content.Load<Texture2D>("UI/button");
+            Texture = Screen.Content.Load<Texture2D>("UI/button");
         }
     }
 }

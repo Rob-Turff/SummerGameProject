@@ -18,7 +18,7 @@ namespace SummerGameProject.Src.Screens
     {
         #region Fields
 
-        protected List<Component> components = new List<Component>();
+        public List<Component> Components { get; set; } = new List<Component>();
 
         protected readonly MainGame game;
 
@@ -45,20 +45,20 @@ namespace SummerGameProject.Src.Screens
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            foreach (var component in components)
+            foreach (var component in Components)
                 component.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (var component in components)
+            foreach (var component in Components)
                 component.Update(gameTime);
         }
 
         public virtual void LoadContent()
         {
-            foreach (var component in components)
+            foreach (var component in Components)
             {
                 component.LoadContent();
             }
@@ -72,10 +72,6 @@ namespace SummerGameProject.Src.Screens
         protected void DistributeVertically(List<Component> listOfComponents)
         {
             bool IsEvenNumber = listOfComponents.Count % 2 == 0;
-
-            // Assume all same height and width
-            int height = listOfComponents[0].Height;
-            int width = listOfComponents[0].Width;
 
             if (IsEvenNumber)
             {

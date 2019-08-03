@@ -10,10 +10,9 @@ namespace SummerGameProject.Src.Screens
 {
     public class ScreenManager
     {
-        private MenuScreen menuScreen;
-        private SettingScreen settingScreen;
-        private GameScreen gameScreen;
-        private InGameMenuScreen inGameMenuScreen;
+        private readonly MenuScreen menuScreen;
+        private readonly SettingScreen settingScreen;
+        private readonly GameScreen gameScreen;
 
         private GraphicsDeviceManager graphics;
 

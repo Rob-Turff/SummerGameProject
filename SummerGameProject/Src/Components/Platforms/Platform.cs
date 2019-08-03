@@ -8,28 +8,29 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Screens;
 
-namespace SummerGameProject.Src.Components
+namespace SummerGameProject.Src.Components.Platforms
 {
     abstract class Platform : Component
     {
-        protected Texture2D texture;
         protected Color colour;
 
-
         public override Vector2 Position { get; set; }
-        public override int Width => texture.Width;
-        public override int Height => texture.Height;
 
-
-        public Platform(Vector2 position, Color colour,Screen screen) : base(screen)
+        public Platform(Vector2 position, Color colour, float scale, Screen screen) : base(screen)
         {
-            Position = position;
+            this.Position = position;
             this.colour = colour;
+            this.Scale = scale;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, colour);
+            spriteBatch.Draw(Texture, Position, null, colour, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + ".at: " + Position;
         }
 
         public override void Update(GameTime gameTime)
