@@ -9,9 +9,11 @@ namespace SummerGameProject.Src.Screens
 {
     class SettingScreen : Screen
     {
-        public SettingScreen(MainGame game, GraphicsDeviceManager graphics) : base(game, graphics)
+        public SettingScreen(MainGame game) : base(game)
         {
-
+            ScreenWidth = 400;
+            ScreenHeight = 500;
+            IsFullScreen = false;
         }
 
         public override void LoadContent()
