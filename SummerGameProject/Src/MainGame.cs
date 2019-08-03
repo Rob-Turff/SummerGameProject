@@ -20,7 +20,6 @@ namespace SummerGameProject
         {
             GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
             ScreenManager = new ScreenManager(this, graphics);
         }
 

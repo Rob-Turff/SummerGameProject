@@ -7,19 +7,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SummerGameProject.Src.Screens;
 
-namespace SummerGameProject.Src.Components
+namespace SummerGameProject.Src.Components.Platforms
 {
-    class FloorPlatform : Platform
+    class GrassPlatform : Platform
     {
-        public FloorPlatform(Screen screen) : base(new Vector2(0,0), Color.White, screen)
+        public GrassPlatform(Vector2 position, float scale, Screen screen) : base(position, Color.White, scale, screen)
         {
         }
 
         public override void LoadContent()
         {
-            texture = Screen.Content.Load<Texture2D>("Game/GroundV1");
-
-            Position = new Vector2(0, Screen.ScreenHeight - texture.Height);
+            Texture = Screen.Content.Load<Texture2D>("Game/GroundV1");
         }
     }
 }

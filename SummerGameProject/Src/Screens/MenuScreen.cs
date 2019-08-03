@@ -25,15 +25,15 @@ namespace SummerGameProject.Src.Screens
             Button playGameBtn = new Button("Start Game", new Vector2(0,0), playGameBtnAction, this);
             Button settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
 
-            components.Add(playGameBtn);
-            components.Add(settingsBtn);
+            Components.Add(playGameBtn);
+            Components.Add(settingsBtn);
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
 
-            DistributeVertically(components);
+            DistributeVertically(Components);
         }
 
     }
