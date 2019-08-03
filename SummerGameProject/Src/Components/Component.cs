@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +16,32 @@ namespace SummerGameProject.Src.Components
     /// </summary>
     public abstract class Component
     {
-        virtual public Vector2 Position { get; set; }
+        protected Screen Screen { get; }
+
         public Texture2D Texture { get; set; }
         public float Scale { get; set; } = 1f;
+
+        public abstract Vector2 Position { get; set; }
+        public float Width => Texture.Width * Scale;
+        public float Height => Texture.Height * Scale;
+
         public RectangleF Hitbox
         {
             get
             {
-                return new RectangleF(Position.X, Position.Y, (Texture.Width * Scale), (Texture.Height * Scale));
+                return new RectangleF(Position.X, Position.Y, Width, Height);
             }
+        }
+
+        public Component(Screen screen)
+        {
+            Screen = screen;
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
         public abstract void Update(GameTime gameTime);
+
+        public abstract void LoadContent();
     }
 }

@@ -73,9 +73,14 @@ namespace SummerGameProject.Src.Components.Player
 
             velocity.Y = HandleJump(attemptJump, velocity.Y, elapsedTime);
 
+
             // Apply pseudo-drag horizontally
             if (isInAir)
+            {
                 velocity.X *= groundDragFactor;
+                // Stop moving animation if falling/jumping
+                animationHandler.Stop();
+            }
             else
                 velocity.X *= airDragFactor;
 
@@ -84,6 +89,12 @@ namespace SummerGameProject.Src.Components.Player
             velocity.Y = MathHelper.Clamp(velocity.Y, -initalJumpSpeed, maxFallSpeed);
 
             HandleCollisions(elapsedTime);
+
+            // Detect if player is falling
+            if (velocity.Y > 0)
+                isInAir = true;
+
+            animationHandler.animation.FrameSpeed = Math.Abs(30 / velocity.X);
         }
 
         private void HandleCollisions(float elapsedTime)
@@ -198,17 +209,24 @@ namespace SummerGameProject.Src.Components.Player
 
             if (keyboardState.IsKeyDown(Keys.A))
             {
+                animationHandler.Play();
                 horizontalMovement = -1f;
                 IsPlayerMovingLeft = true;
             }
             else if (keyboardState.IsKeyDown(Keys.D))
             {
+                animationHandler.Play();
                 horizontalMovement = 1f;
                 IsPlayerMovingLeft = false;
             }
+            else
+                animationHandler.Stop(); 
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
+            {
                 attemptJump = true;
+                // TODO Play jumping animation
+            }
 
             return (horizontalMovement, attemptJump);
         }
