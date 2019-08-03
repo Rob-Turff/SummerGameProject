@@ -76,6 +76,8 @@
     <Compile Include="Src\MainGame.cs" />
     <Compile Include="Src\MainMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Utilities\Animation.cs" />
+    <Compile Include="Src\Utilities\AnimationHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
