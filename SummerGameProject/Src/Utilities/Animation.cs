@@ -9,11 +9,9 @@ namespace SummerGameProject.Src.Utilities
 {
     public class Animation
     {
-        public Animation(int numFrames, float frameSpeed, Texture2D texture)
+        public Animation(int numFrames)
         {
             this.NumFrames = numFrames;
-            this.FrameSpeed = frameSpeed;
-            this.Texture = texture;
             IsLooping = true;
             CurrentFrame = 0;
         }
@@ -24,7 +22,7 @@ namespace SummerGameProject.Src.Utilities
 
         public float FrameSpeed { get; set; }
 
-        public Texture2D Texture { get; private set; }
+        public Texture2D Texture { get; set; }
 
         public bool IsLooping { get; set; }
 

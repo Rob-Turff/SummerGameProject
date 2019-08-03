@@ -6,22 +6,20 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Screens;
 
-namespace SummerGameProject.Src.Components
+namespace SummerGameProject.Src.Components.Platforms
 {
-    public class Platform : Component
+    abstract class Platform : Component
     {
-        private Color colour;
+        protected Color colour;
 
-        public Platform(Texture2D texture, Vector2 position, Color colour)
+        public override Vector2 Position { get; set; }
+
+        public Platform(Vector2 position, Color colour, float scale, Screen screen) : base(screen)
         {
-            this.Texture = texture;
             this.Position = position;
             this.colour = colour;
-        }
-
-        public Platform(Texture2D texture, Vector2 position, Color colour, float scale) : this(texture, position, colour)
-        {
             this.Scale = scale;
         }
 
@@ -39,5 +37,6 @@ namespace SummerGameProject.Src.Components
         {
             
         }
+
     }
 }

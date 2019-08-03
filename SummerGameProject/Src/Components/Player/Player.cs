@@ -10,21 +10,21 @@ namespace SummerGameProject.Src.Components.Player
     public class Player : Component
     {
         private Screen screen;
-        private string playerName;
         private PlayerMovementHandler movementHandler;
         private Animation animation;
         private AnimationHandler animationHandler;
+        private int moveAnimationFrames = 9;
 
         public override Vector2 Position { get => movementHandler.Position; set => movementHandler.Position = value; }
 
-        public Player(Vector2 position, Screen screen, string name)
+        public Player(Vector2 position, Screen screen) : base(screen)
         {
             this.screen = screen;
+            animation = new Animation(moveAnimationFrames);
+            animationHandler = new AnimationHandler(animation, this);
             this.movementHandler = new PlayerMovementHandler(this, screen.Components, animationHandler);
             this.Position = position;
-            this.playerName = name;
         }
-
 
         public override void Update(GameTime gameTime)
         {
@@ -38,11 +38,10 @@ namespace SummerGameProject.Src.Components.Player
             animationHandler.Draw(spriteBatch);
         }
 
-        public void LoadContent()
+        public override void LoadContent()
         {
-            Texture = screen.Content.Load<Texture2D>("Game/WizardSpriteSheet");
-            animation = new Animation(7, 0.5f, Texture);
-            animationHandler = new AnimationHandler(animation, this);
+            Texture = screen.Content.Load<Texture2D>("Game/Player");
+            animation.Texture = screen.Content.Load<Texture2D>("Game/WizardSpriteSheet");
         }
 
     }

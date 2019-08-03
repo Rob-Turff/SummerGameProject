@@ -17,14 +17,14 @@ namespace SummerGameProject.Src.Utilities
         public float Scale { get; set; } = 1f;
 
         private readonly Component component;
-        private Animation animation;
-        private float timer;
+        public Animation animation { get; private set; }
+        private float timer = 0f;
+        private bool doUpdate = false;
 
         public AnimationHandler(Animation animation, Component component)
         {
             this.animation = animation;
             this.component = component;
-            timer = 0f;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -40,11 +40,18 @@ namespace SummerGameProject.Src.Utilities
         {
             timer = 0f;
             animation.CurrentFrame = 0;
+            doUpdate = false;
+        }
+
+        public void Play()
+        {
+            doUpdate = true;
         }
 
         public void Update(GameTime gameTime)
         {
-            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (doUpdate)
+                timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timer >= animation.FrameSpeed)
             {
