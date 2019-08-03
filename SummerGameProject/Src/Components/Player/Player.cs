@@ -9,20 +9,16 @@ namespace SummerGameProject.Src.Components.Player
     public class Player : Component
     {
         private Screen screen;
-        private string playerName;
-        private SpriteEffects flipTexture; // Probs move this into animation class when done
         private PlayerMovementHandler movementHandler;
 
         public override Vector2 Position { get => movementHandler.Position; set => movementHandler.Position = value; }
 
-        public Player(Vector2 position, Screen screen, string name)
+        public Player(Vector2 position, Screen screen) : base(screen)
         {
             this.screen = screen;
             this.movementHandler = new PlayerMovementHandler(this, screen.Components);
             this.Position = position;
-            this.playerName = name;
         }
-
 
         public override void Update(GameTime gameTime)
         {
@@ -41,7 +37,7 @@ namespace SummerGameProject.Src.Components.Player
             }
         }
 
-        public void LoadContent()
+        public override void LoadContent()
         {
             Texture = screen.Content.Load<Texture2D>("Game/Player");
         }
