@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace SummerGameProject.Src.Components.Player
 
         private Player player;
         private List<Component> components;
-
+        private AnimationHandler animationHandler;
         private bool isInAir = false;
         private float jumpTime = 0;
 
@@ -41,10 +42,11 @@ namespace SummerGameProject.Src.Components.Player
         public Vector2 Position { get => position; set => position = value; }
         public bool IsPlayerMovingLeft { get; set; } = false;
 
-        public PlayerMovementHandler(Player player, List<Component> components)
+        public PlayerMovementHandler(Player player, List<Component> components, Utilities.AnimationHandler animationHandler)
         {
             this.player = player;
             this.components = components;
+            this.animationHandler = animationHandler;
         }
 
         public void Update(GameTime gameTime)
@@ -71,9 +73,14 @@ namespace SummerGameProject.Src.Components.Player
 
             velocity.Y = HandleJump(attemptJump, velocity.Y, elapsedTime);
 
+
             // Apply pseudo-drag horizontally
             if (isInAir)
+            {
                 velocity.X *= groundDragFactor;
+                // Stop moving animation if falling/jumping
+                animationHandler.Stop();
+            }
             else
                 velocity.X *= airDragFactor;
 
@@ -82,6 +89,12 @@ namespace SummerGameProject.Src.Components.Player
             velocity.Y = MathHelper.Clamp(velocity.Y, -initalJumpSpeed, maxFallSpeed);
 
             HandleCollisions(elapsedTime);
+
+            // Detect if player is falling
+            if (velocity.Y > 0)
+                isInAir = true;
+
+            animationHandler.animation.FrameSpeed = Math.Abs(30 / velocity.X);
         }
 
         private void HandleCollisions(float elapsedTime)
@@ -196,17 +209,24 @@ namespace SummerGameProject.Src.Components.Player
 
             if (keyboardState.IsKeyDown(Keys.A))
             {
+                animationHandler.Play();
                 horizontalMovement = -1f;
                 IsPlayerMovingLeft = true;
             }
             else if (keyboardState.IsKeyDown(Keys.D))
             {
+                animationHandler.Play();
                 horizontalMovement = 1f;
                 IsPlayerMovingLeft = false;
             }
+            else
+                animationHandler.Stop(); 
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
+            {
                 attemptJump = true;
+                // TODO Play jumping animation
+            }
 
             return (horizontalMovement, attemptJump);
         }

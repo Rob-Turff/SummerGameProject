@@ -41,17 +41,19 @@ namespace SummerGameProject.Src.Screens
             switch (screenEnum)
             {
                 case ScreenEnum.Game:
+                    gameScreen.LoadContent();
                     CurrentScreen = gameScreen;
                     break;
                 case ScreenEnum.Menu:
+                    menuScreen.LoadContent();
                     CurrentScreen = menuScreen;
                     break;
                 case ScreenEnum.Setting:
+                    settingScreen.LoadContent();
                     CurrentScreen = settingScreen;
                     break;
             }
 
-            CurrentScreen.LoadContent();
             ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
         }
 
