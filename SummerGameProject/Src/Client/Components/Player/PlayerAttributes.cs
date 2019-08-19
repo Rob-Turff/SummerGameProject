@@ -10,14 +10,16 @@ namespace SummerGameProject.Src.Client.Components.Player
 {
     public class PlayerAttributes
     {
+        public Guid playerID;
         public string playerName;
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 position = new Vector2(0, 0);
         public PlayerMove currentMove = new PlayerMove();
 
-        public PlayerAttributes(string playerName)
+        public PlayerAttributes(string playerName, Guid playerID)
         {
             this.playerName = playerName;
+            this.playerID = playerID;
         }
     }
 }

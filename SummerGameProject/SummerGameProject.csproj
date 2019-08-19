@@ -91,6 +91,8 @@
     <Compile Include="Src\Common\NetworkCommands.cs" />
     <Compile Include="Src\Common\Message\Message.cs" />
     <Compile Include="Src\Common\Message\PlayerJoinMessage.cs" />
+    <Compile Include="Src\Common\Utilities\SerializationHandler.cs" />
+    <Compile Include="Src\Server\Networking\CommandHandler.cs" />
     <Compile Include="Src\Server\Networking\GameServer.cs" />
   </ItemGroup>
   <ItemGroup>

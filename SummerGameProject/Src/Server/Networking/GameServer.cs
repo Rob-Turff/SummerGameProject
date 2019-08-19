@@ -1,4 +1,5 @@
 ﻿using Lidgren.Network;
+using SummerGameProject.Src.Common;
 using System.Collections.Generic;
 
 namespace SummerGameProject.Src.Server.Networking
@@ -6,11 +7,15 @@ namespace SummerGameProject.Src.Server.Networking
     public class GameServer
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private static List<NetPeer> clientList;
+        private readonly MainGame game;
+        internal List<NetPeer> clientList;
+        private CommandHandler commandHandler;
 
-        public GameServer()
+        public GameServer(MainGame game)
         {
+            this.game = game;
             clientList = new List<NetPeer>();
+            commandHandler = new CommandHandler(this, game);
         }
 
         public void StartServer()
@@ -26,7 +31,7 @@ namespace SummerGameProject.Src.Server.Networking
                 ReadMessages(server);
         }
 
-        private static void ReadMessages(NetServer server)
+        private void ReadMessages(NetServer server)
         {
             NetIncomingMessage msg;
             while ((msg = server.ReadMessage()) != null)
@@ -34,25 +39,22 @@ namespace SummerGameProject.Src.Server.Networking
                 switch (msg.MessageType)
                 {
                     case NetIncomingMessageType.Data:
-                        logger.Debug("Server received message: " + msg.ReadString());
+                        switch ((NetworkCommands) msg.ReadByte())
+                        {
+                            case NetworkCommands.ADD_PLAYER:
+                                logger.Debug("Server received add player message");
+                                commandHandler.PlayerJoined(msg);
+                                break;
+                            default:
+                                logger.Error("Unhandled network command type");
+                                break;
+                        }
                         break;
                     case NetIncomingMessageType.ErrorMessage:
                         logger.Error(msg.ReadString());
                         break;
                     case NetIncomingMessageType.StatusChanged:
-                        if (msg.SenderConnection.Status == NetConnectionStatus.Connected)
-                        {
-                            logger.Debug(msg.SenderConnection.Peer.Configuration.LocalAddress + " has connected");
-                            clientList.Add(msg.SenderConnection.Peer);
-
-                        }
-                        else if (msg.SenderConnection.Status == NetConnectionStatus.Disconnected)
-                        {
-                            logger.Debug(msg.SenderConnection.Peer.Configuration.LocalAddress + " has disconnected");
-                            clientList.Remove(msg.SenderConnection.Peer);
-                        }
-                        else
-                            logger.Error("Connection Status net yet implemented: " + msg.SenderConnection.Status);
+                        commandHandler.StatusChanged(msg);
                         break;
                     default:
                         logger.Error("Unhandled type: " + msg.MessageType);

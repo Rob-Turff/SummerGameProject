@@ -1,9 +1,13 @@
 ﻿using Lidgren.Network;
 using SummerGameProject.Src.Common;
+using SummerGameProject.Src.Common.Message;
+using SummerGameProject.Src.Common.Utilities;
 using SummerGameProject.Src.Server.Networking;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,16 +17,21 @@ namespace SummerGameProject.Src.Client.Networking
     public class NetworkHandler
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        private readonly MainGame game;
         private string ip = "localhost";
         private int port = 7777;
         private NetClient client;
-        
+
+        public NetworkHandler(MainGame game)
+        {
+            this.game = game;
+        }
+
         public GameServer gameServer { get; private set; }
 
         public void HostServer()
         {
-            gameServer = new GameServer();
+            gameServer = new GameServer(game);
             Thread serverThread = new Thread(gameServer.StartServer);
             serverThread.Start();
             StartClient();
@@ -40,10 +49,12 @@ namespace SummerGameProject.Src.Client.Networking
                 ReadMessages();
         }
 
-        public void sendMessage(NetworkCommands msgType, byte[] bytes)
+        public void sendMessage(Message msgContent)
         {
             NetOutgoingMessage msg = client.CreateMessage();
-            msg.Write((byte)NetworkCommands.ADD_PLAYER);
+            msg.Write((byte)msgContent.command);
+            byte[] bytes = SerializationHandler.ObjectToByteArray(msgContent);
+            msg.Write(bytes.Length);
             msg.Write(bytes);
             client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             client.FlushSendQueue();
@@ -66,12 +77,12 @@ namespace SummerGameProject.Src.Client.Networking
                         if (msg.SenderConnection.Status == NetConnectionStatus.Connected)
                         {
                             logger.Debug("Connected to server " + msg.SenderConnection.Peer.Configuration.LocalAddress);
-                            //TODO Implement
+                            handleConnect();
                         }
                         else if (msg.SenderConnection.Status == NetConnectionStatus.Disconnected)
                         {
                             logger.Debug("Disconnected from server " + msg.SenderConnection.Peer.Configuration.LocalAddress);
-                            //TODO Implement
+                            handleDisconnect();
                         }
                         else
                             logger.Error("Connection Status net yet implemented: " + msg.SenderConnection.Status);
@@ -82,6 +93,17 @@ namespace SummerGameProject.Src.Client.Networking
                 }
                 client.Recycle(msg);
             }
+        }
+
+        private void handleConnect()
+        {
+            game.GameData.clientsPlayer = new Guid();
+            sendMessage(new PlayerJoinMessage(game.GameData.PlayerName, game.GameData.clientsPlayer));
+        }
+
+        private void handleDisconnect()
+        {
+
         }
     }
 }

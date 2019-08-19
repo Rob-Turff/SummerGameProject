@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SummerGameProject.Src.Client.Components.Player;
 using SummerGameProject.Src.Components.Player;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,12 @@ namespace SummerGameProject.Src.Client.Utilities
     public class GameDataStore
     {
         public string PlayerName;
-        public List<Player> players;
+        public Guid clientsPlayer;
+        public List<PlayerAttributes> players;
+
+        public GameDataStore()
+        {
+            players = new List<PlayerAttributes>();
+        }
     }
 }

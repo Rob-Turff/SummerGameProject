@@ -22,7 +22,7 @@ namespace SummerGameProject.Src.Client.Screens
             ScreenHeight = 500;
             IsFullScreen = false;
 
-            networkHandler = new NetworkHandler();
+            networkHandler = new NetworkHandler(game);
 
             Button joinGameBtn = new Button("Join Game", new Vector2(0, 0), JoinGame, this);
             Button hostGameBtn = new Button("Host Game", new Vector2(0, 0), HostGame, this);

@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Common.Message
 {
+    [Serializable]
     public class PlayerJoinMessage : Message
     {
-        internal Guid guid;
+        internal Guid playerID;
         internal string name;
 
-        public PlayerJoinMessage() : base(NetworkCommands.ADD_PLAYER) { }
+        public PlayerJoinMessage(string name, Guid playerID) : base(NetworkCommands.ADD_PLAYER) {
+            this.name = name;
+            this.playerID = playerID;
+        }
     }
 }
