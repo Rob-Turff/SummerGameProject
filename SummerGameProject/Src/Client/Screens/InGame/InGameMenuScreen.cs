@@ -18,8 +18,8 @@ namespace SummerGameProject.Src.Screens
             IsFullScreen = gameScreen.IsFullScreen;
 
             Action quitGameBtnAction = new Action(() => game.Exit());
-            Action quitToMenuBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Menu));
-            Action settingsBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
+            Action quitToMenuBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.MENU));
+            Action settingsBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.SETTING));
 
             Button quitGameBtn = new Button("Quit Game", new Vector2(0,0), quitGameBtnAction, this);
             Button quitToMenuBtn = new Button("Quit to Menu", new Vector2(0,0), quitToMenuBtnAction, this);

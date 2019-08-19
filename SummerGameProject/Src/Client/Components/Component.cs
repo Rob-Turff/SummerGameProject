@@ -19,11 +19,11 @@ namespace SummerGameProject.Src.Components
         protected Screen Screen { get; }
 
         public Texture2D Texture { get; set; }
-        public float Scale { get; set; } = 1f;
+        public Vector2 Scale { get; set; } = new Vector2(1f, 1f);
 
-        public abstract Vector2 Position { get; set; }
-        public float Width => Texture.Width * Scale;
-        public float Height => Texture.Height * Scale;
+        public virtual Vector2 Position { get; set; }
+        public float Width => Texture.Width * Scale.X;
+        public float Height => Texture.Height * Scale.Y;
 
         public RectangleF Hitbox
         {

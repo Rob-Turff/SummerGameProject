@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SummerGameProject.Src.Client.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace SummerGameProject.Src.Screens
         private readonly MenuScreen menuScreen;
         private readonly SettingScreen settingScreen;
         private readonly GameScreen gameScreen;
-
+        private readonly MultiplayerScreen multiplayerScreen;
+        private readonly LoginScreen loginScreen;
+        private readonly LobbyScreen lobbyScreen;
         private GraphicsDeviceManager graphics;
 
         public Screen CurrentScreen { get; private set; }
 
-        public enum ScreenEnum { Game, Menu, Setting };
+        public enum ScreenEnum { GAME, MENU, SETTING, MULTIPLAYER, LOGIN, LOBBY };
 
         public ScreenManager(MainGame game, GraphicsDeviceManager graphics)
         {
@@ -27,8 +30,11 @@ namespace SummerGameProject.Src.Screens
             gameScreen = new GameScreen(game);
             menuScreen = new MenuScreen(game);
             settingScreen = new SettingScreen(game);
+            multiplayerScreen = new MultiplayerScreen(game);
+            loginScreen = new LoginScreen(game);
+            lobbyScreen = new LobbyScreen(game);
 
-            CurrentScreen = menuScreen;
+            CurrentScreen = loginScreen;
             ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);
             game.IsMouseVisible = true;
         }
@@ -40,17 +46,29 @@ namespace SummerGameProject.Src.Screens
 
             switch (screenEnum)
             {
-                case ScreenEnum.Game:
+                case ScreenEnum.GAME:
                     gameScreen.LoadContent();
                     CurrentScreen = gameScreen;
                     break;
-                case ScreenEnum.Menu:
+                case ScreenEnum.MENU:
                     menuScreen.LoadContent();
                     CurrentScreen = menuScreen;
                     break;
-                case ScreenEnum.Setting:
+                case ScreenEnum.SETTING:
                     settingScreen.LoadContent();
                     CurrentScreen = settingScreen;
+                    break;
+                case ScreenEnum.MULTIPLAYER:
+                    multiplayerScreen.LoadContent();
+                    CurrentScreen = multiplayerScreen;
+                    break;
+                case ScreenEnum.LOGIN:
+                    loginScreen.LoadContent();
+                    CurrentScreen = loginScreen;
+                    break;
+                case ScreenEnum.LOBBY:
+                    lobbyScreen.LoadContent();
+                    CurrentScreen = lobbyScreen;
                     break;
             }
 

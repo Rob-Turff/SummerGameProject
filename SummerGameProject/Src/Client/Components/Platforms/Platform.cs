@@ -16,7 +16,7 @@ namespace SummerGameProject.Src.Components.Platforms
 
         public override Vector2 Position { get; set; }
 
-        public Platform(Vector2 position, Color colour, float scale, Screen screen) : base(screen)
+        public Platform(Vector2 position, Color colour, Vector2 scale, Screen screen) : base(screen)
         {
             this.Position = position;
             this.colour = colour;

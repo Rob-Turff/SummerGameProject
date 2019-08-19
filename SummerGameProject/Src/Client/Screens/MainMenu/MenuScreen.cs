@@ -19,14 +19,17 @@ namespace SummerGameProject.Src.Screens
             ScreenHeight = 500;
             IsFullScreen = false;
 
-            Action playGameBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Game));
-            Action settingsBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.Setting));
+            Action playGameBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.GAME));
+            Action settingsBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.SETTING));
+            Action multiplayerBtnAction = new Action(() => game.ScreenManager.ChangeScreen(ScreenManager.ScreenEnum.MULTIPLAYER));
 
-            Button playGameBtn = new Button("Start Game", new Vector2(0,0), playGameBtnAction, this);
+            Button singlePlayerButton = new Button("SinglePlayer", new Vector2(0,0), playGameBtnAction, this);
             Button settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
+            Button multiplayerBtn = new Button("Multiplayer", new Vector2(0, 0), multiplayerBtnAction, this);
 
-            Components.Add(playGameBtn);
+            Components.Add(singlePlayerButton);
             Components.Add(settingsBtn);
+            Components.Add(multiplayerBtn);
         }
 
         public override void LoadContent()

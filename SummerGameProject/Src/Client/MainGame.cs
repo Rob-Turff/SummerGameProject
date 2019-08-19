@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Client.Utilities;
 using SummerGameProject.Src.Screens;
 
 namespace SummerGameProject
@@ -14,13 +15,14 @@ namespace SummerGameProject
 
         public SpriteFont Font { get; private set; }
         public ScreenManager ScreenManager { get; private set; }
-
+        public GameDataStore GameData { get; private set; }
 
         public MainGame()
         {
             GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             ScreenManager = new ScreenManager(this, graphics);
+            GameData = new GameDataStore();
         }
 
         /// <summary>
