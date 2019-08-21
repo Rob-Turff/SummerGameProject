@@ -22,10 +22,10 @@ namespace SummerGameProject.Src.Components
         public Vector2 Scale { get; set; } = new Vector2(1f, 1f);
 
         public virtual Vector2 Position { get; set; }
-        public float Width => Texture.Width * Scale.X;
-        public float Height => Texture.Height * Scale.Y;
+        public virtual float Width { get => Texture.Width * Scale.X; set => Width = value; }
+        public virtual float Height { get => Texture.Height * Scale.Y; set => Width = value; }
 
-        public RectangleF Hitbox
+    public RectangleF Hitbox
         {
             get
             {
@@ -35,7 +35,13 @@ namespace SummerGameProject.Src.Components
 
         public Component(Screen screen)
         {
-            Screen = screen;
+            this.Screen = screen;
+        }
+
+        public Component(Screen screen, Vector2 position)
+        {
+            this.Screen = screen;
+            this.Position = position;
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);

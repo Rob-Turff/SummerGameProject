@@ -15,11 +15,13 @@ namespace SummerGameProject.Src.Client.Components.Player
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 position = new Vector2(0, 0);
         public PlayerMove currentMove = new PlayerMove();
+        public bool isHost = false;
 
-        public PlayerAttributes(string playerName, Guid playerID)
+        public PlayerAttributes(string playerName, Guid playerID, bool isHost)
         {
             this.playerName = playerName;
             this.playerID = playerID;
+            this.isHost = isHost;
         }
     }
 }

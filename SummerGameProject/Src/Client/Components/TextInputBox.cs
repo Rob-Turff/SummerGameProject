@@ -27,11 +27,9 @@ namespace SummerGameProject.Src.Client.Components
         private KeyboardState currentKeyboard;
 
 
-        public TextInputBox(string text, Vector2 position, Screen screen, Game game) : base(screen)
+        public TextInputBox(string text, Vector2 position, Screen screen, Game game) : base(screen, position)
         {
             this.text = text;
-            this.Position = position;
-            this.screen = screen;
             this.game = game;
             game.Window.TextInput += TextInputHandler;
         }
@@ -56,7 +54,6 @@ namespace SummerGameProject.Src.Client.Components
 
         public override void LoadContent()
         {
-            //TODO Make text input box texture
             Texture = Screen.Content.Load<Texture2D>("UI/TextBox");
         }
 

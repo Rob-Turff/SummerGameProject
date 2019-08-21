@@ -19,10 +19,10 @@ namespace SummerGameProject
 
         public MainGame()
         {
+            GameData = new GameDataStore();
             GraphicsDeviceManager graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             ScreenManager = new ScreenManager(this, graphics);
-            GameData = new GameDataStore();
         }
 
         /// <summary>

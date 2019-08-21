@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Src\Client\Components\Button.cs" />
     <Compile Include="Src\Client\Components\Component.cs" />
+    <Compile Include="Src\Client\Components\Label.cs" />
     <Compile Include="Src\Client\Components\Platforms\GrassPlatform.cs" />
     <Compile Include="Src\Client\Components\Platforms\Platform.cs" />
     <Compile Include="Src\Client\Components\Platforms\StoneWallPlatform.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Src\Client\Components\Player\PlayerMove.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerMovementHandler.cs" />
     <Compile Include="Src\Client\Components\TextInputBox.cs" />
+    <Compile Include="Src\Client\Networking\ClientCommandHandler.cs" />
     <Compile Include="Src\Client\Networking\NetworkHandler.cs" />
     <Compile Include="Src\Client\Screens\InGame\GameScreen.cs" />
     <Compile Include="Src\Client\Screens\MainMenu\LobbyScreen.cs" />
@@ -92,7 +94,8 @@
     <Compile Include="Src\Common\Message\Message.cs" />
     <Compile Include="Src\Common\Message\PlayerJoinMessage.cs" />
     <Compile Include="Src\Common\Utilities\SerializationHandler.cs" />
-    <Compile Include="Src\Server\Networking\CommandHandler.cs" />
+    <Compile Include="Src\Server\Networking\ClientInfo.cs" />
+    <Compile Include="Src\Server\Networking\ServerCommandHandler.cs" />
     <Compile Include="Src\Server\Networking\GameServer.cs" />
   </ItemGroup>
   <ItemGroup>

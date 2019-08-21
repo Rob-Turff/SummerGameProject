@@ -24,7 +24,7 @@ namespace SummerGameProject.Src.Screens
 
             menuOverlay = new InGameMenuScreen(game, this);
 
-            PlayerAttributes playerAttributes = new PlayerAttributes("Player 1", new System.Guid());
+            PlayerAttributes playerAttributes = new PlayerAttributes("Player 1", new System.Guid(), true);
             playerAttributes.position = new Vector2(ScreenWidth / 2, ScreenHeight / 2);
             Player player = new Player(playerAttributes, this);
             Components.Add(player);

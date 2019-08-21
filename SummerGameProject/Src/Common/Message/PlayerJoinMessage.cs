@@ -11,10 +11,12 @@ namespace SummerGameProject.Src.Common.Message
     {
         internal Guid playerID;
         internal string name;
+        internal bool isHost;
 
-        public PlayerJoinMessage(string name, Guid playerID) : base(NetworkCommands.ADD_PLAYER) {
+        public PlayerJoinMessage(string name, Guid playerID, bool isHost) : base(NetworkCommands.ADD_PLAYER) {
             this.name = name;
             this.playerID = playerID;
+            this.isHost = isHost;
         }
     }
 }

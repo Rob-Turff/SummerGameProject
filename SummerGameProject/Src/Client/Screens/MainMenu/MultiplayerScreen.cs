@@ -40,13 +40,11 @@ namespace SummerGameProject.Src.Client.Screens
         private void JoinGame()
         {
             networkHandler.StartClient();
-            game.ScreenManager.ChangeScreen(ScreenEnum.LOBBY);
         }
 
         private void HostGame()
         {
             networkHandler.HostServer();
-            game.ScreenManager.ChangeScreen(ScreenEnum.LOBBY);
         }
     }
 }

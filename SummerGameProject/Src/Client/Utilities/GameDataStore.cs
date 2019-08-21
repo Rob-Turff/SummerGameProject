@@ -13,11 +13,6 @@ namespace SummerGameProject.Src.Client.Utilities
     {
         public string PlayerName;
         public Guid clientsPlayer;
-        public List<PlayerAttributes> players;
-
-        public GameDataStore()
-        {
-            players = new List<PlayerAttributes>();
-        }
+        public List<PlayerAttributes> players = new List<PlayerAttributes>();
     }
 }
