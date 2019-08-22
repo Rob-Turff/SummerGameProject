@@ -14,5 +14,15 @@ namespace SummerGameProject.Src.Client.Utilities
         public string PlayerName;
         public Guid clientsPlayer;
         public List<PlayerAttributes> players = new List<PlayerAttributes>();
+
+        public bool IsHost()
+        {
+            foreach (PlayerAttributes p in players)
+            {
+                if (clientsPlayer.Equals(p.playerID) && p.isHost)
+                    return true;
+            }
+            return false;
+        }
     }
 }

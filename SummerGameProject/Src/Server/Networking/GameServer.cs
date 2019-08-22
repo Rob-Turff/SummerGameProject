@@ -48,6 +48,9 @@ namespace SummerGameProject.Src.Server.Networking
                                 logger.Debug("Server - received add player message");
                                 commandHandler.PlayerJoined(msg);
                                 break;
+                            case NetworkCommands.START_GAME:
+                                commandHandler.StartGame();
+                                break;
                             default:
                                 logger.Error("Server - Unhandled network command type");
                                 break;
@@ -70,13 +73,26 @@ namespace SummerGameProject.Src.Server.Networking
 
         internal void sendMsg(Message msgContent, NetConnection recipient)
         {
+            NetOutgoingMessage msg = prepareMsg(msgContent);
+            server.SendMessage(msg, recipient, NetDeliveryMethod.ReliableOrdered);
+            server.FlushSendQueue();
+        }
+
+        internal void sendMsgToAll(Message msgContent)
+        {
+            NetOutgoingMessage msg = prepareMsg(msgContent);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+            server.FlushSendQueue();
+        }
+
+        private NetOutgoingMessage prepareMsg(Message msgContent)
+        {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write((byte)msgContent.command);
             byte[] bytes = SerializationHandler.ObjectToByteArray(msgContent);
             msg.Write(bytes.Length);
             msg.Write(bytes);
-            server.SendMessage(msg, recipient, NetDeliveryMethod.ReliableOrdered);
-            server.FlushSendQueue();
+            return msg;
         }
     }
 }

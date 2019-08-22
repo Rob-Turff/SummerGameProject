@@ -90,6 +90,7 @@
     <Compile Include="Src\Client\Utilities\Animation.cs" />
     <Compile Include="Src\Client\Utilities\AnimationHandler.cs" />
     <Compile Include="Src\Client\Utilities\GameDataStore.cs" />
+    <Compile Include="Src\Common\Message\StartGameMessage.cs" />
     <Compile Include="Src\Common\NetworkCommands.cs" />
     <Compile Include="Src\Common\Message\Message.cs" />
     <Compile Include="Src\Common\Message\PlayerJoinMessage.cs" />

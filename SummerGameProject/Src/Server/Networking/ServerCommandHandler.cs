@@ -50,6 +50,11 @@ namespace SummerGameProject.Src.Server.Networking
                 logger.Error("Connection Status net yet implemented: " + msg.SenderConnection.Status);
         }
 
+        internal void StartGame()
+        {
+            gameServer.sendMsgToAll(new StartGameMessage());
+        }
+
         private void ClientPlayerUpdate()
         {
             foreach (ClientInfo c in gameServer.clientList)

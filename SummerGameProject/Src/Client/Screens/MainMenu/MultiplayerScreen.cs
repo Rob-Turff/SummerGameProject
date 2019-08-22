@@ -14,15 +14,11 @@ namespace SummerGameProject.Src.Client.Screens
 {
     public class MultiplayerScreen : Screen
     {
-        private NetworkHandler networkHandler;
-
         public MultiplayerScreen(MainGame game) : base(game)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;
             IsFullScreen = false;
-
-            networkHandler = new NetworkHandler(game);
 
             Button joinGameBtn = new Button("Join Game", new Vector2(0, 0), JoinGame, this);
             Button hostGameBtn = new Button("Host Game", new Vector2(0, 0), HostGame, this);
@@ -39,12 +35,12 @@ namespace SummerGameProject.Src.Client.Screens
 
         private void JoinGame()
         {
-            networkHandler.StartClient();
+            game.networkHandler.StartClient();
         }
 
         private void HostGame()
         {
-            networkHandler.HostServer();
+            game.networkHandler.HostServer();
         }
     }
 }

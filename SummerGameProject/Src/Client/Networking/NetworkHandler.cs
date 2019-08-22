@@ -1,4 +1,5 @@
 ﻿using Lidgren.Network;
+using Microsoft.Xna.Framework;
 using SummerGameProject.Src.Common;
 using SummerGameProject.Src.Common.Message;
 using SummerGameProject.Src.Common.Utilities;
@@ -19,6 +20,8 @@ namespace SummerGameProject.Src.Client.Networking
         private NetClient client;
         private bool isHost = false;
         private bool isConnected = false;
+        private bool gameStarted = false;
+        private bool onGameScreen = false;
 
         public NetworkHandler(MainGame game)
         {
@@ -77,6 +80,9 @@ namespace SummerGameProject.Src.Client.Networking
                                     logger.Debug("Client - received add player message");
                                     commandHandler.AddPlayer(msg);
                                     break;
+                                case NetworkCommands.START_GAME:
+                                    gameStarted = true;
+                                    break;
                                 default:
                                     logger.Error("Client - Unhandled network command type");
                                     break;
@@ -106,6 +112,15 @@ namespace SummerGameProject.Src.Client.Networking
                     client.Recycle(msg);
                 }
                 System.Threading.Thread.Sleep(10);
+            }
+        }
+
+        internal void Update(GameTime gameTime)
+        {
+            if (gameStarted && !onGameScreen)
+            {
+                game.ScreenManager.ChangeScreen(ScreenEnum.GAME);
+                onGameScreen = true;
             }
         }
 
