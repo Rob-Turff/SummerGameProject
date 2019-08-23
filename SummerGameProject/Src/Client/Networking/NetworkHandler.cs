@@ -15,8 +15,8 @@ namespace SummerGameProject.Src.Client.Networking
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly MainGame game;
         private ClientCommandHandler commandHandler;
-        private string ip = "localhost";
-        private int port = 7777;
+        private string ip = "86.138.244.77";
+        private int port = 27015;
         private NetClient client;
         private bool isHost = false;
         private bool isConnected = false;

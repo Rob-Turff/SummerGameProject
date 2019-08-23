@@ -24,7 +24,7 @@ namespace SummerGameProject.Src.Server.Networking
         public void StartServer()
         {
             NetPeerConfiguration config = new NetPeerConfiguration("gameServer");
-            config.Port = 7777;
+            config.Port = 27015;
             server = new NetServer(config);
             server.Start();
 
