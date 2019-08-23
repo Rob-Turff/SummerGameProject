@@ -11,6 +11,7 @@ namespace SummerGameProject.Src.Common
         ADD_PLAYER,
         REMOVE_PLAYER,
         
-        START_GAME
+        START_GAME,
+        MOVE_PLAYER
     }
 }

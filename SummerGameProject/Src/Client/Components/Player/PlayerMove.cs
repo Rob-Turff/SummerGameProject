@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Client.Components.Player
 {
+    [Serializable]
     public class PlayerMove
     {
         public bool jumping;
@@ -24,6 +25,16 @@ namespace SummerGameProject.Src.Client.Components.Player
             this.jumping = jumping;
             this.movingLeft = movingLeft;
             this.movingRight = movingRight;
+        }
+
+        public static bool operator ==(PlayerMove obj1, PlayerMove obj2)
+        {
+            return (obj1.jumping == obj2.jumping && obj1.movingLeft == obj2.movingLeft && obj1.movingRight == obj2.movingRight);
+        }
+
+        public static bool operator !=(PlayerMove obj1, PlayerMove obj2)
+        {
+            return !(obj1.jumping == obj2.jumping && obj1.movingLeft == obj2.movingLeft && obj1.movingRight == obj2.movingRight);
         }
     }
 }

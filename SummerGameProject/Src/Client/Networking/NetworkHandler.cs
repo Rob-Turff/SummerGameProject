@@ -42,6 +42,8 @@ namespace SummerGameProject.Src.Client.Networking
 
         public void StartClient()
         {
+            game.GameData.isMultiplayer = true;
+
             NetPeerConfiguration config = new NetPeerConfiguration("gameServer");
             client = new NetClient(config);
             client.Start();
@@ -82,6 +84,9 @@ namespace SummerGameProject.Src.Client.Networking
                                     break;
                                 case NetworkCommands.START_GAME:
                                     gameStarted = true;
+                                    break;
+                                case NetworkCommands.MOVE_PLAYER:
+                                    commandHandler.MovePlayer(msg);
                                     break;
                                 default:
                                     logger.Error("Client - Unhandled network command type");
@@ -137,8 +142,8 @@ namespace SummerGameProject.Src.Client.Networking
 
         private void handleConnect()
         {
-            game.GameData.clientsPlayer = Guid.NewGuid();
-            sendMessage(new PlayerJoinMessage(game.GameData.PlayerName, game.GameData.clientsPlayer, isHost));
+            game.GameData.clientsPlayerID = Guid.NewGuid();
+            sendMessage(new PlayerJoinMessage(game.GameData.PlayerName, game.GameData.clientsPlayerID, isHost));
             isConnected = true;
         }
 

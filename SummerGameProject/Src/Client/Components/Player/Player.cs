@@ -10,7 +10,8 @@ namespace SummerGameProject.Src.Components.Player
 {
     public class Player : Component
     {
-        private Screen screen;
+        private readonly Screen screen;
+        private readonly MainGame game;
         private PlayerMovementHandler movementHandler;
         private PlayerAttributes playerAttributes;
         private Animation animation;
@@ -19,13 +20,14 @@ namespace SummerGameProject.Src.Components.Player
 
         public override Vector2 Position { get => playerAttributes.position; set => playerAttributes.position = value; }
 
-        public Player(PlayerAttributes playerAttributes, Screen screen) : base(screen)
+        public Player(PlayerAttributes playerAttributes, Screen screen, MainGame game) : base(screen)
         {
             this.playerAttributes = playerAttributes;
             this.screen = screen;
+            this.game = game;
             animation = new Animation(moveAnimationFrames);
             animationHandler = new AnimationHandler(animation, this);
-            this.movementHandler = new PlayerMovementHandler(this, screen.Components, animationHandler, playerAttributes);
+            this.movementHandler = new PlayerMovementHandler(this, screen.Components, animationHandler, playerAttributes, game);
         }
 
         public override void Update(GameTime gameTime)

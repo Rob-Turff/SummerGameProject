@@ -28,6 +28,7 @@ namespace SummerGameProject.Src.Server.Networking
             byte[] msgContents = msg.ReadBytes(msgLength);
             PlayerJoinMessage joinMsg = (PlayerJoinMessage) SerializationHandler.ByteArrayToObject(msgContents);
             PlayerAttributes player = new PlayerAttributes(joinMsg.name, joinMsg.playerID, joinMsg.isHost);
+            player.position = game.GameData.getSpawnPos();
             game.GameData.players.Add(player);
             gameServer.clientList.Add(new ClientInfo(msg.SenderConnection, player));
             logger.Debug("Player with name " + player.playerName + " added");
@@ -50,6 +51,15 @@ namespace SummerGameProject.Src.Server.Networking
                 logger.Error("Connection Status net yet implemented: " + msg.SenderConnection.Status);
         }
 
+        internal void MovePlayer(NetIncomingMessage msg)
+        {
+            int msgLength = msg.ReadInt32();
+            byte[] msgContents = msg.ReadBytes(msgLength);
+            PlayerMoveMessage moveMsg = (PlayerMoveMessage)SerializationHandler.ByteArrayToObject(msgContents);
+            PlayerMove move = moveMsg.move; // TODO Do something with this
+            gameServer.sendMsgToAll(moveMsg);
+        }
+
         internal void StartGame()
         {
             gameServer.sendMsgToAll(new StartGameMessage());
@@ -63,7 +73,7 @@ namespace SummerGameProject.Src.Server.Networking
                 {
                     if (!c.playerSent.Contains(p.playerID) && !c.playerInfo.isHost)
                     {
-                        gameServer.sendMsg(new PlayerJoinMessage(p.playerName, p.playerID, p.isHost), c.clientConnection);
+                        gameServer.sendMsg(new PlayerJoinMessage(p.playerName, p.playerID, p.isHost, p.position.X, p.position.Y), c.clientConnection);
                         c.playerSent.Add(p.playerID);
                     }
                 }

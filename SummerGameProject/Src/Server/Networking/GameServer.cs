@@ -51,6 +51,9 @@ namespace SummerGameProject.Src.Server.Networking
                             case NetworkCommands.START_GAME:
                                 commandHandler.StartGame();
                                 break;
+                            case NetworkCommands.MOVE_PLAYER:
+                                commandHandler.MovePlayer(msg);
+                                break;
                             default:
                                 logger.Error("Server - Unhandled network command type");
                                 break;

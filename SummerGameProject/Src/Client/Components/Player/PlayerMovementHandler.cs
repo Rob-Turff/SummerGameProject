@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Client.Components.Player;
+using SummerGameProject.Src.Common.Message;
 using SummerGameProject.Src.Utilities;
 using System;
 using System.Collections.Generic;
@@ -35,20 +36,25 @@ namespace SummerGameProject.Src.Components.Player
         private List<Component> components;
         private AnimationHandler animationHandler;
         private PlayerAttributes playerAttributes;
+        private readonly MainGame game;
         private bool isInAir = false;
         private float jumpTime = 0;
 
-        public PlayerMovementHandler(Player player, List<Component> components, AnimationHandler animationHandler, PlayerAttributes playerAttributes)
+        public PlayerMovementHandler(Player player, List<Component> components, AnimationHandler animationHandler, PlayerAttributes playerAttributes, MainGame game)
         {
             this.player = player;
             this.components = components;
             this.animationHandler = animationHandler;
             this.playerAttributes = playerAttributes;
+            this.game = game;
         }
 
         public void Update(GameTime gameTime)
         {
-            float horizontalMovement = HandleInput();
+            if (playerAttributes.playerID == game.GameData.clientsPlayerID)
+                HandleInput();
+
+            float horizontalMovement = 0f;
 
             if (playerAttributes.currentMove.movingLeft == true)
                 horizontalMovement = -1f;
@@ -198,7 +204,7 @@ namespace SummerGameProject.Src.Components.Player
             return newVerticalVelocity;
         }
 
-        private float HandleInput()
+        private void HandleInput()
         {
             PlayerMove playerMove = new PlayerMove();
 
@@ -225,9 +231,12 @@ namespace SummerGameProject.Src.Components.Player
                 // TODO Play jumping animation
             }
 
-            playerAttributes.currentMove = playerMove;
+            if (playerMove != playerAttributes.currentMove && game.GameData.isMultiplayer)
+            {
+                game.networkHandler.sendMessage(new PlayerMoveMessage(playerMove, playerAttributes.playerID));
+            }
 
-            return (horizontalMovement);
+            playerAttributes.currentMove = playerMove;
         }
     }
 }

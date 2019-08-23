@@ -23,5 +23,13 @@ namespace SummerGameProject.Src.Client.Components.Player
             this.playerID = playerID;
             this.isHost = isHost;
         }
+
+        public PlayerAttributes(string playerName, Guid playerID, bool isHost, Vector2 position)
+        {
+            this.playerName = playerName;
+            this.playerID = playerID;
+            this.isHost = isHost;
+            this.position = position;
+        }
     }
 }

@@ -48,6 +48,7 @@ namespace SummerGameProject.Src.Screens
             {
                 case ScreenEnum.GAME:
                     gameScreen.LoadContent();
+                    gameScreen.SetupGame(); //TODO Handle quiting to menu then returning back to game
                     CurrentScreen = gameScreen;
                     break;
                 case ScreenEnum.MENU:
