@@ -1,6 +1,9 @@
 # SummerGameProject
 ## TODO
-1. Networking
+1. Networking  
+  a. Prediction  
+  b. Reconcilliation  
+  c. Interpolation (?)  
 2. Hud
 3. Player attakcs/abilities
 4. Expand the map
@@ -13,3 +16,4 @@
 1. Helpful Monogame Tutorial Series: https://www.youtube.com/watch?v=F_q7XFmJhgs&list=PLV27bZtgVIJqoeHrQq6Mt_S1-Fvq_zzGZ&index=3
 2. Game Mindmap: https://drive.mindmup.com/map/1yCBLfOtKVVu_1mD-uSA6rm8CH9C1my_k#
 3. Gamedev tutorial: https://github.com/UnterrainerInformatik/GameDevelopmentLinks#networking
+4. Fast Paced Multiplayer: https://www.gabrielgambetta.com/client-server-game-architecture.html
