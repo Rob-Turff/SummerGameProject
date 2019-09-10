@@ -31,6 +31,9 @@ namespace SummerGameProject.Src.Client.Networking
 
         public GameServer gameServer { get; private set; }
 
+        /// <summary>
+        /// Hosts the server on a seperate thread then connects to it
+        /// </summary>
         public void HostServer()
         {
             isHost = true;
@@ -40,6 +43,9 @@ namespace SummerGameProject.Src.Client.Networking
             StartClient();
         }
 
+        /// <summary>
+        /// Initiates connection to the server, starts the message reading thread and then waits for connection
+        /// </summary>
         public void StartClient()
         {
             game.GameData.isMultiplayer = true;
@@ -56,6 +62,10 @@ namespace SummerGameProject.Src.Client.Networking
             waitForConnection();
         }
 
+        /// <summary>
+        /// Sends the provided message to the server using reliable ordered delivery method
+        /// </summary>
+        /// <param name="msgContent"></param>
         public void sendMessage(Message msgContent)
         {
             NetOutgoingMessage msg = client.CreateMessage();
@@ -67,6 +77,9 @@ namespace SummerGameProject.Src.Client.Networking
             client.FlushSendQueue();
         }
 
+        /// <summary>
+        /// Loop which reads and handles messages from the server
+        /// </summary>
         private void ReadMessages()
         {
             NetIncomingMessage msg;
@@ -129,6 +142,9 @@ namespace SummerGameProject.Src.Client.Networking
             }
         }
 
+        /// <summary>
+        /// Waits for successful connection then switches to the lobby screen
+        /// </summary>
         private void waitForConnection()
         {
             while (!isConnected)
@@ -140,6 +156,9 @@ namespace SummerGameProject.Src.Client.Networking
             game.ScreenManager.ChangeScreen(ScreenEnum.LOBBY);
         }
 
+        /// <summary>
+        /// Handles successful connection to the server
+        /// </summary>
         private void handleConnect()
         {
             game.GameData.clientsPlayerID = Guid.NewGuid();
@@ -147,9 +166,12 @@ namespace SummerGameProject.Src.Client.Networking
             isConnected = true;
         }
 
+        /// <summary>
+        /// Handles disconnection from the server
+        /// </summary>
         private void handleDisconnect()
         {
-
+            logger.Debug("Client disconnected from server");
         }
     }
 }

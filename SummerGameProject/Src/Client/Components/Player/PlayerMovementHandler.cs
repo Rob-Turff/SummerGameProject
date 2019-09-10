@@ -6,12 +6,10 @@ using SummerGameProject.Src.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Components.Player
 {
-    class PlayerMovementHandler
+    public class PlayerMovementHandler
     {
         #region Constants
 
@@ -40,6 +38,9 @@ namespace SummerGameProject.Src.Components.Player
         private bool isInAir = false;
         private float jumpTime = 0;
 
+        private Vector2 Position { get { return playerAttributes.position; } set { playerAttributes.position = value; } }
+        private Vector2 Velocity { get { return playerAttributes.velocity; } set { playerAttributes.velocity = value; } }
+
         public PlayerMovementHandler(Player player, List<Component> components, AnimationHandler animationHandler, PlayerAttributes playerAttributes, MainGame game)
         {
             this.player = player;
@@ -60,6 +61,8 @@ namespace SummerGameProject.Src.Components.Player
                 horizontalMovement = -1f;
             if (playerAttributes.currentMove.movingRight == true)
                 horizontalMovement = 1f;
+
+            Position = playerAttributes.currentMove.Position;
 
             ApplyPhysics(gameTime, horizontalMovement, playerAttributes.currentMove.jumping);
         }
@@ -206,9 +209,7 @@ namespace SummerGameProject.Src.Components.Player
 
         private void HandleInput()
         {
-            PlayerMove playerMove = new PlayerMove();
-
-            float horizontalMovement = 0;
+            PlayerMove playerMove = new PlayerMove(Position.X, Position.Y);
 
             KeyboardState keyboardState = Keyboard.GetState();
 
@@ -223,7 +224,7 @@ namespace SummerGameProject.Src.Components.Player
                 playerMove.movingRight = true;
             }
             else
-                animationHandler.Stop(); 
+                animationHandler.Stop();
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
             {

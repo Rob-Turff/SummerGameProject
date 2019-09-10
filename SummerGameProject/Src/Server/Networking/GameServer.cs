@@ -21,6 +21,9 @@ namespace SummerGameProject.Src.Server.Networking
             commandHandler = new ServerCommandHandler(this, game);
         }
 
+        /// <summary>
+        /// Starts the server and initiates the messsage reading thread
+        /// </summary>
         public void StartServer()
         {
             NetPeerConfiguration config = new NetPeerConfiguration("gameServer");
@@ -34,6 +37,9 @@ namespace SummerGameProject.Src.Server.Networking
                 ReadMessages();
         }
 
+        /// <summary>
+        /// Continously reads and handles messages from the client
+        /// </summary>
         private void ReadMessages()
         {
             NetIncomingMessage msg;
@@ -74,6 +80,11 @@ namespace SummerGameProject.Src.Server.Networking
             System.Threading.Thread.Sleep(10);
         }
 
+        /// <summary>
+        /// Sends the message content to the desired recipient using the Reliable Ordered delivery type
+        /// </summary>
+        /// <param name="msgContent"></param>
+        /// <param name="recipient"></param>
         internal void sendMsg(Message msgContent, NetConnection recipient)
         {
             NetOutgoingMessage msg = prepareMsg(msgContent);
@@ -81,6 +92,10 @@ namespace SummerGameProject.Src.Server.Networking
             server.FlushSendQueue();
         }
 
+        /// <summary>
+        /// Sends the message content to every connected client using the reliable ordered delivery type
+        /// </summary>
+        /// <param name="msgContent"></param>
         internal void sendMsgToAll(Message msgContent)
         {
             NetOutgoingMessage msg = prepareMsg(msgContent);
@@ -88,6 +103,11 @@ namespace SummerGameProject.Src.Server.Networking
             server.FlushSendQueue();
         }
 
+        /// <summary>
+        /// Converts the message into a sendable format
+        /// </summary>
+        /// <param name="msgContent"></param>
+        /// <returns></returns>
         private NetOutgoingMessage prepareMsg(Message msgContent)
         {
             NetOutgoingMessage msg = server.CreateMessage();

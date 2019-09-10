@@ -23,6 +23,7 @@ namespace SummerGameProject.Src.Components.Player
         public Player(PlayerAttributes playerAttributes, Screen screen, MainGame game) : base(screen)
         {
             this.playerAttributes = playerAttributes;
+            playerAttributes.movementHandler = movementHandler;
             this.screen = screen;
             this.game = game;
             animation = new Animation(moveAnimationFrames);

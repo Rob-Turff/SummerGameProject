@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using SummerGameProject.Src.Common;
+using SummerGameProject.Src.Components.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace SummerGameProject.Src.Client.Components.Player
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 position = new Vector2(0, 0);
         public PlayerMove currentMove = new PlayerMove();
+        public PlayerMovementHandler movementHandler;
         public bool isHost = false;
 
         public PlayerAttributes(string playerName, Guid playerID, bool isHost)
