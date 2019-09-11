@@ -13,12 +13,19 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Font.spritefont
+#begin ArialBold.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Font.spritefont
+/build:ArialBold.spritefont
+
+#begin ArialRegular.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:ArialRegular.spritefont
 
 #begin Game/GroundV1.png
 /importer:TextureImporter
