@@ -232,7 +232,7 @@ namespace SummerGameProject.Src.Components.Player
                 // TODO Play jumping animation
             }
 
-            if (playerMove != playerAttributes.currentMove && game.GameData.isMultiplayer)
+            if (playerMove.isSameDirection(playerAttributes.currentMove) && game.GameData.isMultiplayer)
             {
                 game.networkHandler.sendMessage(new PlayerMoveMessage(playerMove, playerAttributes.playerID));
             }

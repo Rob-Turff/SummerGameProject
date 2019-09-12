@@ -15,7 +15,7 @@ namespace SummerGameProject.Src.Client.Components.Player
         public string playerName;
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 position = new Vector2(0, 0);
-        public PlayerMove currentMove = new PlayerMove();
+        public PlayerMove currentMove = new PlayerMove(0, 0);
         public PlayerMovementHandler movementHandler;
         public bool isHost = false;
 

@@ -38,9 +38,9 @@ namespace SummerGameProject.Src.Client.Components.Player
             this.yPos = yPos;
         }
 
-        public bool isSameDirection(PlayerMove obj1, PlayerMove obj2)
+        public bool isSameDirection(PlayerMove obj)
         {
-            return (obj1.jumping == obj2.jumping && obj1.movingLeft == obj2.movingLeft && obj1.movingRight == obj2.movingRight);
+            return (this.jumping == obj.jumping && this.movingLeft == obj.movingLeft && this.movingRight == obj.movingRight);
         }
     }
 }
