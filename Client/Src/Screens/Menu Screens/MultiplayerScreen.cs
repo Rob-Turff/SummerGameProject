@@ -4,10 +4,12 @@ using System;
 using ServerFacadeNS;
 using Common.Src;
 using System.Threading;
+using Lidgren.Network;
+using Common.Src.Packets.ClientToServer;
 
 namespace Client.Src.Screens
 {
-    public class MultiplayerScreen : Screen
+    internal class MultiplayerScreen : Screen
     {
         public MultiplayerScreen(Game1 game) : base(game)
         {
@@ -15,11 +17,13 @@ namespace Client.Src.Screens
             ScreenHeight = 500;
             IsFullScreen = false;
 
-            Button joinGameBtn = new Button("Join Game", new Vector2(0, 0), JoinGame, this);
-            Button hostGameBtn = new Button("Host Game", new Vector2(0, 0), HostGame, this);
+            Button joinGameBtn = new Button("Join Game", new Vector2(0, 0), JoinGame, this)
+            { CentreOnPosition = true };
+            Button hostGameBtn = new Button("Host Game", new Vector2(0, 0), HostGame, this)
+            { CentreOnPosition = true };
 
-            Components.Add(joinGameBtn);
-            Components.Add(hostGameBtn);
+            UIComponents.Add(joinGameBtn);
+            UIComponents.Add(hostGameBtn);
         }
 
 
@@ -27,7 +31,7 @@ namespace Client.Src.Screens
         {
             base.LoadContent();
 
-            DistributeVertically(Components);
+            DistributeVertically(UIComponents);
         }
 
 
@@ -39,11 +43,22 @@ namespace Client.Src.Screens
         private void HostGame()
         {
             (new ServerFacade()).CreateAndStartServer(true);
-            GameClient client = new GameClient(Game.PlayerName);
-            client.Connect("localhost", GamePeer.DefaultPort);
 
-            LobbyScreen lobbyScreen = new LobbyScreen(Game, client, true);
-            client.RegisterPacketHandler(lobbyScreen);
+            NetClient netClient = new NetClient(NetworkSettings.DefaultNetPeerConfiguration);
+            netClient.Start();
+
+            NetOutgoingMessage netOutgoingMessage = NetPeerHandler.CreateMessage(new PlayerJoinPacket(Game.Player, "Rob is in fact handsome Squidward"), netClient);
+            netClient.Connect("localhost", NetworkSettings.DefaultPort, netOutgoingMessage);
+
+            while (netClient.ServerConnection == null)
+            {
+                Thread.Sleep(100);
+            }
+
+            ClientLobby clientLobby = new ClientLobby(netClient);
+
+            LobbyScreen lobbyScreen = new LobbyScreen(Game, clientLobby, true);
+
             Game.ScreenManager.CurrentScreen = lobbyScreen;
         }
     }

@@ -8,7 +8,7 @@ using Client.Src.Components;
 
 namespace Client.Src.Screens
 {
-    public class SettingScreen : Screen
+    internal class SettingScreen : Screen
     {
         public SettingScreen(Game1 game) : base(game)
         {

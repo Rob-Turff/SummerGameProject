@@ -8,7 +8,7 @@ using System;
 
 namespace Client.Src.Components
 {
-    public class TextInputBox : Component
+    internal class TextInputBox : UserInterfaceComponent
     {
         private readonly string text;
 
@@ -22,7 +22,7 @@ namespace Client.Src.Components
         private SpriteFont Font => Screen.FontRegular;
         public string EnteredText { get; set; } = "";
 
-        public TextInputBox(string text, Vector2 position, Screen screen, Game game) : base(screen, position)
+        public TextInputBox(string text, Vector2 position, Screen screen, Game game) : base(screen,position)
         {
             this.text = text;
             this.game = game;

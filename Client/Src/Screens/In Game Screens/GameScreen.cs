@@ -3,41 +3,49 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Client.Src.Components.Player;
 using Client.Src.Components;
-using Client.Src.Components.Platforms;
 using System.Collections.Generic;
 using Common.Src.Packets;
 using System;
 using Common.Src.Packets.ServerToClient;
+using Common.Src.Entities;
+using Client.Src.Components.Game_Components;
 
 namespace Client.Src.Screens
 {
-    class GameScreen : NetworkScreen
+    class GameScreen : Screen
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        private readonly ClientMatch clientMatch;
+        private readonly List<DrawableGameObject> drawableGameObjects;
+        private readonly InGameMenuScreen menuOverlay;
+
         private bool wasEscapePressed = false;
+        private bool isMenuOverlayShowing = false;
 
-        private InGameMenuScreen menuOverlay;
-        private bool isMenuOverlayShowing;
-
-        public GameScreen(Game1 game, GameClient gameClient) : base(game, gameClient)
+        public GameScreen(Game1 game, ClientMatch clientMatch) : base(game)
         {
             ScreenWidth = 1920;
             ScreenHeight = 1080;
 
+            this.clientMatch = clientMatch;
+            this.drawableGameObjects = new List<DrawableGameObject>();
+
+            clientMatch.DrawableEntityHasBeenAdded += ClientMatch_EntityHasBeenAdded;
+
+            foreach (IDrawableEntity drawableEntity in clientMatch.DrawableEntities)
+            {
+                drawableGameObjects.Add(new DrawableGameObject(drawableEntity, this));
+            }
+
+
+
             menuOverlay = new InGameMenuScreen(game, this);
+        }
 
-            Platform floor = new GrassPlatform(new Vector2(0, 880), new Vector2(1f, 1f), this);
-            Platform platform1 = new GrassPlatform(new Vector2(300, 650), new Vector2(0.2f, 0.2f), this);
-            Platform platform2 = new GrassPlatform(new Vector2(1200, 650), new Vector2(0.2f, 0.2f), this);
-            Platform wallLeft = new StoneWallPlatform(new Vector2(0, 380), new Vector2(1f, 1f), this);
-            Platform wallRight = new StoneWallPlatform(new Vector2(1870, 380), new Vector2(1f, 1f), this);
-
-            Components.Add(floor);
-            Components.Add(platform1);
-            Components.Add(platform2);
-            Components.Add(wallLeft);
-            Components.Add(wallRight);
+        private void ClientMatch_EntityHasBeenAdded(object sender, IDrawableEntity drawableEntity)
+        {
+            drawableGameObjects.Add(new DrawableGameObject(drawableEntity, this));
         }
 
         public void SetupGame()
@@ -67,7 +75,13 @@ namespace Client.Src.Screens
             {
                 menuOverlay.Draw(gameTime, spriteBatch);
             }
-            base.Draw(gameTime, spriteBatch);
+
+            spriteBatch.Begin();
+            foreach (DrawableGameObject drawableGameObject in drawableGameObjects)
+            {
+                spriteBatch.Draw(drawableGameObject.Texture, drawableGameObject.Position, null, Color.White, 0f, Vector2.Zero, drawableGameObject.Scale, SpriteEffects.None, 0f);
+            }
+            spriteBatch.End();
         }
 
         public override void Update(GameTime gameTime)
@@ -82,6 +96,8 @@ namespace Client.Src.Screens
             {
                 base.Update(gameTime);
             }
+
+            clientMatch.Update(gameTime);
         }
 
         public override void LoadContent()
@@ -113,21 +129,11 @@ namespace Client.Src.Screens
                 }
             }
             else
-            { 
+            {
                 wasEscapePressed = false;
             }
 
             return isOverlayShowing;
-        }
-
-        public override void HandleMatchStartedPacket(MatchStartedPacket matchStartedPacket)
-        {
-            logger.Error("Match started packet recieved when the match has already started");
-        }
-
-        public override void HandleLobbyInfoPacket(LobbyInfoPacket clientNamesPacket)
-        {
-            logger.Error("Lobby information packet recieved when the match has already started");
         }
     }
 }

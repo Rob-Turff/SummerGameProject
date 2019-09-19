@@ -8,12 +8,12 @@ using Lidgren.Network;
 
 namespace Common.Src.Packets.ClientToServer
 {
-    public class PlayerInputPacket : IPacket
+    public class PlayerInputPacket : Packet
     {
 
-        public PlayerInputs Inputs { get; private set; }
+        public override PacketType PacketType => PacketType.PLAYER_INPUT;
 
-        public PacketType PacketType => PacketType.PLAYER_INPUT;
+        public PlayerInputs Inputs { get; private set; }
 
         public PlayerInputPacket(PlayerInputs inputs)
         {
@@ -25,12 +25,12 @@ namespace Common.Src.Packets.ClientToServer
             Decode(netIncomingMessage);
         }
 
-        public void Encode(NetOutgoingMessage netOutgoingMessage)
+        public override void Encode(NetOutgoingMessage netOutgoingMessage)
         {
             netOutgoingMessage.Write((byte)Inputs);
         }
 
-        public void Decode(NetIncomingMessage netIncomingMessage)
+        protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
             this.Inputs = (PlayerInputs)netIncomingMessage.ReadByte();
         }

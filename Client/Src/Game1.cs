@@ -19,7 +19,7 @@ namespace Client
 
         internal SpriteFont FontRegular { get; private set; }
         internal SpriteFont FontBold { get; private set; }
-        internal string PlayerName { get; set; }
+        internal Player Player { get; set; }
         internal ScreenManager ScreenManager { get; }
 
         public Game1()
@@ -52,8 +52,8 @@ namespace Client
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            FontRegular = Content.Load<SpriteFont>("ArialRegular");
-            FontBold = Content.Load<SpriteFont>("ArialBold");
+            FontRegular = Content.Load<SpriteFont>("UI/ArialRegular");
+            FontBold = Content.Load<SpriteFont>("UI/ArialBold");
 
             ScreenManager.CurrentScreen.LoadContent();
         }

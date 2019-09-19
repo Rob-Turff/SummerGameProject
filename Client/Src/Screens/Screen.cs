@@ -9,7 +9,7 @@ namespace Client.Src.Screens
     /// <summary>
     /// Abstract class to create game states e.g. main menu
     /// </summary>
-    public abstract class Screen
+    internal abstract class Screen
     {
         #region Fields
 
@@ -19,9 +19,9 @@ namespace Client.Src.Screens
 
         #region Properties
 
-        protected readonly Game1 Game;
+        protected Game1 Game { get; }
 
-        public List<Component> Components { get; set; } = new List<Component>();
+        public List<UserInterfaceComponent> UIComponents { get; set; } = new List<UserInterfaceComponent>();
         public ContentManager Content { get; }
         public int ScreenWidth { get; protected set; }
         public int ScreenHeight { get; protected set; }
@@ -42,20 +42,20 @@ namespace Client.Src.Screens
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            foreach (var component in Components)
+            foreach (var component in UIComponents)
                 component.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (var component in Components)
+            foreach (var component in UIComponents)
                 component.Update(gameTime);
         }
 
         public virtual void LoadContent()
         {
-            foreach (var component in Components)
+            foreach (var component in UIComponents)
             {
                 component.LoadContent();
             }
@@ -66,7 +66,7 @@ namespace Client.Src.Screens
             Content.Unload();
         }
 
-        protected void DistributeVertically(List<Component> listOfComponents)
+        protected void DistributeVertically(List<UserInterfaceComponent> listOfComponents)
         {
             bool IsEvenNumber = listOfComponents.Count % 2 == 0;
 
@@ -74,28 +74,28 @@ namespace Client.Src.Screens
             {
                 for (int i = 0, length = listOfComponents.Count; i < length; i++)
                 {
-                    Component ithButton = listOfComponents[i];
+                    UserInterfaceComponent ithButton = listOfComponents[i];
                     ithButton.Position = new Vector2(
-                        ScreenWidth / 2 - ithButton.Width / 2, // Centre horizontally
-                        ScreenHeight / 2 - 1.75f * (ithButton.Height * (length / 2 - i))  // Distribute Vertically
-                        );
+                        ScreenWidth / 2, // Centre horizontally
+                        ScreenHeight / 2 - 1.75f * ithButton.Height * ((length - 1.0f) / 2.0f - i)   // Distribute Vertically
+                    );
                 }
             }
             else
             {
                 for (int i = 0, length = listOfComponents.Count; i < length; i++)
                 {
-                    Component ithButton = listOfComponents[i];
+                    UserInterfaceComponent ithButton = listOfComponents[i];
                     ithButton.Position = new Vector2(
-                        ScreenWidth / 2 - ithButton.Width / 2, // Centre horizontally
+                        ScreenWidth / 2, // Centre horizontally
                         ScreenHeight / 2 - 1.75f * ithButton.Height * ((length - 1) / 2 - i) // Distribute Vertically
-                        );
+                    ); 
                 }
             }
 
         }
 
-        protected void DistributeHorizontally(List<Component> listOfComponents, float spacing)
+        protected void DistributeHorizontally(List<UserInterfaceComponent> listOfComponents, float spacing)
         {
             bool IsEvenNumber = listOfComponents.Count % 2 == 0;
 
@@ -103,10 +103,10 @@ namespace Client.Src.Screens
             {
                 for (int i = 0, length = listOfComponents.Count; i < length; i++)
                 {
-                    Component ithButton = listOfComponents[i];
+                    UserInterfaceComponent ithButton = listOfComponents[i];
                     ithButton.Position = new Vector2(
                         ScreenWidth / 2 - (1.75f + spacing) * (ithButton.Width * (length / 2 - i)),  // Distribute horizontally
-                        ScreenHeight / 2 - ithButton.Height / 2 // Centre Vertically
+                        ScreenHeight / 2 // Centre Vertically
                         );
                 }
             }
@@ -114,24 +114,15 @@ namespace Client.Src.Screens
             {
                 for (int i = 0, length = listOfComponents.Count; i < length; i++)
                 {
-                    Component ithButton = listOfComponents[i];
+                    UserInterfaceComponent ithButton = listOfComponents[i];
                     ithButton.Position = new Vector2(
                         ScreenWidth / 2 - (1.75f + spacing) * ithButton.Width * ((length - 1) / 2 - i), // Distribute horizontally
-                        ScreenHeight / 2 - ithButton.Height / 2 // Centre Vertically
+                        ScreenHeight / 2 // Centre Vertically
                         );
                 }
             }
         }
 
-        protected void CentreHorizontally(Component component)
-        {
-            component.Position = new Vector2(component.Position.X - component.Width / 2, component.Position.Y);
-        }
-
-        protected void CentreVertically(Component component)
-        {
-            component.Position = new Vector2(component.Position.X, component.Position.Y + component.Height / 2);
-        }
         #endregion
     }
 }

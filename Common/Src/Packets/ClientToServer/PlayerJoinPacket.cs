@@ -7,15 +7,17 @@ using Lidgren.Network;
 
 namespace Common.Src.Packets.ClientToServer
 {
-    public class PlayerJoinPacket : IPacket
+    public class PlayerJoinPacket : Packet
     {
-        public string Name { get; private set; }
+        public override PacketType PacketType => PacketType.PLAYER_JOIN;
 
-        public PacketType PacketType => PacketType.PLAYER_JOIN;
+        public Player Player { get; private set; }
+        public string Password { get; private set; }
 
-        public PlayerJoinPacket(string name)
+        public PlayerJoinPacket(Player player,string password)
         {
-            this.Name = name;
+            this.Player = player;
+            this.Password = password;
         }
 
         public PlayerJoinPacket(NetIncomingMessage netIncomingMessage)
@@ -23,14 +25,20 @@ namespace Common.Src.Packets.ClientToServer
             Decode(netIncomingMessage);
         }
 
-        public void Encode(NetOutgoingMessage netOutgoingMessage)
+        public override void Encode(NetOutgoingMessage netOutgoingMessage)
         {
-            netOutgoingMessage.Write(Name);
+            netOutgoingMessage.Write(Player.Name);
+            netOutgoingMessage.Write(Player.ID.ToByteArray());
+            netOutgoingMessage.Write(Password);
         }
 
-        public void Decode(NetIncomingMessage netIncomingMessage)
+        protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
-            this.Name = netIncomingMessage.ReadString();
+            string name = netIncomingMessage.ReadString();
+            Guid id = new Guid(netIncomingMessage.ReadBytes(16));
+
+            this.Player = new Player(name,id);
+            this.Password = netIncomingMessage.ReadString();
         }
     }
 }

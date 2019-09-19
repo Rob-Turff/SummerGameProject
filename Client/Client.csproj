@@ -63,18 +63,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Src\Components\Button.cs" />
+    <Compile Include="Src\Components\Game Components\DrawableGameObject.cs" />
+    <Compile Include="Src\ClientMatch.cs" />
+    <Compile Include="Src\UI Components\Button.cs" />
     <Compile Include="Src\Components\Component.cs" />
-    <Compile Include="Src\Components\Label.cs" />
-    <Compile Include="Src\Components\Platforms\GrassPlatform.cs" />
-    <Compile Include="Src\Components\Platforms\Platform.cs" />
-    <Compile Include="Src\Components\Platforms\StoneWallPlatform.cs" />
-    <Compile Include="Src\Components\Player\Player.cs" />
-    <Compile Include="Src\Components\Player\PlayerAttributes.cs" />
-    <Compile Include="Src\Components\Player\PlayerMove.cs" />
-    <Compile Include="Src\Components\Player\PlayerMovementHandler.cs" />
-    <Compile Include="Src\Components\TextInputBox.cs" />
-    <Compile Include="Src\GameClient.cs" />
+    <Compile Include="Src\UI Components\Label.cs" />
+    <Compile Include="Src\Components\Game Components\Player\Player.cs" />
+    <Compile Include="Src\Components\Game Components\Player\PlayerAttributes.cs" />
+    <Compile Include="Src\Components\Game Components\Player\PlayerMove.cs" />
+    <Compile Include="Src\Components\Game Components\Player\PlayerMovementHandler.cs" />
+    <Compile Include="Src\UI Components\TextInputBox.cs" />
+    <Compile Include="Src\UI Components\UserInterfaceComponent.cs" />
+    <Compile Include="Src\NetClientHandler.cs" />
     <Compile Include="Src\Networking\ClientCommandHandler.cs" />
     <Compile Include="Src\Networking\NetworkHandler.cs" />
     <Compile Include="Src\Screens\In Game Screens\GameScreen.cs" />
@@ -83,13 +83,13 @@
     <Compile Include="Src\Screens\In Game Screens\InGameMenuScreen.cs" />
     <Compile Include="Src\Screens\Menu Screens\LoginScreen.cs" />
     <Compile Include="Src\Screens\Menu Screens\MenuScreen.cs" />
-    <Compile Include="Src\Screens\Menu Screens\NetworkScreen.cs" />
     <Compile Include="Src\Screens\Screen.cs" />
     <Compile Include="Src\Screens\ScreenManager.cs" />
     <Compile Include="Src\Screens\Menu Screens\SettingScreen.cs" />
     <Compile Include="Src\Game1.cs" />
     <Compile Include="Src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\ClientLobby.cs" />
     <Compile Include="Src\Utilities\Animation.cs" />
     <Compile Include="Src\Utilities\AnimationHandler.cs" />
     <Compile Include="Src\Utilities\GameDataStore.cs" />
@@ -103,6 +103,7 @@
     </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>

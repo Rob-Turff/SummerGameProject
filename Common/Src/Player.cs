@@ -12,12 +12,6 @@ namespace Common.Src
         public string Name { get; }
         public Guid ID { get; }
 
-        public Player(string name)
-        {
-            this.Name = name;
-            this.ID = Guid.NewGuid();
-        }
-
         public Player(string name, Guid ID)
         {
             this.Name = name;

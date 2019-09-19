@@ -12,78 +12,113 @@ using Common.Src;
 
 namespace Client.Src.Screens
 {
-    internal class LobbyScreen : NetworkScreen
+    internal class LobbyScreen : Screen
     {
-        private readonly Dictionary<Guid,Label> playerLabels = new Dictionary<Guid, Label>();
+        private readonly List<PlayerLabel> playerLabels = new List<PlayerLabel>();
         private readonly Button startGameBtn;
         private readonly bool amHosting;
+        private readonly ClientLobby clientLobby;
+        private readonly int distanceBetweenLabels = 30;
         private Vector2 nextLabelPosition;
 
-        public LobbyScreen(Game1 game, GameClient gameClient, bool amHosting) : base(game, gameClient)
+        public LobbyScreen(Game1 game, ClientLobby clientLobby, bool amHosting) : base(game)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;
             IsFullScreen = false;
 
+            this.clientLobby = clientLobby;
             this.amHosting = amHosting;
+
             this.nextLabelPosition = new Vector2(ScreenWidth / 2, ScreenHeight / 10);
 
-            if (this.amHosting)
+            clientLobby.PlayerHasJoined += LobbyScreen_PlayerHasJoined;
+            clientLobby.PlayerHasLeft += LobbyScreen_PlayerHasLeft;
+            clientLobby.MatchHasStarted += LobbyScreen_MatchHasStarted;
+
+            if (amHosting)
             {
-                startGameBtn = new Button("Start Game", new Vector2(ScreenWidth / 2, ScreenHeight * 4 / 5), () => Client.SendMatchStartRequestPacket(), this)
+                startGameBtn = new Button("Start Game", new Vector2(ScreenWidth / 2, ScreenHeight * 4 / 5), () => clientLobby.SendMatchStartRequestPacket(), this)
                 {
                     CentreOnPosition = true
                 };
-                Components.Add(startGameBtn);
+                UIComponents.Add(startGameBtn);
             }
         }
 
 
-        public override void HandleMatchStartedPacket(MatchStartedPacket matchStartedPacket)
+        public override void Update(GameTime gameTime)
         {
-            Client.UnregisterPacketHandler();
-            GameScreen gameScreen = new GameScreen(Game, Client);
-            Client.RegisterPacketHandler(gameScreen);
+            clientLobby.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+        private void LobbyScreen_PlayerHasJoined(object sender, (Player, bool) tuple)
+        {
+            Player player = tuple.Item1;
+            bool isHost = tuple.Item2;
+
+            Label label = new Label(player.Name, nextLabelPosition, this)
+            {
+                CentreOnPosition = true
+            };
+
+            if (isHost)
+                label.IsTextBold = true;
+
+            UIComponents.Add(label);
+            playerLabels.Add(new PlayerLabel(player, label));
+
+
+        }
+
+        private void LobbyScreen_PlayerHasLeft(object sender, Player removedPlayer)
+        {
+            bool afterRemovedLabel = false;
+
+            for (int i = 0, length = playerLabels.Count; i < length; i++)
+            {
+                PlayerLabel playerLabel = playerLabels[i];
+                Player player = playerLabel.Player;
+                Label label = playerLabel.Label;
+
+                if (player == removedPlayer)
+                {
+                    UIComponents.Remove(label);
+                    playerLabels.Remove(playerLabel);
+                    afterRemovedLabel = true;
+                    i--;
+                    continue;
+                }
+
+                // Move each label after the removed label up
+                if (afterRemovedLabel == true)
+                {
+                    label.Position = new Vector2(label.Position.X, label.Position.Y - distanceBetweenLabels);
+                }
+            }
+
+            nextLabelPosition = new Vector2(nextLabelPosition.X, nextLabelPosition.Y - distanceBetweenLabels);
+        }
+
+        private void LobbyScreen_MatchHasStarted(object sender, (NetClient netClient, MatchStartedPacket matchStartedPacket) pair)
+        {
+            GameScreen gameScreen = new GameScreen(Game, new ClientMatch(pair.netClient, pair.matchStartedPacket));
             Game.ScreenManager.CurrentScreen = gameScreen;
         }
 
-        public override void HandleLobbyInfoPacket(LobbyInfoPacket lobbyInfoPacket)
+
+    }
+
+    internal class PlayerLabel
+    {
+        public Player Player { get; }
+        public Label Label { get; }
+
+        public PlayerLabel(Player player, Label label)
         {
-            // Add labels for players without a label
-            for (int i = 0, length = lobbyInfoPacket.Players.Count; i < length; i++)
-            {
-                Player player = lobbyInfoPacket.Players[i];
-
-                if (!playerLabels.ContainsKey(player.ID))
-                {
-                    Label label = new Label(player.Name, nextLabelPosition, this)
-                    {
-                        CentreOnPosition = true
-                    };
-
-                    if (i == lobbyInfoPacket.HostIndex)
-                        label.IsTextBold = true;
-
-                    playerLabels.Add(player.ID, label);
-                    Components.Add(label);
-
-                    nextLabelPosition.Y += 40;
-                }
-            }
-
-            // Remove labels for players who have left
-            for (int i = 0, length = playerLabels.Keys.Count; i < length; i++)
-            {
-                Guid playerID = playerLabels.Keys.ElementAt(i);
-
-                if (lobbyInfoPacket.Players.Count(player => player.ID == playerID) == 0)
-                {
-                    Components.Remove(playerLabels[playerID]);
-                    playerLabels.Remove(playerID);
-                    nextLabelPosition.Y -= 40;
-                }
-            }
+            Player = player;
+            Label = label;
         }
-
     }
 }

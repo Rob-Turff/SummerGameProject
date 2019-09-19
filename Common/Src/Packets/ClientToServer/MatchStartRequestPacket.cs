@@ -7,9 +7,9 @@ using Lidgren.Network;
 
 namespace Common.Src.Packets.ClientToServer
 {
-    public class MatchStartRequestPacket : IPacket
+    public class MatchStartRequestPacket : Packet
     {
-        public PacketType PacketType => PacketType.MATCH_START_REQUEST;
+        public override PacketType PacketType => PacketType.MATCH_START_REQUEST;
 
         public MatchStartRequestPacket()
         {
@@ -20,12 +20,12 @@ namespace Common.Src.Packets.ClientToServer
             Decode(netIncomingMessage);
         }
 
-        public void Encode(NetOutgoingMessage netOutgoingMessage)
+        public override void Encode(NetOutgoingMessage netOutgoingMessage)
         {
             // No data associated with this packet yet
         }
 
-        public void Decode(NetIncomingMessage netIncomingMessage)
+        protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
             // No data associated with this packet yet
         }

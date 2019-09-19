@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Src;
 
 namespace Client.Src.Screens
 {
-    public class LoginScreen : Screen
+    internal class LoginScreen : Screen
     {
         private TextInputBox playerNameBox;
 
@@ -22,17 +23,17 @@ namespace Client.Src.Screens
             playerNameBox = new TextInputBox("Enter Your Player Name", new Vector2(0, 0), this, game);
             playerNameBox.Position = new Vector2(50, 55);
 
-            Action loginBtnAction = new Action(() => handleLogin());
+            Action loginBtnAction = new Action(() => HandleLogin());
             Button loginButton = new Button("Login", new Vector2(0, 0), loginBtnAction, this);
             loginButton.Position = new Vector2(300, 57);
 
-            Components.Add(playerNameBox);
-            Components.Add(loginButton);
+            UIComponents.Add(playerNameBox);
+            UIComponents.Add(loginButton);
         }
 
-        public void handleLogin()
+        private void HandleLogin()
         {
-            Game.PlayerName = playerNameBox.EnteredText;
+            Game.Player = new Player(playerNameBox.EnteredText, Guid.NewGuid());
             Game.ScreenManager.ChangeToSavedScreen<MenuScreen>();
         }
     }

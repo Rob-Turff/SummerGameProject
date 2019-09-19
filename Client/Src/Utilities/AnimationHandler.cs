@@ -16,24 +16,24 @@ namespace Client.Src.Utilities
 
         public float Scale { get; set; } = 1f;
 
-        private readonly Component component;
+        //private readonly Component component;
         public Animation animation { get; private set; }
         private float timer = 0f;
         private bool doUpdate = false;
 
-        public AnimationHandler(Animation animation, Component component)
+        public AnimationHandler(Animation animation)//Component component)
         {
             this.animation = animation;
-            this.component = component;
+            //this.component = component;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.Texture.Height);
-            if (MovingLeft)
-                spriteBatch.Draw(animation.Texture, component.Position, sourceRectangle, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
-            else
-                spriteBatch.Draw(animation.Texture, component.Position, sourceRectangle, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            //Rectangle sourceRectangle = new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.Texture.Height);
+            //if (MovingLeft)
+            //    spriteBatch.Draw(animation.Texture, component.Position, sourceRectangle, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
+            //else
+            //    spriteBatch.Draw(animation.Texture, component.Position, sourceRectangle, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
         }
 
         public void Stop()

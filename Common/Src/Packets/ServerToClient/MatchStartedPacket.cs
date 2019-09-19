@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Src.Stages;
 using Lidgren.Network;
 
 namespace Common.Src.Packets.ServerToClient
 {
-    public class MatchStartedPacket : IPacket
+    public class MatchStartedPacket : Packet
     {
-        public PacketType PacketType => PacketType.MATCH_STARTED;
+        public override PacketType PacketType => PacketType.MATCH_STARTED;
 
-        public MatchStartedPacket()
+        public StageIdentifier StageIdentifier { get; private set; }
+        public List<Player> Players { get; private set; }
+
+        public MatchStartedPacket(StageIdentifier stageIdentifier, List<Player> players)
         {
+            StageIdentifier = stageIdentifier;
+            Players = players;
         }
 
         public MatchStartedPacket(NetIncomingMessage netIncomingMessage)
@@ -20,14 +26,16 @@ namespace Common.Src.Packets.ServerToClient
             Decode(netIncomingMessage);
         }
 
-        public void Encode(NetOutgoingMessage netOutgoingMessage)
+        public override void Encode(NetOutgoingMessage netOutgoingMessage)
         {
-            // No data associated with this packet yet
+            netOutgoingMessage.Write((byte)StageIdentifier);
+            EncodePlayerList(netOutgoingMessage, Players);
         }
 
-        public void Decode(NetIncomingMessage netIncomingMessage)
+        protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
-            // No data associated with this packet yet
+            StageIdentifier = (StageIdentifier)netIncomingMessage.ReadByte();
+            Players = DecodePlayerList(netIncomingMessage);
         }
     }
 }

@@ -38,10 +38,18 @@
       <HintPath>..\packages\Lidgren.Network.1.0.2\lib\net451\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Primitives.4.3.0\lib\net45\System.Drawing.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,20 +57,59 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Src\GamePeer.cs" />
+    <Compile Include="Properties\Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Src\CharacterMovementSystem.cs" />
+    <Compile Include="Src\Entities\Character.cs" />
+    <Compile Include="Src\Entities\CollidableEntity.cs" />
+    <Compile Include="Src\Entities\Entity.cs" />
+    <Compile Include="Src\Entities\ICollidableEntity.cs" />
+    <Compile Include="Src\Entities\IDrawableEntity.cs" />
+    <Compile Include="Src\Entities\IMovableCharacter.cs" />
+    <Compile Include="Src\Entities\Platforms\GrassPlatform.cs" />
+    <Compile Include="Src\Entities\Platforms\Platform.cs" />
+    <Compile Include="Src\NetPeerHandler.cs" />
+    <Compile Include="Src\NetworkSettings.cs" />
     <Compile Include="Src\Packets\ServerToClient\LobbyInfoPacket.cs" />
     <Compile Include="Src\Packets\ServerToClient\MatchStartedPacket.cs" />
-    <Compile Include="Src\Packets\IPacket.cs" />
+    <Compile Include="Src\Packets\Packet.cs" />
     <Compile Include="Src\Packets\ClientToServer\PlayerJoinPacket.cs" />
     <Compile Include="Src\Packets\ClientToServer\PlayerInputPacket.cs" />
     <Compile Include="Src\Packets\ClientToServer\MatchStartRequestPacket.cs" />
     <Compile Include="Src\Packets\PacketType.cs" />
+    <Compile Include="Src\Packets\ServerToClient\WorldStatePacket.cs" />
     <Compile Include="Src\Player.cs" />
+    <Compile Include="Src\Stages\DefaultStage.cs" />
+    <Compile Include="Src\Stages\IStage.cs" />
+    <Compile Include="Src\Stages\StageFactory.cs" />
+    <Compile Include="Src\Entities\Platforms\StoneWall.cs" />
     <Compile Include="Src\Utilities\SerializationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Src\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Game\GroundV1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Game\Player.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Game\Stonewall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Game\WizardSpriteSheet.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

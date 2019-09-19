@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Client.Src.Components
 {
-    public class Label : Component
+    internal class Label : UserInterfaceComponent
     {
         private readonly string text;
 

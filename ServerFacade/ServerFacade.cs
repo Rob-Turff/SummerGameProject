@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace ServerFacadeNS
 {
@@ -14,17 +15,16 @@ namespace ServerFacadeNS
 
         public void CreateAndStartServer(bool isMultiplayer)
         {
-            //Thread serverThread = new Thread(() =>
-            //{
-            //    SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+            Thread serverThread = new Thread(() =>
+            {
+                SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
 
-                GameServer server = new GameServer(isMultiplayer ? maximumPlayers : 1);
-                
-                server.StartServer();
+                GameServer gameServer = new GameServer(isMultiplayer);
+                gameServer.Start();
 
-            //});
-            //serverThread.Start();
-            //serverThread.Name = "Server Thread";
+            });
+            serverThread.Start();
+            serverThread.Name = "Server Thread";
         }
 
     }
