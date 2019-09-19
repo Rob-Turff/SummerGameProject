@@ -81,7 +81,7 @@ namespace Common.Src
             (newVelocityY, newJumpTime) = HandleJump(jumpButtonPressed, character.JumpTime, character.IsOnGround, newVelocityY, elapsedTime);
 
             // Apply pseudo-drag horizontally
-            newVelocityX *= (character.IsOnGround ? groundDragFactor : airDragFactor);
+            newVelocityX -= newVelocityX * (character.IsOnGround ? groundDragFactor : airDragFactor) * elapsedTime * 5;
 
             // Prevent the player from running faster than their top speed
             newVelocityX = Clamp(newVelocityX, -maxMoveSpeed, maxMoveSpeed);
