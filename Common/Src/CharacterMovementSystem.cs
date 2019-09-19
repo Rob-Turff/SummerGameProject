@@ -16,8 +16,8 @@ namespace Common.Src
         #region Constants
 
         // Constants for controlling horizontal movement
-        private const float maxMoveSpeed = 3000.0f;
-        private const float moveAcceleration = maxMoveSpeed; // So it takes one second to accelerate to full speed
+        private const float maxMoveSpeed = 900.0f;
+        private const float moveAcceleration = maxMoveSpeed * 4; // So it takes one second to accelerate to full speed
         private const float groundDragFactor = 0.9f;
         private const float airDragFactor = 0.9f;
 
@@ -81,11 +81,15 @@ namespace Common.Src
             (newVelocityY, newJumpTime) = HandleJump(jumpButtonPressed, character.JumpTime, character.IsOnGround, newVelocityY, elapsedTime);
 
             // Apply pseudo-drag horizontally
-            newVelocityX -= newVelocityX * (character.IsOnGround ? groundDragFactor : airDragFactor) * elapsedTime * 5;
+            if (playerInputs == PlayerInputs.NONE)
+                newVelocityX -= newVelocityX * (character.IsOnGround ? groundDragFactor : airDragFactor) * elapsedTime * 10;
 
             // Prevent the player from running faster than their top speed
             newVelocityX = Clamp(newVelocityX, -maxMoveSpeed, maxMoveSpeed);
             newVelocityY = Clamp(newVelocityY, -initalJumpSpeed, maxFallSpeed);
+
+            // If coming to rest then stop it taking forever
+            newVelocityX = (playerInputs == PlayerInputs.NONE && Math.Abs(newVelocityX) < maxMoveSpeed / 20) ? 0 : newVelocityX;
 
             // Change the player's position, velocity, jumptime and isonground according to whether or not they collide
             HandleCollisions(character, collidableEntities, newVelocityX, newVelocityY, newJumpTime, elapsedTime);
