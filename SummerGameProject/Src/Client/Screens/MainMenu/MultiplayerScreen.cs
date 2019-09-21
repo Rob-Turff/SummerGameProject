@@ -23,14 +23,14 @@ namespace SummerGameProject.Src.Client.Screens
             Button joinGameBtn = new Button("Join Game", new Vector2(0, 0), JoinGame, this);
             Button hostGameBtn = new Button("Host Game", new Vector2(0, 0), HostGame, this);
 
-            Components.Add(joinGameBtn);
-            Components.Add(hostGameBtn);
+            components.Add(joinGameBtn);
+            components.Add(hostGameBtn);
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
-            DistributeVertically(Components);
+            DistributeVertically(components);
         }
 
         private void JoinGame()

@@ -27,16 +27,16 @@ namespace SummerGameProject.Src.Screens
             Button settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
             Button multiplayerBtn = new Button("Multiplayer", new Vector2(0, 0), multiplayerBtnAction, this);
 
-            Components.Add(singlePlayerButton);
-            Components.Add(settingsBtn);
-            Components.Add(multiplayerBtn);
+            components.Add(singlePlayerButton);
+            components.Add(settingsBtn);
+            components.Add(multiplayerBtn);
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
 
-            DistributeVertically(Components);
+            DistributeVertically(components);
         }
 
     }

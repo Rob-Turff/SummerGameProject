@@ -25,13 +25,6 @@ namespace SummerGameProject.Src.Components
         public virtual float Width { get => Texture.Width * Scale.X; set => Width = value; }
         public virtual float Height { get => Texture.Height * Scale.Y; set => Width = value; }
 
-    public RectangleF Hitbox
-        {
-            get
-            {
-                return new RectangleF(Position.X, Position.Y, Width, Height);
-            }
-        }
 
         public Component(Screen screen)
         {
@@ -42,6 +35,14 @@ namespace SummerGameProject.Src.Components
         {
             this.Screen = screen;
             this.Position = position;
+        }
+
+        public RectangleF Hitbox
+        {
+            get
+            {
+                return new RectangleF(Position.X, Position.Y, Width, Height);
+            }
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);

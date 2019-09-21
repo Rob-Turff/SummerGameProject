@@ -52,9 +52,6 @@ namespace SummerGameProject.Src.Components.Player
 
         public void Update(GameTime gameTime)
         {
-            if (playerAttributes.playerID == game.GameData.clientsPlayerID)
-                HandleInput();
-
             float horizontalMovement = 0f;
 
             if (playerAttributes.currentMove.movingLeft == true)
@@ -205,39 +202,6 @@ namespace SummerGameProject.Src.Components.Player
             }
 
             return newVerticalVelocity;
-        }
-
-        private void HandleInput()
-        {
-            PlayerMove playerMove = new PlayerMove(Position.X, Position.Y);
-
-            KeyboardState keyboardState = Keyboard.GetState();
-
-            if (keyboardState.IsKeyDown(Keys.A))
-            {
-                animationHandler.Play();
-                playerMove.movingLeft = true;
-            }
-            else if (keyboardState.IsKeyDown(Keys.D))
-            {
-                animationHandler.Play();
-                playerMove.movingRight = true;
-            }
-            else
-                animationHandler.Stop();
-
-            if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
-            {
-                playerMove.jumping = true;
-                // TODO Play jumping animation
-            }
-
-            if (playerMove.isSameDirection(playerAttributes.currentMove) && game.GameData.isMultiplayer)
-            {
-                game.networkHandler.sendMessage(new PlayerMoveMessage(playerMove, playerAttributes.playerID));
-            }
-
-            playerAttributes.currentMove = playerMove;
         }
     }
 }

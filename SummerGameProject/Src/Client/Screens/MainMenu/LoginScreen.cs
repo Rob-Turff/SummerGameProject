@@ -27,8 +27,8 @@ namespace SummerGameProject.Src.Client.Screens
             Button loginButton = new Button("Login", new Vector2(0, 0), loginBtnAction, this);
             loginButton.Position = new Vector2(300, 57);
 
-            Components.Add(playerNameBox);
-            Components.Add(loginButton);
+            components.Add(playerNameBox);
+            components.Add(loginButton);
         }
 
         public void handleLogin()

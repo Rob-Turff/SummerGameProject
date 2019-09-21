@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Client.Components;
 using SummerGameProject.Src.Client.Components.Player;
+using SummerGameProject.Src.Client.Physics;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Components.Platforms;
 using SummerGameProject.Src.Components.Player;
@@ -9,19 +11,22 @@ using System.Collections.Generic;
 
 namespace SummerGameProject.Src.Screens
 {
-    class GameScreen : Screen
+    public class GameScreen : Screen
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private bool wasEscapePressed = false;
-
         private InGameMenuScreen menuOverlay;
         private bool isMenuOverlayShowing;
+
+        private PhysicsHandler physicsHandler;
 
         public GameScreen(MainGame game) : base(game)
         {
             ScreenWidth = 1920;
             ScreenHeight = 1080;
+
+            physicsHandler = new PhysicsHandler(this);
 
             menuOverlay = new InGameMenuScreen(game, this);
 
@@ -31,11 +36,11 @@ namespace SummerGameProject.Src.Screens
             Platform wallLeft = new StoneWallPlatform(new Vector2(0, 380), new Vector2(1f, 1f), this);
             Platform wallRight = new StoneWallPlatform(new Vector2(1870, 380), new Vector2(1f, 1f), this);
 
-            Components.Add(floor);
-            Components.Add(platform1);
-            Components.Add(platform2);
-            Components.Add(wallLeft);
-            Components.Add(wallRight);
+            components.Add(floor);
+            components.Add(platform1);
+            components.Add(platform2);
+            components.Add(wallLeft);
+            components.Add(wallRight);
         }
 
         public void SetupGame()
@@ -44,14 +49,14 @@ namespace SummerGameProject.Src.Screens
             {
                 foreach (PlayerAttributes pa in game.GameData.players)
                 {
-                    Components.Add(new Player(pa, this, game));
+                    components.Add(new Player(pa, this, game));
                 }
             } else
             {
                 PlayerAttributes playerAttributes = new PlayerAttributes("Player 1", new System.Guid(), true);
                 playerAttributes.position = new Vector2(ScreenWidth / 2, ScreenHeight / 2);
                 Player player = new Player(playerAttributes, this, game);
-                Components.Add(player);
+                components.Add(player);
             }
 
             LoadContent();
@@ -78,6 +83,7 @@ namespace SummerGameProject.Src.Screens
             else
             {
                 base.Update(gameTime);
+                physicsHandler.Update(gameTime);
             }
         }
 

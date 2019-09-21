@@ -22,7 +22,7 @@ namespace SummerGameProject.Src.Client.Screens
             IsFullScreen = false;
 
             startGameBtn = new Button("Start Game", new Vector2(0, 0), startGame, this);
-            Components.Add(startGameBtn);
+            components.Add(startGameBtn);
         }
 
         private void updateConnectedPlayers()
@@ -32,12 +32,12 @@ namespace SummerGameProject.Src.Client.Screens
                 if (!labelsCreated.Contains(p.playerID))
                 {
                     if (p.isHost)
-                        Components.Add(new Label(p.playerName + " : Host", new Vector2(), this));
+                        components.Add(new Label(p.playerName + " : Host", new Vector2(), this));
                     else
-                        Components.Add(new Label(p.playerName, new Vector2(), this));
+                        components.Add(new Label(p.playerName, new Vector2(), this));
 
                     labelsCreated.Add(p.playerID);
-                    DistributeVertically(Components);
+                    DistributeVertically(components);
                 }
             }
         }
@@ -58,8 +58,8 @@ namespace SummerGameProject.Src.Client.Screens
 
             if (!game.GameData.IsHost())
             {
-                Components.Remove(startGameBtn);
-                DistributeVertically(Components);
+                components.Remove(startGameBtn);
+                DistributeVertically(components);
             }
 
             base.Update(gameTime);

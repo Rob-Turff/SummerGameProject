@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SummerGameProject.Src.Client.Components;
 using SummerGameProject.Src.Components;
 using System.Collections.Generic;
 
@@ -15,7 +16,15 @@ namespace SummerGameProject.Src.Screens
 
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public List<Component> Components { get; set; } = new List<Component>();
+        /// <summary>
+        /// List of components which are drawn but physics is NOT applied to.
+        /// </summary>
+        public List<Component> components= new List<Component>();
+
+        /// <summary>
+        /// List of entities which physics is applied to and is drawn.
+        /// </summary>
+        public List<Entity> entities = new List<Entity>();
 
         protected readonly MainGame game;
 
@@ -32,7 +41,6 @@ namespace SummerGameProject.Src.Screens
         #endregion
 
         #region Methods
-
         public Screen(MainGame game)
         {
             this.game = game;
@@ -42,20 +50,24 @@ namespace SummerGameProject.Src.Screens
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            foreach (var component in Components)
+            foreach (var component in components)
                 component.Draw(gameTime, spriteBatch);
+            foreach (var entity in entities)
+                entity.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (var component in Components)
+            foreach (var component in components)
                 component.Update(gameTime);
+            foreach (var entity in entities)
+                entity.Update(gameTime);
         }
 
         public virtual void LoadContent()
         {
-            foreach (var component in Components)
+            foreach (var component in components)
             {
                 component.LoadContent();
             }

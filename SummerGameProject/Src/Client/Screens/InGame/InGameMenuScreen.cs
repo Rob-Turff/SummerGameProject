@@ -25,15 +25,15 @@ namespace SummerGameProject.Src.Screens
             Button quitToMenuBtn = new Button("Quit to Menu", new Vector2(0,0), quitToMenuBtnAction, this);
             Button settingsBtn = new Button("Settings", new Vector2(0,0), settingsBtnAction, this);
 
-            Components.Add(quitGameBtn);
-            Components.Add(quitToMenuBtn);
-            Components.Add(settingsBtn);
+            components.Add(quitGameBtn);
+            components.Add(quitToMenuBtn);
+            components.Add(settingsBtn);
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
-            DistributeVertically(Components);
+            DistributeVertically(components);
         }
     }
 }

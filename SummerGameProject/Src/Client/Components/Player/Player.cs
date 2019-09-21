@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Client.Components;
 using SummerGameProject.Src.Client.Components.Player;
 using SummerGameProject.Src.Screens;
 using SummerGameProject.Src.Utilities;
@@ -8,11 +9,12 @@ using System;
 
 namespace SummerGameProject.Src.Components.Player
 {
-    public class Player : Component
+    public class Player : Entity
     {
-        private readonly Screen screen;
+        private readonly GameScreen screen;
         private readonly MainGame game;
         private PlayerMovementHandler movementHandler;
+        private PlayerInputHandler inputHandler;
         private PlayerAttributes playerAttributes;
         private Animation animation;
         private AnimationHandler animationHandler;
@@ -20,7 +22,7 @@ namespace SummerGameProject.Src.Components.Player
 
         public override Vector2 Position { get => playerAttributes.position; set => playerAttributes.position = value; }
 
-        public Player(PlayerAttributes playerAttributes, Screen screen, MainGame game) : base(screen)
+        public Player(PlayerAttributes playerAttributes, GameScreen screen, MainGame game) : base(screen)
         {
             this.playerAttributes = playerAttributes;
             playerAttributes.movementHandler = movementHandler;
@@ -28,11 +30,13 @@ namespace SummerGameProject.Src.Components.Player
             this.game = game;
             animation = new Animation(moveAnimationFrames);
             animationHandler = new AnimationHandler(animation, this);
-            this.movementHandler = new PlayerMovementHandler(this, screen.Components, animationHandler, playerAttributes, game);
+            movementHandler = new PlayerMovementHandler(this, screen.components, animationHandler, playerAttributes, game);
+            inputHandler = new PlayerInputHandler(screen, playerAttributes, animationHandler, game);
         }
 
         public override void Update(GameTime gameTime)
         {
+            inputHandler.Update(gameTime);
             movementHandler.Update(gameTime);
             animationHandler.Update(gameTime);
         }
