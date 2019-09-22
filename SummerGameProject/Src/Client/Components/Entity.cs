@@ -11,11 +11,15 @@ namespace SummerGameProject.Src.Client.Components
 {
     public abstract class Entity : Component
     {
-        internal Vector2 maxVelocity;
-        internal Vector2 velocity;
-
-        internal float airDrag;
-        internal float groundFriction;
+        // Default values for physics calculations
+        internal Vector2 velocity = new Vector2(0,0);
+        internal float airDrag = 0.9f;
+        internal float groundFriction = 0.9f;
+        internal float horizontalAcceleration = 0;
+        internal float verticalAcceleration = 0;
+        internal float maxVerticalSpeed = 3000f;
+        internal float maxHorzizontalSpeed = 3000f;
+        internal bool isInAir = true;
 
         public Entity(Screen screen) : base(screen)
         {

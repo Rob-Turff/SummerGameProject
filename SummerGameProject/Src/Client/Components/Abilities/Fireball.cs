@@ -14,6 +14,7 @@ namespace SummerGameProject.Src.Client.Components
 {
     public class Fireball : Ability
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private Animation animation;
         private AnimationHandler animationHandler;
         private int moveAnimationFrames = 4;
@@ -26,7 +27,10 @@ namespace SummerGameProject.Src.Client.Components
             LoadContent();
             animationHandler.Play();
             Screen.entities.Add(this);
+            SetInitialVelocity(3000);
         }
+
+      
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

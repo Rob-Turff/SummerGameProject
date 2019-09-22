@@ -16,6 +16,8 @@ namespace SummerGameProject.Src.Components
     /// </summary>
     public abstract class Component
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected Screen Screen { get; }
 
         public Texture2D Texture { get; set; }
@@ -43,6 +45,22 @@ namespace SummerGameProject.Src.Components
             {
                 return new RectangleF(Position.X, Position.Y, Width, Height);
             }
+        }
+
+        public Vector2 GetCentreCoord()
+        {
+            return new Vector2(Position.X + Width / 2, Position.Y + Height / 2);
+        }
+
+        /// <summary>
+        /// Returns the angle between obj1 and obj2 (in radians)
+        /// </summary>
+        /// <param name="obj1Pos"></param>
+        /// <param name="obj2Pos"></param>
+        /// <returns></returns>
+        public float GetAngleToCentre(Vector2 obj1Pos, Vector2 obj2Pos)
+        {
+            return (float) Math.Atan((obj2Pos.Y - obj1Pos.Y) / (obj2Pos.X - obj1Pos.X));
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
