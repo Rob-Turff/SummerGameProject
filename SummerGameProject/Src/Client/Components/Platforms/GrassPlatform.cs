@@ -11,7 +11,7 @@ namespace SummerGameProject.Src.Components.Platforms
 {
     class GrassPlatform : Platform
     {
-        public GrassPlatform(Vector2 position, float scale, Screen screen) : base(position, Color.White, scale, screen)
+        public GrassPlatform(Vector2 position, Vector2 scale, Screen screen) : base(position, Color.White, scale, screen)
         {
         }
 

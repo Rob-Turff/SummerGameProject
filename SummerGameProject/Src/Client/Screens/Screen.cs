@@ -1,13 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Screens
 {
@@ -17,6 +12,8 @@ namespace SummerGameProject.Src.Screens
     public abstract class Screen
     {
         #region Fields
+
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public List<Component> Components { get; set; } = new List<Component>();
 
@@ -98,6 +95,33 @@ namespace SummerGameProject.Src.Screens
 
         }
 
+        protected void DistributeHorizontally(List<Component> listOfComponents, float spacing)
+        {
+            bool IsEvenNumber = listOfComponents.Count % 2 == 0;
+
+            if (IsEvenNumber)
+            {
+                for (int i = 0, length = listOfComponents.Count; i < length; i++)
+                {
+                    Component ithButton = listOfComponents[i];
+                    ithButton.Position = new Vector2(
+                        ScreenWidth / 2 - (1.75f + spacing) * (ithButton.Width * (length / 2 - i)),  // Distribute horizontally
+                        ScreenHeight / 2 - ithButton.Height / 2 // Centre Vertically
+                        );
+                }
+            }
+            else
+            {
+                for (int i = 0, length = listOfComponents.Count; i < length; i++)
+                {
+                    Component ithButton = listOfComponents[i];
+                    ithButton.Position = new Vector2(
+                        ScreenWidth / 2 - (1.75f + spacing) * ithButton.Width * ((length - 1) / 2 - i), // Distribute horizontally
+                        ScreenHeight / 2 - ithButton.Height / 2 // Centre Vertically
+                        );
+                }
+            }
+        }
         #endregion
     }
 }

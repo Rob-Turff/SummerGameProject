@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Client.Components.Player;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Components.Platforms;
 using SummerGameProject.Src.Components.Player;
+using System.Collections.Generic;
 
 namespace SummerGameProject.Src.Screens
 {
@@ -23,20 +25,36 @@ namespace SummerGameProject.Src.Screens
 
             menuOverlay = new InGameMenuScreen(game, this);
 
-            Player player = new Player(new Vector2(ScreenWidth / 2, ScreenHeight / 2), this);
-            Components.Add(player);
-
-            Platform floor = new GrassPlatform(new Vector2(0, 880), 1f, this);
-            Platform platform1 = new GrassPlatform(new Vector2(300, 650), 0.2f, this);
-            Platform platform2 = new GrassPlatform(new Vector2(1200, 650), 0.2f, this);
-            Platform wallLeft = new StoneWallPlatform(new Vector2(0, 380), 1f, this);
-            Platform wallRight = new StoneWallPlatform(new Vector2(1870, 380), 1f, this);
+            Platform floor = new GrassPlatform(new Vector2(0, 880), new Vector2(1f, 1f), this);
+            Platform platform1 = new GrassPlatform(new Vector2(300, 650), new Vector2(0.2f, 0.2f), this);
+            Platform platform2 = new GrassPlatform(new Vector2(1200, 650), new Vector2(0.2f, 0.2f), this);
+            Platform wallLeft = new StoneWallPlatform(new Vector2(0, 380), new Vector2(1f, 1f), this);
+            Platform wallRight = new StoneWallPlatform(new Vector2(1870, 380), new Vector2(1f, 1f), this);
 
             Components.Add(floor);
             Components.Add(platform1);
             Components.Add(platform2);
             Components.Add(wallLeft);
             Components.Add(wallRight);
+        }
+
+        public void SetupGame()
+        {
+            if (game.GameData.isMultiplayer)
+            {
+                foreach (PlayerAttributes pa in game.GameData.players)
+                {
+                    Components.Add(new Player(pa, this, game));
+                }
+            } else
+            {
+                PlayerAttributes playerAttributes = new PlayerAttributes("Player 1", new System.Guid(), true);
+                playerAttributes.position = new Vector2(ScreenWidth / 2, ScreenHeight / 2);
+                Player player = new Player(playerAttributes, this, game);
+                Components.Add(player);
+            }
+
+            LoadContent();
         }
 
 
@@ -59,7 +77,6 @@ namespace SummerGameProject.Src.Screens
             }
             else
             {
-                // Potential Issue: Might update twice in one cycle
                 base.Update(gameTime);
             }
         }

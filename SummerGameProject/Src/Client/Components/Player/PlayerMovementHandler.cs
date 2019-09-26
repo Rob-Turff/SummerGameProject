@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Client.Components.Player;
+using SummerGameProject.Src.Common.Message;
 using SummerGameProject.Src.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Components.Player
 {
-    class PlayerMovementHandler
+    public class PlayerMovementHandler
     {
         #region Constants
 
@@ -33,27 +33,38 @@ namespace SummerGameProject.Src.Components.Player
         private Player player;
         private List<Component> components;
         private AnimationHandler animationHandler;
+        private PlayerAttributes playerAttributes;
+        private readonly MainGame game;
         private bool isInAir = false;
         private float jumpTime = 0;
 
-        private Vector2 velocity = new Vector2(0, 0);
-        private Vector2 position;
+        private Vector2 Position { get { return playerAttributes.position; } set { playerAttributes.position = value; } }
+        private Vector2 Velocity { get { return playerAttributes.velocity; } set { playerAttributes.velocity = value; } }
 
-        public Vector2 Position { get => position; set => position = value; }
-        public bool IsPlayerMovingLeft { get; set; } = false;
-
-        public PlayerMovementHandler(Player player, List<Component> components, Utilities.AnimationHandler animationHandler)
+        public PlayerMovementHandler(Player player, List<Component> components, AnimationHandler animationHandler, PlayerAttributes playerAttributes, MainGame game)
         {
             this.player = player;
             this.components = components;
             this.animationHandler = animationHandler;
+            this.playerAttributes = playerAttributes;
+            this.game = game;
         }
 
         public void Update(GameTime gameTime)
         {
-            (float horizontalMovement, bool attemptJump) = HandleInput();
+            if (playerAttributes.playerID == game.GameData.clientsPlayerID)
+                HandleInput();
 
-            ApplyPhysics(gameTime, horizontalMovement, attemptJump);
+            float horizontalMovement = 0f;
+
+            if (playerAttributes.currentMove.movingLeft == true)
+                horizontalMovement = -1f;
+            if (playerAttributes.currentMove.movingRight == true)
+                horizontalMovement = 1f;
+
+            Position = playerAttributes.currentMove.Position;
+
+            ApplyPhysics(gameTime, horizontalMovement, playerAttributes.currentMove.jumping);
         }
 
         /// <summary>
@@ -68,40 +79,40 @@ namespace SummerGameProject.Src.Components.Player
 
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity
-            velocity.X += horizontalMovement * moveAcceleration * elapsedTime;
-            velocity.Y += gravityAcceleration * elapsedTime;
+            playerAttributes.velocity.X += horizontalMovement * moveAcceleration * elapsedTime;
+            playerAttributes.velocity.Y += gravityAcceleration * elapsedTime;
 
-            velocity.Y = HandleJump(attemptJump, velocity.Y, elapsedTime);
+            playerAttributes.velocity.Y = HandleJump(attemptJump, playerAttributes.velocity.Y, elapsedTime);
 
 
             // Apply pseudo-drag horizontally
             if (isInAir)
             {
-                velocity.X *= groundDragFactor;
+                playerAttributes.velocity.X *= groundDragFactor;
                 // Stop moving animation if falling/jumping
                 animationHandler.Stop();
             }
             else
-                velocity.X *= airDragFactor;
+                playerAttributes.velocity.X *= airDragFactor;
 
             // Prevent the player from running faster than their top speed
-            velocity.X = MathHelper.Clamp(velocity.X, -maxMoveSpeed, maxMoveSpeed);
-            velocity.Y = MathHelper.Clamp(velocity.Y, -initalJumpSpeed, maxFallSpeed);
+            playerAttributes.velocity.X = MathHelper.Clamp(playerAttributes.velocity.X, -maxMoveSpeed, maxMoveSpeed);
+            playerAttributes.velocity.Y = MathHelper.Clamp(playerAttributes.velocity.Y, -initalJumpSpeed, maxFallSpeed);
 
             HandleCollisions(elapsedTime);
 
             // Detect if player is falling
-            if (velocity.Y > 0)
+            if (playerAttributes.velocity.Y > 0)
                 isInAir = true;
 
-            animationHandler.animation.FrameSpeed = Math.Abs(30 / velocity.X);
+            animationHandler.animation.FrameSpeed = Math.Abs(30 / playerAttributes.velocity.X);
         }
 
         private void HandleCollisions(float elapsedTime)
         {
 
             // Move position to predicted Y position
-            position.Y += velocity.Y * elapsedTime;
+            playerAttributes.position.Y += playerAttributes.velocity.Y * elapsedTime;
 
             IEnumerable<Component> componentsBarPlayer = components.Except(new List<Component> { player });
 
@@ -110,43 +121,39 @@ namespace SummerGameProject.Src.Components.Player
                 // Collided Bottom
                 if (player.Hitbox.Bottom <= component.Hitbox.Bottom && player.Hitbox.Bottom >= component.Hitbox.Top && player.Hitbox.IntersectsWith(component.Hitbox))
                 {
-                    position.Y = component.Hitbox.Top - player.Hitbox.Height - 0.001f;
-                    velocity.Y = 0;
+                    playerAttributes.position.Y = component.Hitbox.Top - player.Hitbox.Height - 0.001f;
+                    playerAttributes.velocity.Y = 0;
                     jumpTime = 0;
                     isInAir = false;
-                    logger.Debug("The bottom of the player collided with " + component + " at: " + Position + " new velocity = " + velocity);
                 }
 
                 // Collided top
                 if (player.Hitbox.Top >= component.Hitbox.Top && player.Hitbox.Top <= component.Hitbox.Bottom && player.Hitbox.IntersectsWith(component.Hitbox))
                 {
-                    position.Y = component.Hitbox.Bottom + 0.001f;
-                    velocity.Y = 0;
+                    playerAttributes.position.Y = component.Hitbox.Bottom + 0.001f;
+                    playerAttributes.velocity.Y = 0;
                     jumpTime = 0;
-                    logger.Debug("The top of the player collided with " + component + " at: " + Position + " new velocity = " + velocity);
                 }
             }
 
 
             // Move position to predicted X position
-            position.X += velocity.X * elapsedTime;
+            playerAttributes.position.X += playerAttributes.velocity.X * elapsedTime;
 
             foreach (var component in componentsBarPlayer)
             {
                 // Collided left
                 if (player.Hitbox.Left <= component.Hitbox.Right && player.Hitbox.Left >= component.Hitbox.Left && player.Hitbox.IntersectsWith(component.Hitbox))
                 {
-                    position.X = component.Hitbox.Right + 0.001f;
-                    velocity.X = 0;
-                    logger.Debug("The left of the player collided with " + component + " at: " + Position + " new velocity = " + velocity);
+                    playerAttributes.position.X = component.Hitbox.Right + 0.001f;
+                    playerAttributes.velocity.X = 0;
                 }
 
                 // Collided right
                 if (player.Hitbox.Right >= component.Hitbox.Left && player.Hitbox.Right <= component.Hitbox.Right && player.Hitbox.IntersectsWith(component.Hitbox))
                 {
-                    position.X = component.Hitbox.Left - player.Hitbox.Width - 0.001f;
-                    velocity.X = 0;
-                    logger.Debug("The right of the player collided with " + component + " at: " + Position + " new velocity = " + velocity);
+                    playerAttributes.position.X = component.Hitbox.Left - player.Hitbox.Width - 0.001f;
+                    playerAttributes.velocity.X = 0;
                 }
             }
         }
@@ -200,35 +207,37 @@ namespace SummerGameProject.Src.Components.Player
             return newVerticalVelocity;
         }
 
-        private (float, bool) HandleInput()
+        private void HandleInput()
         {
-            float horizontalMovement = 0;
-            bool attemptJump = false;
+            PlayerMove playerMove = new PlayerMove(Position.X, Position.Y);
 
             KeyboardState keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.A))
             {
                 animationHandler.Play();
-                horizontalMovement = -1f;
-                IsPlayerMovingLeft = true;
+                playerMove.movingLeft = true;
             }
             else if (keyboardState.IsKeyDown(Keys.D))
             {
                 animationHandler.Play();
-                horizontalMovement = 1f;
-                IsPlayerMovingLeft = false;
+                playerMove.movingRight = true;
             }
             else
-                animationHandler.Stop(); 
+                animationHandler.Stop();
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
             {
-                attemptJump = true;
+                playerMove.jumping = true;
                 // TODO Play jumping animation
             }
 
-            return (horizontalMovement, attemptJump);
+            if (playerMove.isSameDirection(playerAttributes.currentMove) && game.GameData.isMultiplayer)
+            {
+                game.networkHandler.sendMessage(new PlayerMoveMessage(playerMove, playerAttributes.playerID));
+            }
+
+            playerAttributes.currentMove = playerMove;
         }
     }
 }

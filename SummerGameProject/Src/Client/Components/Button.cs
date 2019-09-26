@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -51,7 +47,6 @@ namespace SummerGameProject.Src.Components
                 colour = Color.Yellow;
                 if (currentMouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed)
                 {
-                    logger.Error("Invoked button in main menu");
                     OnClick?.Invoke();
                 }
             }

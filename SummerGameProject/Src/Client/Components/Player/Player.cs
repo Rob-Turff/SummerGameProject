@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SummerGameProject.Src.Client.Components.Player;
 using SummerGameProject.Src.Screens;
 using SummerGameProject.Src.Utilities;
 using System;
@@ -9,21 +10,25 @@ namespace SummerGameProject.Src.Components.Player
 {
     public class Player : Component
     {
-        private Screen screen;
+        private readonly Screen screen;
+        private readonly MainGame game;
         private PlayerMovementHandler movementHandler;
+        private PlayerAttributes playerAttributes;
         private Animation animation;
         private AnimationHandler animationHandler;
         private int moveAnimationFrames = 9;
 
-        public override Vector2 Position { get => movementHandler.Position; set => movementHandler.Position = value; }
+        public override Vector2 Position { get => playerAttributes.position; set => playerAttributes.position = value; }
 
-        public Player(Vector2 position, Screen screen) : base(screen)
+        public Player(PlayerAttributes playerAttributes, Screen screen, MainGame game) : base(screen)
         {
+            this.playerAttributes = playerAttributes;
+            playerAttributes.movementHandler = movementHandler;
             this.screen = screen;
+            this.game = game;
             animation = new Animation(moveAnimationFrames);
             animationHandler = new AnimationHandler(animation, this);
-            this.movementHandler = new PlayerMovementHandler(this, screen.Components, animationHandler);
-            this.Position = position;
+            this.movementHandler = new PlayerMovementHandler(this, screen.Components, animationHandler, playerAttributes, game);
         }
 
         public override void Update(GameTime gameTime)
@@ -34,7 +39,7 @@ namespace SummerGameProject.Src.Components.Player
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            animationHandler.MovingLeft = movementHandler.IsPlayerMovingLeft;
+            animationHandler.MovingLeft = playerAttributes.currentMove.movingLeft;
             animationHandler.Draw(spriteBatch);
         }
 
