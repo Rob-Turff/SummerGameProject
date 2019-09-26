@@ -53,14 +53,14 @@ namespace SummerGameProject.Src.Components
         }
 
         /// <summary>
-        /// Returns the angle between obj1 and obj2 (in radians)
+        /// Returns the angle between the centre of this component and the obj (in radians)
         /// </summary>
-        /// <param name="obj1Pos"></param>
-        /// <param name="obj2Pos"></param>
+        /// <param name="objPos"></param>
         /// <returns></returns>
-        public float GetAngleToCentre(Vector2 obj1Pos, Vector2 obj2Pos)
+        public float GetAngleToCentre(Vector2 objPos)
         {
-            return (float) Math.Atan((obj2Pos.Y - obj1Pos.Y) / (obj2Pos.X - obj1Pos.X));
+            Vector2 centre = GetCentreCoord();
+            return (float) (Math.Atan2((centre.Y - objPos.Y), (centre.X - objPos.X)) + Math.PI/2);
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);

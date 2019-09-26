@@ -14,20 +14,20 @@ namespace SummerGameProject.Src.Client.Components.Player
     public class PlayerInputHandler
     {
         private enum AbilityType { Fireball};
-        private PlayerAttributes playerAttributes;
+        private PlayerStats playerStats;
         private MouseState oldMouseState;
         private MouseState mouseState;
         // TODO let player change this
         private AbilityType currentAbility = AbilityType.Fireball;
 
-        private Vector2 Position { get { return playerAttributes.position; } set { playerAttributes.position = value; } }
+        private Vector2 Position { get { return playerStats.position; } set { playerStats.position = value; } }
         private readonly GameScreen screen;
         private readonly AnimationHandler animationHandler;
         private readonly MainGame game;
 
-        public PlayerInputHandler(GameScreen screen, PlayerAttributes playerAttributes, AnimationHandler animationHandler, MainGame game)
+        public PlayerInputHandler(GameScreen screen, PlayerStats playerAttributes, AnimationHandler animationHandler, MainGame game)
         {
-            this.playerAttributes = playerAttributes;
+            this.playerStats = playerAttributes;
             this.screen = screen;
             this.animationHandler = animationHandler;
             this.game = game;
@@ -35,7 +35,7 @@ namespace SummerGameProject.Src.Client.Components.Player
 
         internal void Update(GameTime gameTime)
         {
-            if (playerAttributes.playerID == game.GameData.clientsPlayerID)
+            if (playerStats.playerID == game.GameData.clientsPlayerID)
                 HandleInput();
         }
 
@@ -71,17 +71,17 @@ namespace SummerGameProject.Src.Client.Components.Player
                 switch (currentAbility)
                 {
                     case AbilityType.Fireball:
-                        screen.entities.Add(new Fireball(screen, playerAttributes, mouseState));
+                        screen.entities.Add(new Fireball(screen, playerStats, mouseState));
                         break;
                 }
             }
 
-            if (!playerMove.isSameDirection(playerAttributes.currentMove) && game.GameData.isMultiplayer)
+            if (!playerMove.isSameDirection(playerStats.currentMove) && game.GameData.isMultiplayer)
             {
-                game.networkHandler.sendMessage(new PlayerMoveMessage(playerMove, playerAttributes.playerID));
+                game.networkHandler.sendMessage(new PlayerMoveMessage(playerMove, playerStats.playerID));
             }
 
-            playerAttributes.currentMove = playerMove;
+            playerStats.currentMove = playerMove;
         }
     }
 }

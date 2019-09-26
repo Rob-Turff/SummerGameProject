@@ -28,7 +28,7 @@ namespace SummerGameProject.Src.Client.Networking
             int msgLength = msg.ReadInt32();
             byte[] msgContents = msg.ReadBytes(msgLength);
             PlayerJoinMessage joinMsg = (PlayerJoinMessage)SerializationHandler.ByteArrayToObject(msgContents);
-            PlayerAttributes player = new PlayerAttributes(joinMsg.name, joinMsg.playerID, joinMsg.isHost, new Vector2(joinMsg.posX, joinMsg.posY));
+            PlayerStats player = new PlayerStats(joinMsg.name, joinMsg.playerID, joinMsg.isHost, new Vector2(joinMsg.posX, joinMsg.posY));
             game.GameData.players.Add(player);
         }
 

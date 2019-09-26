@@ -16,12 +16,12 @@ namespace SummerGameProject.Src.Client.Components
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        internal PlayerAttributes playerAttributes;
+        internal PlayerStats playerStats;
         internal MouseState mouseState;
 
-        public Ability(Screen screen, PlayerAttributes playerAttributes, MouseState mouseState) : base(screen)
+        public Ability(Screen screen, PlayerStats playerAttributes, MouseState mouseState) : base(screen)
         {
-            this.playerAttributes = playerAttributes;
+            this.playerStats = playerAttributes;
             this.mouseState = mouseState;
             CalculatePosition();
         }
@@ -34,15 +34,15 @@ namespace SummerGameProject.Src.Client.Components
         internal void SetInitialVelocity(float targetSpeed)
         {
             Vector2 mousePos = mouseState.Position.ToVector2();
-            float angle = GetAngleToCentre(playerAttributes.position, mousePos);
-            logger.Debug(MathHelper.ToDegrees(angle));
-            velocity = new Vector2((float)(Math.Cos(angle) - (Math.Sin(angle) * targetSpeed)), (float)(Math.Sin(angle) + (Math.Cos(angle) * targetSpeed)));
+            float angle = playerStats.player.GetAngleToCentre(mousePos);
+            logger.Debug("Angle: " + MathHelper.ToDegrees(angle));
+            velocity = new Vector2((float)-(Math.Sin(angle) * targetSpeed), (float)(Math.Cos(angle) * targetSpeed));
             logger.Debug("Ability velocity set to: " + velocity);
         }
 
         private void CalculatePosition()
         {
-            Position = playerAttributes.position;
+            Position = playerStats.position;
         }
     }
 }

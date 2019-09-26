@@ -11,10 +11,10 @@ namespace SummerGameProject.Src.Server.Networking
     public class ClientInfo
     {
         public NetConnection clientConnection;
-        public PlayerAttributes playerInfo;
+        public PlayerStats playerInfo;
         public List<Guid> playerSent = new List<Guid>();
 
-        public ClientInfo(NetConnection clientConnection, PlayerAttributes playerInfo)
+        public ClientInfo(NetConnection clientConnection, PlayerStats playerInfo)
         {
             this.clientConnection = clientConnection;
             this.playerInfo = playerInfo;

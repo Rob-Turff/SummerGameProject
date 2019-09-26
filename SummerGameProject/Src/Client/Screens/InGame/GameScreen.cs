@@ -47,13 +47,13 @@ namespace SummerGameProject.Src.Screens
         {
             if (game.GameData.isMultiplayer)
             {
-                foreach (PlayerAttributes pa in game.GameData.players)
+                foreach (PlayerStats pa in game.GameData.players)
                 {
                     components.Add(new Player(pa, this, game));
                 }
             } else
             {
-                PlayerAttributes playerAttributes = new PlayerAttributes("Player 1", new System.Guid(), true);
+                PlayerStats playerAttributes = new PlayerStats("Player 1", new System.Guid(), true);
                 playerAttributes.position = new Vector2(ScreenWidth / 2, ScreenHeight / 2);
                 Player player = new Player(playerAttributes, this, game);
                 components.Add(player);

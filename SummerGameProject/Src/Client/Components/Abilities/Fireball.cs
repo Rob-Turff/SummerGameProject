@@ -19,7 +19,7 @@ namespace SummerGameProject.Src.Client.Components
         private AnimationHandler animationHandler;
         private int moveAnimationFrames = 4;
 
-        public Fireball(Screen screen, PlayerAttributes playerAttributes, MouseState mouseState) : base(screen, playerAttributes, mouseState)
+        public Fireball(Screen screen, PlayerStats playerAttributes, MouseState mouseState) : base(screen, playerAttributes, mouseState)
         {
             animation = new Animation(moveAnimationFrames);
             animationHandler = new AnimationHandler(animation, this);

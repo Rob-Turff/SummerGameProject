@@ -13,7 +13,7 @@ namespace SummerGameProject.Src.Client.Utilities
     {
         public string PlayerName;
         public Guid clientsPlayerID;
-        public List<PlayerAttributes> players = new List<PlayerAttributes>();
+        public List<PlayerStats> players = new List<PlayerStats>();
         public bool isMultiplayer = false;
 
         private List<Vector2> spawnPositions = new List<Vector2>();
@@ -30,7 +30,7 @@ namespace SummerGameProject.Src.Client.Utilities
 
         public bool IsHost()
         {
-            foreach (PlayerAttributes p in players)
+            foreach (PlayerStats p in players)
             {
                 if (clientsPlayerID.Equals(p.playerID) && p.isHost)
                     return true;
@@ -38,9 +38,9 @@ namespace SummerGameProject.Src.Client.Utilities
             return false;
         }
 
-        public PlayerAttributes getPlayer(Guid ID)
+        public PlayerStats getPlayer(Guid ID)
         {
-            foreach (PlayerAttributes p in players)
+            foreach (PlayerStats p in players)
             {
                 if (p.playerID == ID)
                     return p;
@@ -49,7 +49,7 @@ namespace SummerGameProject.Src.Client.Utilities
             return null;
         }
 
-        public PlayerAttributes getClientsPlayer()
+        public PlayerStats getClientsPlayer()
         {
             return getPlayer(clientsPlayerID);
         }

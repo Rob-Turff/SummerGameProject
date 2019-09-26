@@ -15,23 +15,24 @@ namespace SummerGameProject.Src.Components.Player
         private readonly MainGame game;
         private PlayerMovementHandler movementHandler;
         private PlayerInputHandler inputHandler;
-        private PlayerAttributes playerAttributes;
+        private PlayerStats playerAttributes;
         private Animation animation;
         private AnimationHandler animationHandler;
         private int moveAnimationFrames = 9;
 
         public override Vector2 Position { get => playerAttributes.position; set => playerAttributes.position = value; }
 
-        public Player(PlayerAttributes playerAttributes, GameScreen screen, MainGame game) : base(screen)
+        public Player(PlayerStats playerStats, GameScreen screen, MainGame game) : base(screen)
         {
-            this.playerAttributes = playerAttributes;
-            playerAttributes.movementHandler = movementHandler;
+            this.playerAttributes = playerStats;
             this.screen = screen;
             this.game = game;
+            playerStats.movementHandler = movementHandler;
+            playerStats.player = this;
             animation = new Animation(moveAnimationFrames);
             animationHandler = new AnimationHandler(animation, this);
-            movementHandler = new PlayerMovementHandler(this, screen.components, animationHandler, playerAttributes, game);
-            inputHandler = new PlayerInputHandler(screen, playerAttributes, animationHandler, game);
+            movementHandler = new PlayerMovementHandler(this, screen.components, animationHandler, playerStats, game);
+            inputHandler = new PlayerInputHandler(screen, playerStats, animationHandler, game);
         }
 
         public override void Update(GameTime gameTime)

@@ -33,7 +33,7 @@ namespace SummerGameProject.Src.Components.Player
         private Player player;
         private List<Component> components;
         private AnimationHandler animationHandler;
-        private PlayerAttributes playerAttributes;
+        private PlayerStats playerAttributes;
         private readonly MainGame game;
         private bool isInAir = false;
         private float jumpTime = 0;
@@ -41,7 +41,7 @@ namespace SummerGameProject.Src.Components.Player
         private Vector2 Position { get { return playerAttributes.position; } set { playerAttributes.position = value; } }
         private Vector2 Velocity { get { return playerAttributes.velocity; } set { playerAttributes.velocity = value; } }
 
-        public PlayerMovementHandler(Player player, List<Component> components, AnimationHandler animationHandler, PlayerAttributes playerAttributes, MainGame game)
+        public PlayerMovementHandler(Player player, List<Component> components, AnimationHandler animationHandler, PlayerStats playerAttributes, MainGame game)
         {
             this.player = player;
             this.components = components;

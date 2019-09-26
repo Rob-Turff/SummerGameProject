@@ -72,7 +72,7 @@
     <Compile Include="Src\Client\Components\Platforms\Platform.cs" />
     <Compile Include="Src\Client\Components\Platforms\StoneWallPlatform.cs" />
     <Compile Include="Src\Client\Components\Player\Player.cs" />
-    <Compile Include="Src\Client\Components\Player\PlayerAttributes.cs" />
+    <Compile Include="Src\Client\Components\Player\PlayerStats.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerInputHandler.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerMove.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerMovementHandler.cs" />
