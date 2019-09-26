@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Client.Components.Player;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Screens;
+using SummerGameProject.Src.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,11 @@ namespace SummerGameProject.Src.Client.Components
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        internal PlayerStats playerStats;
-        internal MouseState mouseState;
+        protected PlayerStats playerStats;
+        protected MouseState mouseState;
+
+        protected Animation animation;
+        protected AnimationHandler animationHandler;
 
         public Ability(Screen screen, PlayerStats playerAttributes, MouseState mouseState) : base(screen)
         {

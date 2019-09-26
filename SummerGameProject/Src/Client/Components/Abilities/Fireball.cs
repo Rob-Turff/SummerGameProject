@@ -15,8 +15,6 @@ namespace SummerGameProject.Src.Client.Components
     public class Fireball : Ability
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private Animation animation;
-        private AnimationHandler animationHandler;
         private int moveAnimationFrames = 4;
 
         public Fireball(Screen screen, PlayerStats playerAttributes, MouseState mouseState) : base(screen, playerAttributes, mouseState)

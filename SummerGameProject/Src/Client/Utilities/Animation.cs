@@ -14,6 +14,7 @@ namespace SummerGameProject.Src.Utilities
             this.NumFrames = numFrames;
             IsLooping = true;
             CurrentFrame = 0;
+            Angle = 0f;
         }
 
         public int CurrentFrame { get; set; }
@@ -27,5 +28,7 @@ namespace SummerGameProject.Src.Utilities
         public bool IsLooping { get; set; }
 
         public int FrameWidth { get { return Texture.Width / NumFrames; } }
+
+        public float Angle { get; set; }
     }
 }
