@@ -35,18 +35,24 @@ namespace SummerGameProject.Src.Client.Components
         /// For reference 3000 is the max player move speed
         /// </summary>
         /// <param name="targetSpeed"></param>
-        internal void SetInitialVelocity(float targetSpeed)
+        protected void SetInitialVelocity(float targetSpeed)
         {
             Vector2 mousePos = mouseState.Position.ToVector2();
             float angle = playerStats.player.GetAngleToCentre(mousePos);
-            logger.Debug("Angle: " + MathHelper.ToDegrees(angle));
             velocity = new Vector2((float)-(Math.Sin(angle) * targetSpeed), (float)(Math.Cos(angle) * targetSpeed));
-            logger.Debug("Ability velocity set to: " + velocity);
         }
 
         private void CalculatePosition()
         {
             Position = playerStats.position;
+        }
+
+        /// <summary>
+        /// Calculates the angle of the animation so that it faces the direction of travel
+        /// </summary>
+        protected void AngleForward()
+        {
+            animation.Angle = (float) Math.Atan2(velocity.Y, velocity.X);
         }
     }
 }

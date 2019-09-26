@@ -13,7 +13,7 @@ namespace SummerGameProject.Src.Client.Physics
     {
         #region Constants
 
-        private const float gravityAcceleration = 100f;
+        private const float gravityAcceleration = 200f;
 
         #endregion
 

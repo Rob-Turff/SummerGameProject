@@ -25,7 +25,7 @@ namespace SummerGameProject.Src.Client.Components
             LoadContent();
             animationHandler.Play();
             Screen.entities.Add(this);
-            SetInitialVelocity(3000);
+            SetInitialVelocity(800);
         }
 
       
@@ -43,6 +43,7 @@ namespace SummerGameProject.Src.Client.Components
 
         public override void Update(GameTime gameTime)
         {
+            AngleForward();
             animationHandler.Update(gameTime);
         }
     }
