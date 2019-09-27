@@ -19,6 +19,8 @@ namespace SummerGameProject.Src.Client.Physics
 
         private readonly Screen screen;
         private float dragFactor;
+        private float newXVelocity;
+        private float newYVelocity;
 
         public PhysicsHandler(Screen screen)
         {
@@ -33,12 +35,12 @@ namespace SummerGameProject.Src.Client.Physics
 
         private void ApplyPhysics(GameTime gameTime)
         {
-            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float eTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             foreach (var entity in screen.entities)
             {
-                entity.velocity.X += entity.horizontalAcceleration * elapsedTime;
-                entity.velocity.Y += gravityAcceleration * elapsedTime + entity.verticalAcceleration * elapsedTime;
+                entity.velocity.X += entity.horizontalAcceleration * eTime;
+                entity.velocity.Y += gravityAcceleration * eTime + entity.verticalAcceleration * eTime;
 
                 // Apply drag
                 if (entity.isInAir)
@@ -49,8 +51,17 @@ namespace SummerGameProject.Src.Client.Physics
                     dragFactor = entity.groundFriction;
                 }
 
-                entity.velocity.X *= dragFactor;
-                entity.velocity.Y *= dragFactor;
+                if (entity.velocity.X > 0)
+                    newXVelocity = entity.velocity.X - (Square(entity.velocity.X) * dragFactor * eTime);
+                else
+                    newXVelocity = entity.velocity.X + (Square(entity.velocity.X) * dragFactor * eTime);
+
+                if (entity.velocity.Y > 0)
+                    newYVelocity = entity.velocity.Y - (Square(entity.velocity.Y) * dragFactor * eTime);
+                else
+                    newYVelocity = entity.velocity.Y + (Square(entity.velocity.Y) * dragFactor * eTime);
+
+                entity.velocity = new Vector2(newXVelocity, newYVelocity);
 
                 // Enforce max speed
                 entity.velocity.X = MathHelper.Clamp(entity.velocity.X, -entity.maxHorzizontalSpeed, entity.maxHorzizontalSpeed);
@@ -60,13 +71,18 @@ namespace SummerGameProject.Src.Client.Physics
                 if (entity.velocity.Y > 0)
                     entity.isInAir = true;
 
-                entity.Position = entity.Position + entity.velocity * elapsedTime;
+                entity.Position = entity.Position + entity.velocity * eTime;
             }
         }
 
         private void CheckCollisons(GameTime gameTime)
         {
             
+        }
+
+        private float Square(float value)
+        {
+            return value * value;
         }
     }
 }
