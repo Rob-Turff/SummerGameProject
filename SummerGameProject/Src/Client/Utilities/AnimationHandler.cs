@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SummerGameProject.Src.Components;
-using SummerGameProject.Src.Components.Player;
+using SummerGameProject.Src.Screens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Utilities
 {
@@ -17,23 +13,33 @@ namespace SummerGameProject.Src.Utilities
         public float Scale { get; set; } = 1f;
 
         private readonly Component component;
+        private readonly Screen screen;
+
         public Animation animation { get; private set; }
         private float timer = 0f;
         private bool doUpdate = false;
 
-        public AnimationHandler(Animation animation, Component component)
+        public AnimationHandler(Animation animation, Component component, Screen screen)
         {
             this.animation = animation;
             this.component = component;
+            this.screen = screen;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.Texture.Height);
-            if (MovingLeft)
-                spriteBatch.Draw(animation.Texture, component.Position, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
-            else
-                spriteBatch.Draw(animation.Texture, component.Position, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            Tuple<bool, Vector2> result = screen.Camara.CalcScreenCoords(component.Position, component.Size);
+
+            if (result.Item1)
+            {
+                Vector2 drawPos = result.Item2;
+                Rectangle sourceRectangle = new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.Texture.Height);
+                if (MovingLeft)
+                    spriteBatch.Draw(animation.Texture, drawPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
+                else
+                    spriteBatch.Draw(animation.Texture, drawPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            }
+
         }
 
         public void Stop()

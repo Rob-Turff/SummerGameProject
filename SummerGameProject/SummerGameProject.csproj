@@ -63,23 +63,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Src\Client\Components\Abilities\Fireball.cs" />
-    <Compile Include="Src\Client\Components\Button.cs" />
+    <Compile Include="Src\Client\Components\UI\Button.cs" />
     <Compile Include="Src\Client\Components\Component.cs" />
     <Compile Include="Src\Client\Components\Entity.cs" />
-    <Compile Include="Src\Client\Components\Label.cs" />
+    <Compile Include="Src\Client\Components\UI\Label.cs" />
     <Compile Include="Src\Client\Components\Abilities\Ability.cs" />
-    <Compile Include="Src\Client\Components\Platforms\GrassPlatform.cs" />
-    <Compile Include="Src\Client\Components\Platforms\Platform.cs" />
-    <Compile Include="Src\Client\Components\Platforms\StoneWallPlatform.cs" />
+    <Compile Include="Src\Client\Components\Enviroment\Platforms\GrassPlatform.cs" />
+    <Compile Include="Src\Client\Components\Enviroment\Platforms\Platform.cs" />
+    <Compile Include="Src\Client\Components\Enviroment\Platforms\StoneWallPlatform.cs" />
     <Compile Include="Src\Client\Components\Player\Player.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerStats.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerInputHandler.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerMove.cs" />
     <Compile Include="Src\Client\Components\Player\PlayerMovementHandler.cs" />
-    <Compile Include="Src\Client\Components\TextInputBox.cs" />
+    <Compile Include="Src\Client\Components\UI\TextInputBox.cs" />
     <Compile Include="Src\Client\Networking\ClientCommandHandler.cs" />
     <Compile Include="Src\Client\Networking\NetworkHandler.cs" />
     <Compile Include="Src\Client\Physics\PhysicsHandler.cs" />
+    <Compile Include="Src\Client\Physics\World.cs" />
     <Compile Include="Src\Client\Screens\InGame\GameScreen.cs" />
     <Compile Include="Src\Client\Screens\MainMenu\LobbyScreen.cs" />
     <Compile Include="Src\Client\Screens\MainMenu\MultiplayerScreen.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Client\Utilities\Animation.cs" />
     <Compile Include="Src\Client\Utilities\AnimationHandler.cs" />
+    <Compile Include="Src\Client\Utilities\Camera.cs" />
     <Compile Include="Src\Client\Utilities\GameDataStore.cs" />
     <Compile Include="Src\Common\Message\PlayerMoveMessage.cs" />
     <Compile Include="Src\Common\Message\StartGameMessage.cs" />

@@ -17,15 +17,20 @@ namespace SummerGameProject.Src.Components
     public abstract class Component
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private Vector2 defaultRes = new Vector2(1920, 1080);
 
         protected Screen Screen { get; }
 
         public Texture2D Texture { get; set; }
         public Vector2 Scale { get; set; } = new Vector2(1f, 1f);
 
+        public bool onScreen { get; set; }
+        public Vector2 ScreenPos { get; set; }
+
         public virtual Vector2 Position { get; set; }
         public virtual float Width { get => Texture.Width * Scale.X; set => Width = value; }
         public virtual float Height { get => Texture.Height * Scale.Y; set => Width = value; }
+        public virtual Vector2 Size { get { return new Vector2(Width, Height); } }
 
 
         public Component(Screen screen)
@@ -37,6 +42,13 @@ namespace SummerGameProject.Src.Components
         {
             this.Screen = screen;
             this.Position = position;
+        }
+
+        public Component(Screen screen, Vector2 position, Vector2 screenRes)
+        {
+            this.Screen = screen;
+            this.Position = position;
+            ScaleToRes(screen.ScreenSize);
         }
 
         public RectangleF Hitbox
@@ -61,6 +73,11 @@ namespace SummerGameProject.Src.Components
         {
             Vector2 centre = GetCentreCoord();
             return (float) (Math.Atan2((centre.Y - objPos.Y), (centre.X - objPos.X)) + Math.PI/2);
+        }
+
+        private void ScaleToRes(Vector2 resolution)
+        {
+            Scale = new Vector2(resolution.X / defaultRes.X, resolution.Y / defaultRes.Y);
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);

@@ -30,7 +30,7 @@ namespace SummerGameProject.Src.Components.Player
             playerStats.movementHandler = movementHandler;
             playerStats.player = this;
             animation = new Animation(moveAnimationFrames);
-            animationHandler = new AnimationHandler(animation, this);
+            animationHandler = new AnimationHandler(animation, this, screen);
             movementHandler = new PlayerMovementHandler(this, screen.components, animationHandler, playerStats, game);
             inputHandler = new PlayerInputHandler(screen, playerStats, animationHandler, game);
         }

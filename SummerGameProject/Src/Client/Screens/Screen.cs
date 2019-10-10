@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SummerGameProject.Src.Client.Components;
+using SummerGameProject.Src.Client.Utilities;
 using SummerGameProject.Src.Components;
 using System.Collections.Generic;
 
@@ -37,6 +38,8 @@ namespace SummerGameProject.Src.Screens
         public int ScreenHeight { get; protected set; }
         public bool IsFullScreen { get; protected set; }
         public SpriteFont Font { get => game.Font; }
+        public Vector2 ScreenSize { get { return new Vector2(ScreenWidth, ScreenHeight); } }
+        public Camera Camara { get; set; }
 
         #endregion
 
@@ -45,6 +48,13 @@ namespace SummerGameProject.Src.Screens
         {
             this.game = game;
             this.Content = new ContentManager(game.Services, game.Content.RootDirectory);
+            Camara = new Camera(ScreenSize);
+        }
+
+        protected void SetMaxScreenSize()
+        {
+            ScreenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            ScreenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)

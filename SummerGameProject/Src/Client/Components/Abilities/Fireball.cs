@@ -20,15 +20,13 @@ namespace SummerGameProject.Src.Client.Components
         public Fireball(Screen screen, PlayerStats playerAttributes, MouseState mouseState) : base(screen, playerAttributes, mouseState)
         {
             animation = new Animation(moveAnimationFrames);
-            animationHandler = new AnimationHandler(animation, this);
+            animationHandler = new AnimationHandler(animation, this, screen);
             animation.FrameSpeed = 0.25f;
             LoadContent();
             animationHandler.Play();
             Screen.entities.Add(this);
             SetInitialVelocity(800);
         }
-
-      
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

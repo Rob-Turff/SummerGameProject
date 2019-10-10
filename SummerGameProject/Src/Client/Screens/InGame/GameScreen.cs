@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Client.Components;
 using SummerGameProject.Src.Client.Components.Player;
 using SummerGameProject.Src.Client.Physics;
+using SummerGameProject.Src.Client.Utilities;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Components.Platforms;
 using SummerGameProject.Src.Components.Player;
@@ -23,24 +24,15 @@ namespace SummerGameProject.Src.Screens
 
         public GameScreen(MainGame game) : base(game)
         {
-            ScreenWidth = 1920;
-            ScreenHeight = 1080;
+            SetMaxScreenSize();
 
             physicsHandler = new PhysicsHandler(this);
 
             menuOverlay = new InGameMenuScreen(game, this);
 
-            Platform floor = new GrassPlatform(new Vector2(0, 880), new Vector2(1f, 1f), this);
-            Platform platform1 = new GrassPlatform(new Vector2(300, 650), new Vector2(0.2f, 0.2f), this);
-            Platform platform2 = new GrassPlatform(new Vector2(1200, 650), new Vector2(0.2f, 0.2f), this);
-            Platform wallLeft = new StoneWallPlatform(new Vector2(0, 380), new Vector2(1f, 1f), this);
-            Platform wallRight = new StoneWallPlatform(new Vector2(1870, 380), new Vector2(1f, 1f), this);
+            World world = new World(this);
 
-            components.Add(floor);
-            components.Add(platform1);
-            components.Add(platform2);
-            components.Add(wallLeft);
-            components.Add(wallRight);
+            Camera camera = new Camera(ScreenSize);
         }
 
         public void SetupGame()
