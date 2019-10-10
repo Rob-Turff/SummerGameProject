@@ -39,7 +39,7 @@ namespace SummerGameProject.Src.Screens
         public bool IsFullScreen { get; protected set; }
         public SpriteFont Font { get => game.Font; }
         public Vector2 ScreenSize { get { return new Vector2(ScreenWidth, ScreenHeight); } }
-        public Camera Camara { get; set; }
+        public Camera Cam { get; set; }
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace SummerGameProject.Src.Screens
         {
             this.game = game;
             this.Content = new ContentManager(game.Services, game.Content.RootDirectory);
-            Camara = new Camera(ScreenSize);
+            Cam = new Camera(ScreenSize);
         }
 
         protected void SetMaxScreenSize()

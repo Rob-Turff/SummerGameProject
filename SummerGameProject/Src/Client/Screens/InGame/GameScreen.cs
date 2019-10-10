@@ -8,6 +8,7 @@ using SummerGameProject.Src.Client.Utilities;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Components.Platforms;
 using SummerGameProject.Src.Components.Player;
+using System;
 using System.Collections.Generic;
 
 namespace SummerGameProject.Src.Screens
@@ -32,7 +33,7 @@ namespace SummerGameProject.Src.Screens
 
             World world = new World(this);
 
-            Camera camera = new Camera(ScreenSize);
+            Cam.Size = ScreenSize;
         }
 
         public void SetupGame()
@@ -45,9 +46,12 @@ namespace SummerGameProject.Src.Screens
                 }
             } else
             {
-                PlayerStats playerAttributes = new PlayerStats("Player 1", new System.Guid(), true);
-                playerAttributes.position = new Vector2(ScreenWidth / 2, ScreenHeight / 2);
-                Player player = new Player(playerAttributes, this, game);
+                Guid playerID = Guid.NewGuid();
+                PlayerStats playerStats = new PlayerStats("Player 1", playerID, true);
+                playerStats.position = new Vector2(ScreenWidth / 2, ScreenHeight / 2);
+                Player player = new Player(playerStats, this, game);
+                game.GameData.players.Add(playerStats);
+                game.GameData.clientsPlayerID = playerID;
                 components.Add(player);
             }
 
@@ -76,6 +80,26 @@ namespace SummerGameProject.Src.Screens
             {
                 base.Update(gameTime);
                 physicsHandler.Update(gameTime);
+                CameraUpdate(gameTime);
+            }
+        }
+
+        private void CameraUpdate(GameTime gameTime)
+        {
+            if (game.GameData.getClientsPlayer() != null)
+                Cam.Position = game.GameData.getClientsPlayer().position - Cam.Size/2;
+
+            foreach (var component in components) {
+                Tuple<bool, Vector2> result = Cam.CalcScreenCoords(component.Position, component.Size);
+                component.onScreen = result.Item1;
+                component.ScreenPos = result.Item2;
+            }
+
+            foreach (var entity in entities)
+            {
+                Tuple<bool, Vector2> result = Cam.CalcScreenCoords(entity.Position, entity.Size);
+                entity.onScreen = result.Item1;
+                entity.ScreenPos = result.Item2;
             }
         }
 

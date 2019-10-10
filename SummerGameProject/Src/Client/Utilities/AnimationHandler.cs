@@ -8,6 +8,7 @@ namespace SummerGameProject.Src.Utilities
 {
     public class AnimationHandler
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public bool MovingLeft { get; set; } = false;
 
         public float Scale { get; set; } = 1f;
@@ -28,16 +29,13 @@ namespace SummerGameProject.Src.Utilities
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Tuple<bool, Vector2> result = screen.Camara.CalcScreenCoords(component.Position, component.Size);
-
-            if (result.Item1)
+            if (component.onScreen)
             {
-                Vector2 drawPos = result.Item2;
                 Rectangle sourceRectangle = new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.Texture.Height);
                 if (MovingLeft)
-                    spriteBatch.Draw(animation.Texture, drawPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(animation.Texture, component.ScreenPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
                 else
-                    spriteBatch.Draw(animation.Texture, drawPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(animation.Texture, component.ScreenPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.None, 0f);
             }
 
         }

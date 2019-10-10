@@ -12,6 +12,8 @@ namespace SummerGameProject.Src.Components.Platforms
 {
     abstract class Platform : Component
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected Color colour;
 
         public override Vector2 Position { get; set; }
@@ -25,7 +27,8 @@ namespace SummerGameProject.Src.Components.Platforms
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, colour, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            if (this.onScreen)
+                spriteBatch.Draw(Texture, this.ScreenPos, null, colour, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
         }
 
         public override string ToString()
@@ -35,7 +38,8 @@ namespace SummerGameProject.Src.Components.Platforms
 
         public override void Update(GameTime gameTime)
         {
-            
+            if (!onScreen)
+                logger.Debug(this.onScreen);
         }
 
     }
