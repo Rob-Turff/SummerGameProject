@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Client.Components.Player;
+using SummerGameProject.Src.Client.Utilities;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Screens;
 using SummerGameProject.Src.Utilities;
@@ -16,18 +17,17 @@ namespace SummerGameProject.Src.Client.Components
     public abstract class Ability : Entity
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        private readonly Screen screen;
         protected PlayerStats playerStats;
         protected MouseState mouseState;
-
         protected Animation animation;
         protected AnimationHandler animationHandler;
 
         public Ability(Screen screen, PlayerStats playerAttributes, MouseState mouseState) : base(screen)
         {
+            this.screen = screen;
             this.playerStats = playerAttributes;
             this.mouseState = mouseState;
-            CalculatePosition();
         }
 
         /// <summary>
@@ -37,14 +37,18 @@ namespace SummerGameProject.Src.Client.Components
         /// <param name="targetSpeed"></param>
         protected void SetInitialVelocity(float targetSpeed)
         {
-            Vector2 mousePos = mouseState.Position.ToVector2();
+            Vector2 mousePos = screen.Cam.CalcWorldCoords(mouseState.Position.ToVector2());
             float angle = playerStats.player.GetAngleToCentre(mousePos);
             velocity = new Vector2((float)-(Math.Sin(angle) * targetSpeed), (float)(Math.Cos(angle) * targetSpeed));
+            logger.Debug("New Ability created with initial velocity: " + velocity + " ----- using mouse coords: " + mousePos + " ------ and player location: " + playerStats.position);
         }
 
-        private void CalculatePosition()
+        protected void SetPositionOffset()
         {
-            Position = playerStats.position;
+            Vector2 vUnitVector = velocity;
+            vUnitVector.Normalize();
+            Position = playerStats.position + vUnitVector * Math.Max(Width, Height) * 1.5f;
+            logger.Debug("Ability position offset: " + vUnitVector * Math.Max(Width, Height) * 1.5f);
         }
 
         /// <summary>

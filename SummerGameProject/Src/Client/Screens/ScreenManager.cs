@@ -27,12 +27,12 @@ namespace SummerGameProject.Src.Screens
         {
             this.graphics = graphics;
 
-            gameScreen = new GameScreen(game);
-            menuScreen = new MenuScreen(game);
-            settingScreen = new SettingScreen(game);
-            multiplayerScreen = new MultiplayerScreen(game);
-            loginScreen = new LoginScreen(game);
-            lobbyScreen = new LobbyScreen(game);
+            gameScreen = new GameScreen(game, true);
+            menuScreen = new MenuScreen(game, false);
+            settingScreen = new SettingScreen(game, false);
+            multiplayerScreen = new MultiplayerScreen(game, false);
+            loginScreen = new LoginScreen(game, false);
+            lobbyScreen = new LobbyScreen(game, false);
 
             CurrentScreen = loginScreen;
             ChangeRes(CurrentScreen.ScreenWidth, CurrentScreen.ScreenHeight, CurrentScreen.IsFullScreen);

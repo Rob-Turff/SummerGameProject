@@ -23,13 +23,13 @@ namespace SummerGameProject.Src.Screens
 
         private PhysicsHandler physicsHandler;
 
-        public GameScreen(MainGame game) : base(game)
+        public GameScreen(MainGame game, bool useResScaling) : base(game, useResScaling)
         {
             SetMaxScreenSize();
 
             physicsHandler = new PhysicsHandler(this);
 
-            menuOverlay = new InGameMenuScreen(game, this);
+            menuOverlay = new InGameMenuScreen(game, this, false);
 
             World world = new World(this);
 
@@ -55,6 +55,15 @@ namespace SummerGameProject.Src.Screens
                 components.Add(player);
             }
 
+            foreach (Component c in components)
+            {
+                c.Position *= c.CombinedScale;
+            }
+
+            foreach (Entity e in entities)
+            {
+                e.Position *= e.CombinedScale;
+            }
             LoadContent();
         }
 

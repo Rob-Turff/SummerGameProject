@@ -11,7 +11,7 @@ namespace SummerGameProject.Src.Screens
 {
     class InGameMenuScreen : Screen
     {
-        public InGameMenuScreen(MainGame game, GameScreen gameScreen) : base(game)
+        public InGameMenuScreen(MainGame game, GameScreen gameScreen, bool useResScaling) : base(game, useResScaling)
         {
             ScreenWidth = gameScreen.ScreenWidth;
             ScreenHeight = gameScreen.ScreenHeight;

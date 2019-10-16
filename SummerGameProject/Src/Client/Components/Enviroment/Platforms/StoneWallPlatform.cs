@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Components.Platforms
 {
-    class StoneWallPlatform : Platform
+    public class StoneWallPlatform : Platform
     {
         public StoneWallPlatform(Vector2 position, Vector2 scale, Screen screen) : base(position, Color.White, scale, screen)
         {

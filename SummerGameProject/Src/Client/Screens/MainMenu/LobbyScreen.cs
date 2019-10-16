@@ -15,7 +15,7 @@ namespace SummerGameProject.Src.Client.Screens
         private bool buttonAdded = false;
         private Button startGameBtn;
 
-        public LobbyScreen(MainGame game) : base(game)
+        public LobbyScreen(MainGame game, bool useResScaling) : base(game, useResScaling)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;

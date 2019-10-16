@@ -54,5 +54,9 @@ namespace SummerGameProject.Src.Components.Player
             animation.Texture = screen.Content.Load<Texture2D>("Game/WizardSpriteSheet");
         }
 
+        public override void OnCollide()
+        {
+            // Do Something
+        }
     }
 }

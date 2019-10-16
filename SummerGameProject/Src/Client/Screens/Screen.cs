@@ -40,14 +40,16 @@ namespace SummerGameProject.Src.Screens
         public SpriteFont Font { get => game.Font; }
         public Vector2 ScreenSize { get { return new Vector2(ScreenWidth, ScreenHeight); } }
         public Camera Cam { get; set; }
+        public bool UseResScaling;
 
         #endregion
 
         #region Methods
-        public Screen(MainGame game)
+        public Screen(MainGame game, bool useResScaling)
         {
             this.game = game;
             this.Content = new ContentManager(game.Services, game.Content.RootDirectory);
+            this.UseResScaling = useResScaling;
             Cam = new Camera(ScreenSize);
         }
 

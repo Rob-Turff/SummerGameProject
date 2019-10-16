@@ -23,9 +23,6 @@ namespace SummerGameProject.Src.Client.Components
         private MouseState currentMouse;
         private bool clicked = false;
 
-        private KeyboardState oldKeyboard;
-        private KeyboardState currentKeyboard;
-
 
         public TextInputBox(string text, Vector2 position, Screen screen, Game game) : base(screen, position)
         {
@@ -36,7 +33,7 @@ namespace SummerGameProject.Src.Client.Components
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, CombinedScale, SpriteEffects.None, 0f);
 
             float x, y;
             if (clicked || enteredText != "")

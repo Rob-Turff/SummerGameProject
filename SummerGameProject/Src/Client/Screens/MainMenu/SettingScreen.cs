@@ -10,7 +10,7 @@ namespace SummerGameProject.Src.Screens
 {
     public class SettingScreen : Screen
     {
-        public SettingScreen(MainGame game) : base(game)
+        public SettingScreen(MainGame game, bool useResScaling) : base(game, useResScaling)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;

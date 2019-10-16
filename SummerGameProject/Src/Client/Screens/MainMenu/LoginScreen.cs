@@ -14,7 +14,7 @@ namespace SummerGameProject.Src.Client.Screens
     {
         private TextInputBox playerNameBox;
 
-        public LoginScreen(MainGame game) : base(game)
+        public LoginScreen(MainGame game, bool useResScaling) : base(game, useResScaling)
         {
             ScreenWidth = 500;
             ScreenHeight = 150;

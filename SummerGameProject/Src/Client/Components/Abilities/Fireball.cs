@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SummerGameProject.Src.Client.Components.Player;
+using SummerGameProject.Src.Client.Utilities;
 using SummerGameProject.Src.Components;
 using SummerGameProject.Src.Screens;
 using SummerGameProject.Src.Utilities;
@@ -26,6 +27,7 @@ namespace SummerGameProject.Src.Client.Components
             animationHandler.Play();
             Screen.entities.Add(this);
             SetInitialVelocity(800);
+            SetPositionOffset();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -43,6 +45,12 @@ namespace SummerGameProject.Src.Client.Components
         {
             AngleForward();
             animationHandler.Update(gameTime);
+        }
+
+        public override void OnCollide()
+        {
+            // Do exploding stuff
+            Screen.entities.Remove(this);
         }
     }
 }

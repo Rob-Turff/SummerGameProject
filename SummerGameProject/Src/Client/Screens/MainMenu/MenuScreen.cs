@@ -13,7 +13,7 @@ namespace SummerGameProject.Src.Screens
 {
     public class MenuScreen : Screen
     {
-        public MenuScreen(MainGame game) : base(game)
+        public MenuScreen(MainGame game, bool useResScaling) : base(game, useResScaling)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;

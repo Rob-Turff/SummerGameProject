@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SummerGameProject.Src.Client.Utilities
 {
@@ -31,6 +28,16 @@ namespace SummerGameProject.Src.Client.Utilities
                     isOnScreen = true;
 
             return new Tuple<bool, Vector2>(isOnScreen, screenPos);
+        }
+
+        /// <summary>
+        /// Adds the camera position to the value
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public Vector2 CalcWorldCoords(Vector2 pos)
+        {
+            return pos + Position;
         }
     }
 }

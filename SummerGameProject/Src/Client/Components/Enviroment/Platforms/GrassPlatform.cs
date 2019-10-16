@@ -9,7 +9,7 @@ using SummerGameProject.Src.Screens;
 
 namespace SummerGameProject.Src.Components.Platforms
 {
-    class GrassPlatform : Platform
+    public class GrassPlatform : Platform
     {
         public GrassPlatform(Vector2 position, Vector2 scale, Screen screen) : base(position, Color.White, scale, screen)
         {

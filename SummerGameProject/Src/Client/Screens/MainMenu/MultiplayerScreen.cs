@@ -14,7 +14,7 @@ namespace SummerGameProject.Src.Client.Screens
 {
     public class MultiplayerScreen : Screen
     {
-        public MultiplayerScreen(MainGame game) : base(game)
+        public MultiplayerScreen(MainGame game, bool useResScaling) : base(game, useResScaling)
         {
             ScreenWidth = 400;
             ScreenHeight = 500;

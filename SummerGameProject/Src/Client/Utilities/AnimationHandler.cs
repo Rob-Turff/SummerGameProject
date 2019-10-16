@@ -33,9 +33,9 @@ namespace SummerGameProject.Src.Utilities
             {
                 Rectangle sourceRectangle = new Rectangle(animation.CurrentFrame * animation.FrameWidth, 0, animation.FrameWidth, animation.Texture.Height);
                 if (MovingLeft)
-                    spriteBatch.Draw(animation.Texture, component.ScreenPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(animation.Texture, component.ScreenPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, component.CombinedScale, SpriteEffects.FlipHorizontally, 0f);
                 else
-                    spriteBatch.Draw(animation.Texture, component.ScreenPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(animation.Texture, component.ScreenPos, sourceRectangle, Color.White, animation.Angle, Vector2.Zero, component.CombinedScale, SpriteEffects.None, 0f);
             }
 
         }
