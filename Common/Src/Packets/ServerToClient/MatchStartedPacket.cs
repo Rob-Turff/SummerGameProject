@@ -8,17 +8,17 @@ using Lidgren.Network;
 
 namespace Common.Src.Packets.ServerToClient
 {
-    public class MatchStartedPacket : Packet
+    public class MatchStartedPacket : ServerToClientPacket
     {
         public override PacketType PacketType => PacketType.MATCH_STARTED;
 
         public StageIdentifier StageIdentifier { get; private set; }
-        public List<Player> Players { get; private set; }
+        public List<CharacterData> CharacterDataList { get; private set; }
 
-        public MatchStartedPacket(StageIdentifier stageIdentifier, List<Player> players)
+        public MatchStartedPacket(StageIdentifier stageIdentifier, List<CharacterData> characterDataList)
         {
             StageIdentifier = stageIdentifier;
-            Players = players;
+            CharacterDataList = characterDataList;
         }
 
         public MatchStartedPacket(NetIncomingMessage netIncomingMessage)
@@ -29,13 +29,15 @@ namespace Common.Src.Packets.ServerToClient
         public override void Encode(NetOutgoingMessage netOutgoingMessage)
         {
             netOutgoingMessage.Write((byte)StageIdentifier);
-            EncodePlayerList(netOutgoingMessage, Players);
+            EncodeCharacterDataList(netOutgoingMessage, CharacterDataList);
         }
 
         protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
             StageIdentifier = (StageIdentifier)netIncomingMessage.ReadByte();
-            Players = DecodePlayerList(netIncomingMessage);
+            CharacterDataList = DecodeCharacterDataCollection(netIncomingMessage);
         }
+
+
     }
 }

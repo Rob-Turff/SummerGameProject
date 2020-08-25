@@ -79,7 +79,6 @@ namespace Client
             }
         }
 
-
         protected override void HandleStatusChangedMessage(NetIncomingMessage netIncomingMessage)
         {
             logger.Debug(ToString() + ": " + netIncomingMessage.SenderConnection.ToString() 

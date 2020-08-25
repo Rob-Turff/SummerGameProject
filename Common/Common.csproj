@@ -80,6 +80,7 @@
     <Compile Include="Src\Packets\ClientToServer\PlayerInputPacket.cs" />
     <Compile Include="Src\Packets\ClientToServer\MatchStartRequestPacket.cs" />
     <Compile Include="Src\Packets\PacketType.cs" />
+    <Compile Include="Src\Packets\ServerToClient\ServerToClientPacket.cs" />
     <Compile Include="Src\Packets\ServerToClient\WorldStatePacket.cs" />
     <Compile Include="Src\Player.cs" />
     <Compile Include="Src\Stages\DefaultStage.cs" />

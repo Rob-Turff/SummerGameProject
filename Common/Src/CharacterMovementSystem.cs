@@ -65,23 +65,23 @@ namespace Common.Src
             float newVelocityY = character.Velocity.Y;
             float newJumpTime;
 
-            PlayerInputs playerInputs = character.PlayerInputs;
+            CharacterInputs playerInputs = character.CharacterInputs;
 
             // Update horizontal velocity according to player input
-            if (playerInputs.HasFlag(PlayerInputs.LEFT))
+            if (playerInputs.HasFlag(CharacterInputs.LEFT))
                 newVelocityX -= moveAcceleration * elapsedTime;
-            if (playerInputs.HasFlag(PlayerInputs.RIGHT))
+            if (playerInputs.HasFlag(CharacterInputs.RIGHT))
                 newVelocityX += moveAcceleration * elapsedTime;
 
             // Update vertical velocity according to acceleration due to gravity
             newVelocityY += gravityAcceleration * elapsedTime;
 
             // Handle jumping logic
-            bool jumpButtonPressed = playerInputs.HasFlag(PlayerInputs.JUMP);
+            bool jumpButtonPressed = playerInputs.HasFlag(CharacterInputs.JUMP);
             (newVelocityY, newJumpTime) = HandleJump(jumpButtonPressed, character.JumpTime, character.IsOnGround, newVelocityY, elapsedTime);
 
             // Apply pseudo-drag horizontally
-            if (playerInputs == PlayerInputs.NONE)
+            if (playerInputs == CharacterInputs.NONE)
                 newVelocityX -= newVelocityX * (character.IsOnGround ? groundDragFactor : airDragFactor) * elapsedTime * 10;
 
             // Prevent the player from running faster than their top speed
@@ -89,7 +89,7 @@ namespace Common.Src
             newVelocityY = Clamp(newVelocityY, -initalJumpSpeed, maxFallSpeed);
 
             // If coming to rest then stop it taking forever
-            newVelocityX = (playerInputs == PlayerInputs.NONE && Math.Abs(newVelocityX) < maxMoveSpeed / 20) ? 0 : newVelocityX;
+            newVelocityX = (playerInputs == CharacterInputs.NONE && Math.Abs(newVelocityX) < maxMoveSpeed / 20) ? 0 : newVelocityX;
 
             // Change the player's position, velocity, jumptime and isonground according to whether or not they collide
             HandleCollisions(character, collidableEntities, newVelocityX, newVelocityY, newJumpTime, elapsedTime);
@@ -206,7 +206,7 @@ namespace Common.Src
             }
 
             // Set player inputs to none now that they've been dealt with
-            character.PlayerInputs = PlayerInputs.NONE;
+            character.CharacterInputs = CharacterInputs.NONE;
         }
 
         private float Clamp(float number, float min, float max) => Math.Max(min, Math.Min(number, max));

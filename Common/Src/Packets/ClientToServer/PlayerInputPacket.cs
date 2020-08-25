@@ -8,19 +8,19 @@ using Lidgren.Network;
 
 namespace Common.Src.Packets.ClientToServer
 {
-    public class PlayerInputPacket : Packet
+    public class CharacterInputPacket : Packet
     {
 
         public override PacketType PacketType => PacketType.PLAYER_INPUT;
 
-        public PlayerInputs Inputs { get; private set; }
+        public CharacterInputs Inputs { get; private set; }
 
-        public PlayerInputPacket(PlayerInputs inputs)
+        public CharacterInputPacket(CharacterInputs inputs)
         {
             this.Inputs = inputs;
         }
 
-        public PlayerInputPacket(NetIncomingMessage netIncomingMessage)
+        public CharacterInputPacket(NetIncomingMessage netIncomingMessage)
         {
             Decode(netIncomingMessage);
         }
@@ -32,13 +32,13 @@ namespace Common.Src.Packets.ClientToServer
 
         protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
-            this.Inputs = (PlayerInputs)netIncomingMessage.ReadByte();
+            this.Inputs = (CharacterInputs)netIncomingMessage.ReadByte();
         }
     }
 
 
     [Flags]
-    public enum PlayerInputs
+    public enum CharacterInputs
     {
         NONE    = 0,
         JUMP    = 1,

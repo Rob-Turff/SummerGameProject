@@ -46,10 +46,9 @@ namespace Client.Src.Screens
                 platforms.Add(platform);
             }
 
-            int i = 0;
-            foreach (Player player in matchStartedPacket.Players)
+            foreach (CharacterData characterData in matchStartedPacket.CharacterDataList)
             {
-                characters.Add(new Character(player, stage.CharacterSpawnPositions[i++]));
+                characters.Add(new Character(characterData.ID, characterData.Position));
             }
         }
 
@@ -67,9 +66,11 @@ namespace Client.Src.Screens
 
         protected override void HandleWorldStatePacket(WorldStatePacket worldStatePacket)
         {
-            foreach ((Player player, Vector2 position) in worldStatePacket.PlayerPositions)
+            foreach (CharacterData characterData in worldStatePacket.CharacterDataList)
             {
-                characters.First(character => character.Player == player).Position = position;
+                Character characterOfInterest = characters.First(character => character.ID == characterData.ID);
+                characterOfInterest.Position = characterData.Position;
+                characterOfInterest.Velocity = characterData.Velocity;
             }
         }
 
@@ -77,25 +78,25 @@ namespace Client.Src.Screens
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            PlayerInputs playerInputs = PlayerInputs.NONE;
+            CharacterInputs playerInputs = CharacterInputs.NONE;
 
             if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space))
-                playerInputs |= PlayerInputs.JUMP;
+                playerInputs |= CharacterInputs.JUMP;
             if (keyboardState.IsKeyDown(Keys.A))
-                playerInputs |= PlayerInputs.LEFT;
+                playerInputs |= CharacterInputs.LEFT;
             else if (keyboardState.IsKeyDown(Keys.D))
-                playerInputs |= PlayerInputs.RIGHT;
+                playerInputs |= CharacterInputs.RIGHT;
 
-            if (playerInputs != PlayerInputs.NONE)
+            if (playerInputs != CharacterInputs.NONE)
             {
-                PlayerInputPacket playerInputPacket = new PlayerInputPacket(playerInputs);
+                CharacterInputPacket playerInputPacket = new CharacterInputPacket(playerInputs);
 
                 SendPlayerInputs(playerInputPacket);
             }
 
         }
 
-        private void SendPlayerInputs(PlayerInputPacket playerInputPacket)
+        private void SendPlayerInputs(CharacterInputPacket playerInputPacket)
         {
             SendMessageToServer(playerInputPacket);
         }

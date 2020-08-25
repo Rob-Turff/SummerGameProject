@@ -32,6 +32,7 @@ namespace Client.Src
         {
             int i = 0;
             bool isHost = false;
+
             // If new player detected fire player joined event
             foreach (Player player in lobbyInfoPacket.Players)
             {

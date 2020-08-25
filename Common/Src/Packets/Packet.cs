@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Common.Src
 {
+    /// <summary>
+    /// Abstract base class for data packets, blobs of data which we wish to send between the server and client 
+    /// </summary>
     public abstract class Packet
     {
         public abstract PacketType PacketType { get; }

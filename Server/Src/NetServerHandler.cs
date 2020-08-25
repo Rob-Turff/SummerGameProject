@@ -92,7 +92,7 @@ namespace Server.Src
                     HandleMatchStartRequestPacket(matchStartRequestPacket, netIncomingMessage.SenderConnection);
                     break;
                 case PacketType.PLAYER_INPUT:
-                    PlayerInputPacket playerInputPacket = new PlayerInputPacket(netIncomingMessage);
+                    CharacterInputPacket playerInputPacket = new CharacterInputPacket(netIncomingMessage);
                     HandlePlayerInputPacket(playerInputPacket, netIncomingMessage.SenderConnection);
                     break;
                 default:
@@ -125,7 +125,7 @@ namespace Server.Src
 
         protected abstract void HandleMatchStartRequestPacket(MatchStartRequestPacket matchStartRequestPacket, NetConnection senderConnection);
 
-        protected abstract void HandlePlayerInputPacket(PlayerInputPacket playerInputPacket, NetConnection senderConnection);
+        protected abstract void HandlePlayerInputPacket(CharacterInputPacket playerInputPacket, NetConnection senderConnection);
 
         protected abstract void HandlePlayerConnect(NetConnection senderConnection);
 

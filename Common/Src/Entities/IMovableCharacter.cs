@@ -7,7 +7,7 @@ namespace Common.Src.Entities
 {
     public interface IMovableCharacter : ICollidableEntity
     {
-        PlayerInputs PlayerInputs { get; set; }
+        CharacterInputs CharacterInputs { get; set; }
 
         Vector2 Velocity { get; set; }
         Vector2 Position { get; set; }

@@ -35,11 +35,16 @@ namespace Server.Src
             this.stage = StageFactory.GetStage(StageIdentifier.DEFAULT);
 
             int i = 0;
+
             foreach (NetConnection netConnection in connectionToPlayerMap.Keys)
             {
+                Guid characterID = Guid.NewGuid();
+                Vector2 characterSpawnPos = stage.CharacterSpawnPositions[i];
+
                 connectionToCharacterMap.Add(
                     netConnection,
-                    (new Character(connectionToPlayerMap[netConnection], stage.CharacterSpawnPositions[i])));
+                    new Character(characterID,characterSpawnPos)
+                );
                 i++;
             }
 
@@ -56,11 +61,11 @@ namespace Server.Src
             BroadcastWorldState();
         }
 
-        protected override void HandlePlayerInputPacket(PlayerInputPacket playerInputPacket, NetConnection senderConnection)
+        protected override void HandlePlayerInputPacket(CharacterInputPacket playerInputPacket, NetConnection senderConnection)
         {
             logger.Info(ToString() + ": Player input packet recieved!");
 
-            connectionToCharacterMap[senderConnection].PlayerInputs = playerInputPacket.Inputs;
+            connectionToCharacterMap[senderConnection].CharacterInputs = playerInputPacket.Inputs;
         }
 
         protected override void HandlePlayerDisconnect(NetConnection senderConnection)
@@ -90,25 +95,33 @@ namespace Server.Src
 
         private void BroadcastMatchStarted()
         {
-            MatchStartedPacket matchStartedPacket = new MatchStartedPacket(
-                stage.StageIdentifier,
-                connectionToCharacterMap.
-                Values.
-                Select(character => character.Player).
-                ToList());
+            StageIdentifier stageID = stage.StageIdentifier;
+            List<CharacterData> characterDataList = ExtractCharacterData(connectionToCharacterMap.Values.ToList());
+
+            MatchStartedPacket matchStartedPacket = new MatchStartedPacket(stageID, characterDataList);
 
             BroadcastMessage(matchStartedPacket);
         }
 
         private void BroadcastWorldState()
         {
-            WorldStatePacket worldStatePacket = new WorldStatePacket(
-                connectionToCharacterMap.
-                Values.
-                Select(character => (character.Player, character.Position)).
-                ToList());
+            List<CharacterData> characterDataList = ExtractCharacterData(connectionToCharacterMap.Values.ToList());
+
+            WorldStatePacket worldStatePacket = new WorldStatePacket(characterDataList);
 
             BroadcastMessage(worldStatePacket);
+        }
+
+        private static List<CharacterData> ExtractCharacterData(List<Character> characters)
+        {
+            List<CharacterData> characterDataList = new List<CharacterData>();
+
+            foreach (Character character in characters)
+            {
+                characterDataList.Add(new CharacterData(character.ID, character.Position, character.Velocity));
+            }
+
+            return characterDataList;
         }
     }
 }

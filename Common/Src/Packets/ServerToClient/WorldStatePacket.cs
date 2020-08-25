@@ -8,15 +8,15 @@ using Microsoft.Xna.Framework;
 
 namespace Common.Src.Packets.ServerToClient
 {
-    public class WorldStatePacket : Packet
+    public class WorldStatePacket : ServerToClientPacket
     {
         public override PacketType PacketType => PacketType.WORLD_STATE;
 
-        public List<(Player, Vector2)> PlayerPositions;
+        public List<CharacterData> CharacterDataList;
 
-        public WorldStatePacket(List<(Player, Vector2)> playerPositions)
+        public WorldStatePacket(List<CharacterData> characterDataList)
         {
-            this.PlayerPositions = playerPositions;
+            this.CharacterDataList = characterDataList;
         }
 
         public WorldStatePacket(NetIncomingMessage netIncomingMessage)
@@ -26,28 +26,29 @@ namespace Common.Src.Packets.ServerToClient
 
         public override void Encode(NetOutgoingMessage netOutgoingMessage)
         {
-            netOutgoingMessage.Write(PlayerPositions.Count);
-            foreach ((Player, Vector2) pair in PlayerPositions)
-            {
-                Player player = pair.Item1;
-                EncodePlayer(netOutgoingMessage, player);
-                Vector2 position = pair.Item2;
-                netOutgoingMessage.Write(position.X);
-                netOutgoingMessage.Write(position.Y);
-            }
+            EncodeCharacterDataList(netOutgoingMessage,CharacterDataList);
         }
 
         protected override void Decode(NetIncomingMessage netIncomingMessage)
         {
-            this.PlayerPositions = new List<(Player, Vector2)>();
-            for (int i = 0, length = netIncomingMessage.ReadInt32(); i < length; i++)
-            {
-                PlayerPositions.Add((
-                    DecodePlayer(netIncomingMessage),
-                    new Vector2(netIncomingMessage.ReadFloat(), netIncomingMessage.ReadFloat()
-                )));
-            }
+            CharacterDataList = DecodeCharacterDataCollection(netIncomingMessage);
         }
 
+    }
+
+    public struct CharacterData
+    {
+        public Guid ID { get; }
+
+        public Vector2 Position { get; set; }
+
+        public Vector2 Velocity { get; set; }
+
+        public CharacterData(Guid id, Vector2 position, Vector2 velocity)
+        {
+            ID = id;
+            Position = position;
+            Velocity = velocity;
+        }
     }
 }

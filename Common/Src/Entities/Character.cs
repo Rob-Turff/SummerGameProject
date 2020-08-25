@@ -8,25 +8,25 @@ using Common.Src;
 
 namespace Common.Src.Entities
 {
-    // NOTE: We aren't using the same vector 2 as in the client project as to do so would require adding a reference to the monogame dll
     public class Character : ICollidableEntity, IMovableCharacter, IDrawableEntity
     {
         public string ImageName => "Player";
         public float Scale => 1;
 
-        public Character(Player player,Vector2 position)
+        public Character(Guid id, Vector2 position)
         {
-            Player = player;
+            ID = id;
             Position = position;
 
-            PlayerInputs = PlayerInputs.NONE;
+            CharacterInputs = CharacterInputs.NONE;
             Velocity = new Vector2(0, 0);
             JumpTime = 0;
             IsOnGround = false;
         }
         
-        public Player Player { get; }
-        public PlayerInputs PlayerInputs { get; set; }
+        public Guid ID { get; }
+
+        public CharacterInputs CharacterInputs { get; set; }
 
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }

@@ -12,6 +12,9 @@ using mattmc3.Common.Collections.Generic;
 
 namespace Server.Src
 {
+    /// <summary>
+    /// Class which handles and sends all data packets 
+    /// </summary>
     internal class ServerLobby : NetServerHandler
     {
         public event EventHandler<(NetServer, OrderedDictionary<NetConnection,Player>)> StartMatchRequestedByHost;
@@ -44,7 +47,7 @@ namespace Server.Src
 
             if (password == "Rob is in fact handsome Squidward")
             {
-                // This is set now so that once the connection's status is connected, this can be added to playerConnections
+                // This is set now so that once the connection's status is connected, this can be added to connectionToPlayerMap
                 cachedConnectionAndPlayer = (senderConnection,player);
 
                 senderConnection.Approve();
@@ -55,7 +58,7 @@ namespace Server.Src
             {
                 senderConnection.Deny();
 
-                logger.Info(ToString() + ": " + player.Name + "'s connection approval request was denied");
+                logger.Info(ToString() + ": " + player.Name + "'s connection approval request was denied: wrong password");
             }
         }
 
@@ -73,7 +76,7 @@ namespace Server.Src
             }
         }
 
-        protected override void HandlePlayerInputPacket(PlayerInputPacket playerInputPacket, NetConnection senderConnection)
+        protected override void HandlePlayerInputPacket(CharacterInputPacket playerInputPacket, NetConnection senderConnection)
         {
             logger.Error(ToString() + ": Player input packet received!");
         }
@@ -102,7 +105,13 @@ namespace Server.Src
                     hostConnection = senderConnection;
                 }
 
+                cachedConnectionAndPlayer = (null,null);
+
                  BroadcastLobbyInfo();
+            }
+            else
+            {
+                logger.Error(ToString() + ": Connecting sender doesn't match with cached connection");
             }
         }
 
@@ -125,6 +134,5 @@ namespace Server.Src
 
             return config;
         }
-
     }
 }
